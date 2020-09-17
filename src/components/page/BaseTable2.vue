@@ -19,16 +19,16 @@
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                     <el-table-column prop="id" label="编号"></el-table-column>
                     <el-table-column prop="mid" label="维修记录Id"></el-table-column>
-                    <el-table-column prop="fault_type" label="故障类型"></el-table-column>
-                    <el-table-column prop="fault_reason" label="故障原因"></el-table-column>
-                    <el-table-column prop="fault_desc" label="故障描述"></el-table-column>
-                    <el-table-column prop="fault_imgs" label="故障图片"></el-table-column>
-                    <el-table-column prop="del_flag" label="删除标记"></el-table-column>
+                    <el-table-column prop="faultType" label="故障类型"></el-table-column>
+                    <el-table-column prop="faultReason" label="故障原因"></el-table-column>
+                    <el-table-column prop="faultDesc" label="故障描述"></el-table-column>
+                    <el-table-column prop="faultImgs" label="故障图片"></el-table-column>
+                    <el-table-column prop="delFlag" label="删除标记"></el-table-column>
                     <el-table-column prop="remarks" label="备注"></el-table-column>
-                    <el-table-column prop="create_by" label="创建人"></el-table-column>
-                    <el-table-column prop="create_date" label="创建时间"></el-table-column>
-                    <el-table-column prop="update_by" label="更新人"></el-table-column>
-                    <el-table-column prop="update_date" label="更新时间"></el-table-column>
+                    <el-table-column prop="createBy" label="创建人"></el-table-column>
+                    <el-table-column prop="createDate" label="创建时间"></el-table-column>
+                    <el-table-column prop="updateBy" label="更新人"></el-table-column>
+                    <el-table-column prop="updateDate" label="更新时间"></el-table-column>
 
             </el-table>
 

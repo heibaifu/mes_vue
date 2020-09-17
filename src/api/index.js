@@ -3,9 +3,8 @@ import request from '../utils/request';
 export const fetchData = query => {
     return request({
         // url: './table.json',
-        // url: 'http://localhost:8000/equip_fault_report/all',
-        // params: query
-        url: '/api/equip_fault_report/all',
+        url: '/api/equipFaultReport/all',
+        params: query,
         method: 'get',
     });
 };
@@ -24,10 +23,4 @@ export const fetchData2 = query => {
         method: 'get',
     });
 };
-export const login_po = query => {
-    request({
-        url: '/api/sysUser/login',
-        params: this.param,
-        method: 'post',
-    });
-};
+

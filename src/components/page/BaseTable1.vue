@@ -18,18 +18,18 @@
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                     <el-table-column prop="id" label="编号"></el-table-column>
-                    <el-table-column prop="equip_type" label="设备类型"></el-table-column>
+                    <el-table-column prop="equipType" label="设备类型"></el-table-column>
                     <el-table-column prop="maintenance" label="保养内容"></el-table-column>
                     <el-table-column prop="cycle" label="保养周期：周，月，年"></el-table-column>
-                    <el-table-column prop="warn_time" label="预警时间"></el-table-column>
-                    <el-table-column prop="user_name" label="保养人姓名"></el-table-column>
-                    <el-table-column prop="user_id" label="保养人"></el-table-column>
-                    <el-table-column prop="del_flag" label="删除标记"></el-table-column>
+                    <el-table-column prop="warnTime" label="预警时间"></el-table-column>
+                    <el-table-column prop="userName" label="保养人姓名"></el-table-column>
+                    <el-table-column prop="userId" label="保养人"></el-table-column>
+                    <el-table-column prop="delFlag" label="删除标记"></el-table-column>
                     <el-table-column prop="remarks" label="备注"></el-table-column>
-                    <el-table-column prop="create_by" label="创建人"></el-table-column>
-                    <el-table-column prop="update_by" label="创建时间"></el-table-column>
-                    <el-table-column prop="create_date" label="更新人"></el-table-column>
-                    <el-table-column prop="update_date" label="更新时间"></el-table-column>
+                    <el-table-column prop="createBy" label="创建人"></el-table-column>
+                    <el-table-column prop="updateBy" label="创建时间"></el-table-column>
+                    <el-table-column prop="createDate" label="更新人"></el-table-column>
+                    <el-table-column prop="updateDate" label="更新时间"></el-table-column>
 
             </el-table>
 
