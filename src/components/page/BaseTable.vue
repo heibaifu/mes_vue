@@ -15,11 +15,12 @@
                     class="handle-del mr10"
                     @click="delAllSelection"
                 >批量删除</el-button>
-                <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">
-                    <el-option key="1" label="广东省" value="广东省"></el-option>
-                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
+                <el-select v-model="query.address" placeholder="设备编号" class="handle-select mr10">
+                    <el-option key="1" label="设备编号" value="设备编号"></el-option>
+                    <el-option key="2" label="设备类型" value="设备类型"></el-option>
+                    <el-option key="3" label="上报人姓名" value="上报人姓名"></el-option>
                 </el-select>
-                <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
+                <el-input v-model="query.name" placeholder="设备编号" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
             </div>
             <el-table
@@ -102,13 +103,18 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="用户名">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="地址">
-                    <el-input v-model="form.address"></el-input>
-                </el-form-item>
+            <el-form ref="form" :model="form" label-width="75px">
+                    <el-form-item label="设备id"><el-input v-model="form.equip_id"></el-input></el-form-item>
+                    <el-form-item label="设备编号"><el-input v-model="form.equip_no"></el-input></el-form-item>
+                    <el-form-item label="设备类型"><el-input v-model="form.equip_type"></el-input></el-form-item>
+                    <el-form-item label="所处产线"><el-input v-model="form.equip_loc"></el-input></el-form-item>
+                    <el-form-item label="故障描述"><el-input v-model="form.fault_desc"></el-input></el-form-item>
+                    <el-form-item label="状态"><el-input v-model="form.status"></el-input></el-form-item>
+                    <el-form-item label="上报人姓名"><el-input v-model="form.report_person"></el-input></el-form-item>
+                    <el-form-item label="维修工人"><el-input v-model="form.maintenance_worker"></el-input></el-form-item>
+                    <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
+                    <el-form-item label="创建人"><el-input v-model="form.create_by"></el-input></el-form-item>
+                    <el-form-item label="更新人"><el-input v-model="form.update_by"></el-input></el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>

@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import ElementUI from 'element-ui';
 import VueI18n from 'vue-i18n';
-// import axios from 'axios';
+import axios from 'axios';
 
 import { messages } from './components/common/i18n';
 import 'element-ui/lib/theme-chalk/index.css'; // 默认主题
@@ -14,6 +14,9 @@ import 'babel-polyfill';
 
 
 Vue.config.productionTip = false;
+Vue.prototype.$axios = axios
+
+
 Vue.use(VueI18n);
 Vue.use(ElementUI, {
     size: 'small'

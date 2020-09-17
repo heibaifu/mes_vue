@@ -24,3 +24,10 @@ export const fetchData2 = query => {
         method: 'get',
     });
 };
+export const login_po = query => {
+    request({
+        url: '/api/sysUser/login',
+        params: this.param,
+        method: 'post',
+    });
+};
