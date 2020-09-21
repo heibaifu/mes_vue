@@ -22,6 +22,7 @@
                 </el-select>
                 <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+                <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
             </div>
             <el-table
                 :data="tableData"
@@ -104,6 +105,7 @@
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="95px">
+                    <el-form-item label="id"><el-input v-model="form.id"></el-input></el-form-item>
                     <el-form-item label="设备id"><el-input v-model="form.equipId"></el-input></el-form-item>
                     <el-form-item label="设备编号"><el-input v-model="form.equipNo"></el-input></el-form-item>
                     <el-form-item label="设备类型"><el-input v-model="form.equipType"></el-input></el-form-item>
@@ -121,6 +123,26 @@
                 <el-button type="primary" @click="saveEdit">确 定</el-button>
             </span>
         </el-dialog>
+        <!-- 编辑添加框 -->
+        <el-dialog title="添加" :visible.sync="addVisible" width="30%">
+            <el-form ref="form" :model="form" label-width="95px">
+                <el-form-item label="设备id"><el-input v-model="form.equipId"></el-input></el-form-item>
+                <el-form-item label="设备编号"><el-input v-model="form.equipNo"></el-input></el-form-item>
+                <el-form-item label="设备类型"><el-input v-model="form.equipType"></el-input></el-form-item>
+                <el-form-item label="所处产线"><el-input v-model="form.equipLoc"></el-input></el-form-item>
+                <el-form-item label="故障描述"><el-input v-model="form.faultDesc"></el-input></el-form-item>
+                <el-form-item label="状态"><el-input v-model="form.status"></el-input></el-form-item>
+                <el-form-item label="上报人姓名"><el-input v-model="form.reportPerson"></el-input></el-form-item>
+                <el-form-item label="维修工人"><el-input v-model="form.maintenanceWorker"></el-input></el-form-item>
+                <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
+                <el-form-item label="创建人"><el-input v-model="form.createBy"></el-input></el-form-item>
+                <el-form-item label="更新人"><el-input v-model="form.updateBy"></el-input></el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addVisible = false">取 消</el-button>
+                <el-button type="primary" @click="saveAdd">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -133,13 +155,14 @@ export default {
             query: {
                 address: 'equip_no',
                 name: '',
-                pageIndex: 1,
+                pageIndex: 0,
                 pageSize: 50
             },
             tableData: [],
             multipleSelection: [],
             delList: [],
             editVisible: false,
+            addVisible: false,
             pageTotal: 0,
             form: {},
             idx: -1,
@@ -198,15 +221,32 @@ export default {
         handleEdit(index, row) {
             this.idx = index;
             this.form = row;
+            console.log(this.form)
             this.editVisible = true;
+        },
+        //添加操作
+        handleAdd(index, row) {
+            this.addVisible = true;
         },
         // 保存编辑
         saveEdit() {
+            console.log(this.form)
+
             this.editVisible = false;
             this.$axios.post('/api/equipFaultReport/edit',this.form).then(res=>{
                 this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             })
             this.$set(this.tableData, this.idx, this.form);
+        },
+        // 保存添加
+        saveAdd() {
+            console.log(this.form)
+
+            this.addVisible = false;
+            this.$axios.post('/api/equipFaultReport/add',this.form).then(res=>{
+                this.$message.success(`添加成功`);
+            })
+            this.getData();
         },
         // 分页导航
         handlePageChange(val) {

@@ -91,7 +91,7 @@ export default new Router({
                     meta: { title: '国际化' }
                 },
                 {
-                    // 权限页面
+                    // 权限控制页面
                     path: '/permission',
                     component: () => import(/* webpackChunkName: "permission" */ '../components/page/Permission.vue'),
                     meta: { title: '权限测试', permission: true }
