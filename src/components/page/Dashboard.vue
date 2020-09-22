@@ -4,7 +4,7 @@
             <el-col :span="8">
                 <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
-                        <img src="../../assets/img/img.jpg" class="user-avator" alt />
+                        <img :src="imgUrl" class="user-avator" alt />
                         <div class="user-info-cont">
                             <div class="user-info-name">{{name}}</div>
                             <div>{{role}}</div>
@@ -12,11 +12,11 @@
                     </div>
                     <div class="user-info-list">
                         上次登录时间：
-                        <span>2019-11-01</span>
+                        <span>{{loginData}}</span>
                     </div>
                     <div class="user-info-list">
-                        上次登录地点：
-                        <span>东莞</span>
+                        上次登录IP：
+                        <span>{{loginIp}}</span>
                     </div>
                 </el-card>
                 <el-card shadow="hover" style="height:252px;">
@@ -114,9 +114,13 @@ import Schart from 'vue-schart';
 import bus from '../common/bus';
 export default {
     name: 'dashboard',
+    loginIp: '0.0.0.0',
+    loginDate: '0-0-0-0',
+    userType: '',
+    photo: '../../assets/img/img2.jpg',
     data() {
         return {
-            name: localStorage.getItem('ms_username'),
+            // name: localStorage.getItem('ms_username'),
             todoList: [
                 {
                     title: '今天要修复100个bug',
@@ -176,7 +180,7 @@ export default {
             options: {
                 type: 'bar',
                 title: {
-                    text: '最近一周各品类销售图'
+                    text: '订单统计'
                 },
                 xRorate: 25,
                 labels: ['周一', '周二', '周三', '周四', '周五'],
@@ -198,21 +202,21 @@ export default {
             options2: {
                 type: 'line',
                 title: {
-                    text: '最近几个月各品类销售趋势图'
+                    text: '质量管控'
                 },
                 labels: ['6月', '7月', '8月', '9月', '10月'],
                 datasets: [
                     {
-                        label: '家电',
-                        data: [234, 278, 270, 190, 230]
+                        label: '违规记录',
+                        data: [1, 2, 3, 4, 5]
                     },
                     {
-                        label: '百货',
-                        data: [164, 178, 150, 135, 160]
+                        label: '残次品上报',
+                        data: [1, 4, 3, 2, 1]
                     },
                     {
-                        label: '食品',
-                        data: [74, 118, 200, 235, 90]
+                        label: '异常工序检测',
+                        data: [5, 6, 1, 3, 2]
                     }
                 ]
             }
@@ -223,12 +227,33 @@ export default {
     },
     computed: {
         role() {
-            return this.name === 'admin' ? '超级管理员' : '普通用户';
+            return this.userType === '1' ? '超级管理员' : '普通用户';
+        },
+        imgUrl: function () {
+            return this.photo;
+        },
+        formatDateTime: function (date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            m = m < 10 ? ('0' + m) : m;
+            var d = date.getDate();
+            d = d < 10 ? ('0' + d) : d;
+            var h = date.getHours();
+            h=h < 10 ? ('0' + h) : h;
+            var minute = date.getMinutes();
+            minute = minute < 10 ? ('0' + minute) : minute;
+            var second=date.getSeconds();
+            second=second < 10 ? ('0' + second) : second;
+            return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
         }
+
     },
-    // created() {
-    //     this.handleListener();
-    //     this.changeDate();
+    created() {
+        this.frashdata();
+    },
+        // created() {
+        // this.handleListener();
+        // this.changeDate();
     // },
     // activated() {
     //     this.handleListener();
@@ -244,6 +269,14 @@ export default {
                 const date = new Date(now - (6 - index) * 86400000);
                 item.name = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
             });
+        },
+        frashdata(){
+            var obj=JSON.parse(localStorage.getItem("userInfo"));
+            this.loginIp = obj.loginIp;
+            this.loginData = obj.loginDate;
+            this.name = obj.name;
+            this.photo = require("../../assets/img/"+obj.photo);
+            this.userType = obj.userType;
         }
         // handleListener() {
         //     bus.$on('collapse', this.handleBus);

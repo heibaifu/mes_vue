@@ -53,6 +53,10 @@ export default {
                         {
                             this.$message.success('登录成功');
                             localStorage.setItem('ms_username', this.param.login_name);
+                            localStorage.setItem('userInfo', JSON.stringify(res.data.data));
+                            // localStorage.setItem('login_date', res.login_date);
+                            // localStorage.setItem('login_ip', res.login_ip);
+                            // localStorage.setItem('photo', res.photo);
                             this.$router.push('/');
                         }
                         else
