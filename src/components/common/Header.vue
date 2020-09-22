@@ -29,12 +29,12 @@
                 </div>
                 <!-- 用户头像 -->
                 <div class="user-avator">
-                    <img src="../../assets/img/img.jpg" />
+                    <img :src="imgUrl" />
                 </div>
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
                     <span class="el-dropdown-link">
-                        {{username}}
+                        {{name}}
                         <i class="el-icon-caret-bottom"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
@@ -59,19 +59,30 @@ export default {
             collapse: false,
             fullscreen: false,
             name: 'linxin',
-            message: 2
+            message: 2,
+            name: 'dashboard',
+            photo: '../../assets/img/img2.jpg'
         };
     },
     computed: {
         username() {
             let username = localStorage.getItem('ms_username');
             return username ? username : this.name;
+        },
+        imgUrl: function () {
+            return this.photo;
         }
+    },
+    created() {
+        var obj=JSON.parse(localStorage.getItem("userInfo"));
+        this.photo = require("../../assets/img/"+obj.photo);
+        this.name = obj.name;
     },
     methods: {
         // 用户名下拉菜单选择事件
         handleCommand(command) {
             if (command == 'loginout') {
+                localStorage.removeItem('userInfo');
                 localStorage.removeItem('ms_username');
                 this.$router.push('/login');
             }

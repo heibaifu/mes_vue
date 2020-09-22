@@ -21,14 +21,15 @@
                 </el-card>
                 <el-card shadow="hover" style="height:252px;">
                     <div slot="header" class="clearfix">
-                        <span>语言详情</span>
-                    </div>Vue
-                    <el-progress :percentage="71.3" color="#42b983"></el-progress>JavaScript
-                    <el-progress :percentage="24.1" color="#f1e05a"></el-progress>CSS
-                    <el-progress :percentage="13.7"></el-progress>HTML
-                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>
+                        <span>绩效</span>
+                    </div>
+                    <el-progress :percentage="71.3" color="#42b983"></el-progress>去头
+                    <el-progress :percentage="4.1" color="#f1e05a"></el-progress>开片
+                    <el-progress :percentage="3.7"></el-progress>挑刺
+                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>切片
                 </el-card>
             </el-col>
+
             <el-col :span="16">
                 <el-row :gutter="20" class="mgb20">
                     <el-col :span="8">
@@ -36,7 +37,7 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">1234</div>
+                                    <div class="grid-num">{{lognums}}</div>
                                     <div>用户访问量</div>
                                 </div>
                             </div>
@@ -59,7 +60,7 @@
                                 <i class="el-icon-lx-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">5000</div>
-                                    <div>数量</div>
+                                    <div>订单数量</div>
                                 </div>
                             </div>
                         </el-card>
@@ -117,6 +118,7 @@ export default {
     loginIp: '0.0.0.0',
     loginDate: '0-0-0-0',
     userType: '',
+    lognums: '1',
     photo: '../../assets/img/img2.jpg',
     data() {
         return {
@@ -231,37 +233,13 @@ export default {
         },
         imgUrl: function () {
             return this.photo;
-        },
-        formatDateTime: function (date) {
-            var y = date.getFullYear();
-            var m = date.getMonth() + 1;
-            m = m < 10 ? ('0' + m) : m;
-            var d = date.getDate();
-            d = d < 10 ? ('0' + d) : d;
-            var h = date.getHours();
-            h=h < 10 ? ('0' + h) : h;
-            var minute = date.getMinutes();
-            minute = minute < 10 ? ('0' + minute) : minute;
-            var second=date.getSeconds();
-            second=second < 10 ? ('0' + second) : second;
-            return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
         }
 
     },
     created() {
+        this.getlognums();
         this.frashdata();
     },
-        // created() {
-        // this.handleListener();
-        // this.changeDate();
-    // },
-    // activated() {
-    //     this.handleListener();
-    // },
-    // deactivated() {
-    //     window.removeEventListener('resize', this.renderChart);
-    //     bus.$off('collapse', this.handleBus);
-    // },
     methods: {
         changeDate() {
             const now = new Date().getTime();
@@ -273,10 +251,17 @@ export default {
         frashdata(){
             var obj=JSON.parse(localStorage.getItem("userInfo"));
             this.loginIp = obj.loginIp;
-            this.loginData = obj.loginDate;
+            var logintime = new Date(obj.loginDate);
+            var month= logintime.getMonth()+1;
+            this.loginData = logintime.getFullYear()+"年"+month+"月"+logintime.getDate()+"日"+logintime.getHours()+"时"+logintime.getMinutes()+"分";
             this.name = obj.name;
             this.photo = require("../../assets/img/"+obj.photo);
             this.userType = obj.userType;
+        },
+        getlognums(){
+            this.$axios.get('/api/radis/get?key=lognums').then(res=>{
+                this.lognums = res.data;
+            })
         }
         // handleListener() {
         //     bus.$on('collapse', this.handleBus);
