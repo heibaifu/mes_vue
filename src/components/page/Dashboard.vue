@@ -48,8 +48,8 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-notice grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
+                                    <div class="grid-num">{{doingnum}}</div>
+                                    <div>进行订单</div>
                                 </div>
                             </div>
                         </el-card>
@@ -59,8 +59,8 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-lx-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">5000</div>
-                                    <div>订单数量</div>
+                                    <div class="grid-num">{{donenum}}</div>
+                                    <div>完成订单</div>
                                 </div>
                             </div>
                         </el-card>
@@ -118,7 +118,6 @@ export default {
     loginIp: '0.0.0.0',
     loginDate: '0-0-0-0',
     userType: '',
-    lognums: '1',
     photo: '../../assets/img/img2.jpg',
     data() {
         return {
@@ -233,6 +232,15 @@ export default {
         },
         imgUrl: function () {
             return this.photo;
+        },
+        lognums: function () {
+            return localStorage.getItem("lognums")
+        },
+        doingnum: function () {
+            return localStorage.getItem("doingnum")
+        },
+        donenum: function () {
+            return localStorage.getItem("donenum")
         }
 
     },
@@ -260,7 +268,13 @@ export default {
         },
         getlognums(){
             this.$axios.get('/api/radis/get?key=lognums').then(res=>{
-                this.lognums = res.data;
+                localStorage.setItem('lognums', res.data.data);
+            })
+            this.$axios.get('/api/orders/doingNum').then(res=>{
+                localStorage.setItem('doingnum', res.data.data);
+            })
+            this.$axios.get('/api/orders/doneNum').then(res=>{
+                localStorage.setItem('donenum', res.data.data);
             })
         }
         // handleListener() {
