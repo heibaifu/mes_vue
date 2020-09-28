@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 设备保养计划
+                    <i class="el-icon-lx-cascades"></i> 设备维修报告
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -38,11 +38,11 @@
 
 <script>
 import { fetchData2 } from '../../api/index';
+import request from "../../utils/request";
 export default {
     name: 'basetable2',
     data() {
         return {
-
             tableData: [],
             multipleSelection: [],
             delList: [],
@@ -57,12 +57,10 @@ export default {
         this.getData2();
     },
     methods: {
-        // 获取 easy-mock 的模拟数据
         getData2() {
-            fetchData2().then(res => {
-                console.log(res);
+            this.$axios.get('/api/equipRepair/selectAll').then(res =>{
                 this.tableData = res;
-            });
+            })
         }
     }
 };

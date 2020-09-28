@@ -36,7 +36,7 @@ export default new Router({
                     meta: { title: '设备保养计划' }
                 },{
                     path: '/table2',
-                    component: () => import(/*webpackChunkName: "table" */ '../components/page/BaseTable2.vue'),
+                    component: () => import(/*webpackChunkName: "table" */ '../components/page/crud.vue'),
                     meta: { title: '设备保养计划' }
                 },
                 {

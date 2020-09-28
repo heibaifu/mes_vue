@@ -17,10 +17,3 @@ export const fetchData1 = query => {
 };
 
 
-export const fetchData2 = query => {
-    return request({
-        url: '/api/equip_repair/all',
-        method: 'get',
-    });
-};
-
