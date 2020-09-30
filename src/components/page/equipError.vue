@@ -8,7 +8,7 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <el-form ref="form" :model="form" label-width="95px">
+            <el-form ref="form" :model="form" label-width="95px" :rules="rules">
                 <el-form-item label="用户名" v-show="false"><el-input :disabled="true" v-model="form.reportPerson"></el-input></el-form-item>
                 <el-form-item label="设备编号" prop="equipNo">
                     <el-input v-model="form.equipNo"></el-input>
@@ -35,7 +35,7 @@
                     <el-input type="textarea" v-model="form.faultDesc"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="saveAdd">上报</el-button>
+                    <el-button type="primary" @click="saveAdd('form')">上报</el-button>
                     <el-button @click="resetForm('form')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -62,7 +62,23 @@ export default {
             pageTotal: 0,
             form: {},
             idx: -1,
-            id: -1
+            id: -1,
+            rules: {
+                equipLoc: [
+                    { required: true, message: '请选择设备所处产线', trigger: 'change' }
+                ],
+                equipType: [
+                    { required: true, message: '请选择设备类型', trigger: 'change' }
+                ],
+                equipNo: [
+                    { required: true, message: '请输入设备编号', trigger: 'blur' },
+                    { min: 5, max: 30, message: '长度在 5 到 30 个字符', trigger: 'blur' }
+                ],
+                faultDesc: [
+                    { required: true, message: '请输入故障描述', trigger: 'blur' },
+                    { min: 1, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur' }
+                ]
+            }
         };
     },
     created() {
@@ -76,12 +92,21 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-        // 保存添加
-        saveAdd() {
-            this.$axios.post('/api/equipFaultReport/add',this.form).then(res=>{
-                this.$message.success(`添加成功`);
-                this.resetForm('form');
-            })
+        // 保存添加，加输入校验
+        saveAdd(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$axios.post('/api/equipFaultReport/add',this.form).then(res=>{
+                        this.$message.success(`添加成功`);
+                        this.resetForm('form');
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+
+
         },
 
     }

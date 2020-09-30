@@ -97,8 +97,8 @@
         </div>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="95px">
+        <el-dialog title="编辑" :visible.sync="editVisible"  width="30%">
+            <el-form ref="form" :model="form" label-width="95px" :rules="rules">
                 <el-form-item label="编号" v-show="false"><el-input :disabled="true" v-model="form.id"></el-input></el-form-item>
                 <el-form-item label="设备类型" prop="equipType">
                     <el-select v-model="form.equipType" placeholder="请选择设备类型">
@@ -116,18 +116,18 @@
                         <el-option key="3" label="年" value="year"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="预警时间"><el-input v-model="form.warnTime"></el-input></el-form-item>
-                <el-form-item label="保养人姓名"><el-input v-model="form.userName"></el-input></el-form-item>
-                <el-form-item label="保养内容"><el-input type="textarea"  v-model="form.maintenance"></el-input></el-form-item>
+                <el-form-item label="预警时间" prop="warnTime"><el-input v-model="form.warnTime"></el-input></el-form-item>
+                <el-form-item label="保养人姓名" prop="userName"><el-input v-model="form.userName"></el-input></el-form-item>
+                <el-form-item label="保养内容" prop="maintenance"><el-input type="textarea"  v-model="form.maintenance"></el-input></el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
+                <el-button type="primary" @click="saveEdit('form')">确 定</el-button>
             </span>
         </el-dialog>
         <!-- 编辑添加框 -->
         <el-dialog title="添加" :visible.sync="addVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="95px">
+            <el-form ref="form" :model="form" label-width="95px" :rules="rules">
                 <el-form-item label="编号" v-show="false"><el-input :disabled="true" v-model="form.id"></el-input></el-form-item>
                 <el-form-item label="设备类型" prop="equipType">
                     <el-select v-model="form.equipType" placeholder="请选择设备类型">
@@ -145,13 +145,13 @@
                         <el-option key="3" label="年" value="year"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="预警时间"><el-input v-model="form.warnTime"></el-input></el-form-item>
-                <el-form-item label="保养人姓名"><el-input v-model="form.userName"></el-input></el-form-item>
-                <el-form-item label="保养内容"><el-input type="textarea"  v-model="form.maintenance"></el-input></el-form-item>
+                <el-form-item label="预警时间" prop="warnTime"><el-input v-model="form.warnTime"></el-input></el-form-item>
+                <el-form-item label="保养人姓名" prop="userName"><el-input v-model="form.userName"></el-input></el-form-item>
+                <el-form-item label="保养内容" prop="maintenance"><el-input type="textarea"  v-model="form.maintenance"></el-input></el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveAdd">确 定</el-button>
+                <el-button type="primary" @click="saveAdd('form')">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -176,7 +176,27 @@ export default {
             pageTotal: 0,
             form: {},
             idx: -1,
-            id: -1
+            id: -1,
+            rules: {
+                equipType: [
+                    { required: true, message: '请选择设备类型', trigger: 'change' }
+                ],
+                cycle: [
+                    { required: true, message: '请选择保养周期', trigger: 'change' }
+                ],
+                warnTime: [
+                    { required: true, message: '请输入预警时间', trigger: 'blur' },
+                    { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+                ],
+                userName: [
+                    { required: true, message: '请输入保养人姓名', trigger: 'blur' },
+                    { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+                ],
+                maintenance: [
+                    { required: true, message: '请输入保养内容', trigger: 'blur' },
+                    { min: 1, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur' }
+                ]
+            }
         };
     },
     created() {
@@ -254,25 +274,36 @@ export default {
         handleAdd(index, row) {
             this.addVisible = true;
         },
-        // 保存编辑
-        saveEdit() {
-            console.log(this.form)
+        // 保存编辑，加输入校验
+        saveEdit(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.editVisible = false;
+                    this.$axios.post('/api/equipMaintenancePlan/edit',this.form).then(res=>{
+                        this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+                    })
+                    this.$set(this.tableData, this.idx, this.form);
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
 
-            this.editVisible = false;
-            this.$axios.post('/api/equipMaintenancePlan/edit',this.form).then(res=>{
-                this.$message.success(`修改第 ${this.idx + 1} 行成功`);
-            })
-            this.$set(this.tableData, this.idx, this.form);
         },
-        // 保存添加
-        saveAdd() {
-            console.log(this.form)
-
-            this.addVisible = false;
-            this.$axios.post('/api/equipMaintenancePlan/add',this.form).then(res=>{
-                this.$message.success(`添加成功`);
-            })
-            this.getData();
+        // 保存添加,输入校验
+        saveAdd(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.addVisible = false;
+                    this.$axios.post('/api/equipMaintenancePlan/add',this.form).then(res=>{
+                        this.$message.success(`添加成功`);
+                    })
+                    this.getData();
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         },
         // 分页导航
         handlePageChange(val) {
@@ -280,7 +311,9 @@ export default {
             // this.query.pageIndex = val;
             this.getData();
         }
-    }
+
+    },
+
 };
 </script>
 
