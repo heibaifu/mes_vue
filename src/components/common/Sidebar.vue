@@ -92,19 +92,24 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-cascades',
-                    index: 'table',
                     title: '设备管理',
                     subs: [
                         {
-                            index: 'table',
-                            title: '设备维修记录'
+                            index: 'equipReport',
+                            title: '设备台账'
                         },{
-                            index: 'table1',
+                            index: 'equipMaintenancePlan',
                             title: '设备保养计划'
+                        },{
+                            index: 'equipRepairPerson',
+                            title: '设备报修派工记录'
+                        },{
+                            index: 'equipError',
+                            title: '设备故障上报'
                         },
                         {
-                            index: 'table2',
-                            title: '设备维修报告'
+                            index: 'equipRepair',
+                            title: '设备维修记录'
                         }
                     ]
                 },{

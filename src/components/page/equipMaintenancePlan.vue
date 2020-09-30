@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 设备维修记录
+                    <i class="el-icon-lx-cascades"></i> 设备保养计划
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -15,12 +15,14 @@
                     class="handle-del mr10"
                     @click="delAllSelection"
                 >批量删除</el-button>
-                <el-select v-model="query.address" placeholder="设备编号" class="handle-select mr10">
-                    <el-option key="1" label="设备编号" value="equip_no"></el-option>
-                    <el-option key="2" label="设备类型" value="equip_type"></el-option>
-                    <el-option key="3" label="上报人姓名" value="report_person"></el-option>
+                <el-select v-model="query.address" placeholder="设备类型" class="handle-select mr10">
+                    <el-option key="1" label="" value=""></el-option>
+                    <el-option key="2" label="电子秤" value="0001"></el-option>
+                    <el-option key="3" label="读卡器" value="0002"></el-option>
+                    <el-option key="4" label="条码打印机" value="0003"></el-option>
+                    <el-option key="5" label="安卓PAD" value="0004"></el-option>
+                    <el-option key="6" label="红外对射枪" value="0005"></el-option>
                 </el-select>
-                <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
             </div>
@@ -33,22 +35,14 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                    <el-table-column prop="id" label="编号"></el-table-column>
-                    <el-table-column prop="equipId" label="设备id"></el-table-column>
-                    <el-table-column prop="equipNo" label="设备编号"></el-table-column>
                     <el-table-column prop="equipType" label="设备类型"></el-table-column>
-                    <el-table-column prop="equipLoc" label="所处产线"></el-table-column>
-                    <el-table-column prop="faultDesc" label="故障描述"></el-table-column>
-                    <el-table-column prop="status" label="状态"></el-table-column>
-                    <el-table-column prop="reportPerson" label="上报人姓名"></el-table-column>
-                    <el-table-column prop="assignTime" label="指派时间"></el-table-column>
-                    <el-table-column prop="maintenanceWorker" label="维修工人"></el-table-column>
-                    <el-table-column prop="delFlag" label="删除标记"></el-table-column>
-                    <el-table-column prop="remarks" label="备注"></el-table-column>
-                    <el-table-column prop="createBy" label="创建人"></el-table-column>
-                    <el-table-column prop="createDate" label="创建时间"></el-table-column>
-                    <el-table-column prop="updateBy" label="更新人"></el-table-column>
-                    <el-table-column prop="updateDate" label="更新时间"></el-table-column>
+                    <el-table-column prop="cycle" label="保养周期：周，月，年"></el-table-column>
+                    <el-table-column prop="warnTime" label="预警时间"></el-table-column>
+                    <el-table-column prop="maintenance" label="保养内容"></el-table-column>
+                    <el-table-column prop="userName" label="保养人姓名"></el-table-column>
+                    <el-table-column prop="userId" label="保养人"></el-table-column>
+
+
 
 <!--                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>-->
 <!--                <el-table-column prop="name" label="用户名"></el-table-column>-->
@@ -149,11 +143,11 @@
 <script>
 import { fetchData } from '../../api/index';
 export default {
-    name: 'basetable',
+    name: 'equipMaintenancePlan',
     data() {
         return {
             query: {
-                address: 'equip_no',
+                address: '',
                 name: '',
                 pageIndex: 0,
                 pageSize: 50
@@ -175,12 +169,9 @@ export default {
     methods: {
         // 获取 easy-mock 的模拟数据
         getData() {
-            fetchData(this.query).then(res => {
-                console.log(res);
-                this.tableData = res;
-                // this.pageTotal = res.pageTotal||50;
-                this.pageTotal = 20;
-            });
+            this.$axios.get('/api/equipMaintenancePlan/selectAll').then(res =>{
+                this.tableData = res.data;
+            })
         },
         // 触发搜索按钮
         handleSearch() {

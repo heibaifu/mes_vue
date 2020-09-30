@@ -40,7 +40,7 @@
 import { fetchData2 } from '../../api/index';
 import request from "../../utils/request";
 export default {
-    name: 'basetable2',
+    name: 'equipRepairPerson',
     data() {
         return {
             tableData: [],

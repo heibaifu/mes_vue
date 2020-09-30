@@ -26,18 +26,27 @@ export default new Router({
                     meta: { title: '自定义图标' }
                 },
                 {
-                    path: '/table',
-                    component: () => import(/*webpackChunkName: "table" */ '../components/page/BaseTable.vue'),
-                    meta: { title: '设备列表' }
+                    path: '/equipMaintenancePlan',
+                    component: () => import(/*webpackChunkName: "table" */ '../components/page/equipMaintenancePlan.vue'),
+                    meta: { title: '设备保养计划' }
                 },
                 {
-                    path: '/table1',
-                    component: () => import(/*webpackChunkName: "table" */ '../components/page/BaseTable1.vue'),
-                    meta: { title: '设备保养计划' }
+                    path: '/equipReport',
+                    component: () => import(/*webpackChunkName: "table" */ '../components/page/equipReport.vue'),
+                    meta: { title: '设备台账' }
                 },{
-                    path: '/table2',
-                    component: () => import(/*webpackChunkName: "table" */ '../components/page/crud.vue'),
-                    meta: { title: '设备保养计划' }
+                    path: '/equipRepairPerson',
+                    component: () => import(/*webpackChunkName: "table" */ '../components/page/equipRepairPerson.vue'),
+                    meta: { title: '设备报修派工记录' }
+                },
+                {
+                    path: '/equipError',
+                    component: () => import(/*webpackChunkName: "table" */ '../components/page/equipError.vue'),
+                    meta: { title: '设备故障上报' }
+                },{
+                    path: '/equipRepair',
+                    component: () => import(/*webpackChunkName: "table" */ '../components/page/equipRepair.vue'),
+                    meta: { title: '设备维修记录' }
                 },
                 {
                     path: '/tabs',
