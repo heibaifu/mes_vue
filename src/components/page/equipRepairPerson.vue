@@ -23,6 +23,8 @@
                     <el-option key="2" label="ML001" value="0001"></el-option>
                     <el-option key="3" label="ML002" value="0002"></el-option>
                     <el-option key="4" label="ML003" value="0003"></el-option>
+                    <el-option key="4" label="ML004" value="0004"></el-option>
+                    <el-option key="4" label="ML005" value="0005"></el-option>
                 </el-select>
                 <el-select v-model="query.address3" placeholder="维修状态" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
@@ -35,19 +37,20 @@
             <el-table
                 :data="tableData"
                 border
+                height="800"
                 class="table"
                 ref="multipleTable"
                 header-cell-class-name="table-header"
-                @selection-change="handleSelectionChange"
+                :row-class-name="tableRowClassName"
             >
                 <el-table-column width="55" align="center"></el-table-column>
-                    <el-table-column prop="equipNo" label="设备编号"></el-table-column>
-                    <el-table-column prop="equipType" label="设备类型"></el-table-column>
-                    <el-table-column prop="equipLoc" label="所处产线"></el-table-column>
-                    <el-table-column prop="faultDesc" label="故障描述"></el-table-column>
-                    <el-table-column prop="reportPerson" label="上报人姓名"></el-table-column>
-                    <el-table-column prop="createDate" label="创建时间"></el-table-column>
-                    <el-table-column prop="status" label="状态"></el-table-column>
+                    <el-table-column prop="equipNo" label="设备编号" sortable  width="160"></el-table-column>
+                    <el-table-column prop="equipTypeString" label="设备类型" sortable width="130"></el-table-column>
+                    <el-table-column prop="equipLoc" label="所处产线" sortable width="130"></el-table-column>
+                    <el-table-column prop="faultDesc" label="故障描述" ></el-table-column>
+                    <el-table-column prop="reportPerson" label="上报人姓名" sortable width="130"></el-table-column>
+                    <el-table-column prop="createDateString" label="创建时间" sortable width="180"></el-table-column>
+                    <el-table-column prop="statusString" label="状态" sortable width="130"></el-table-column>
                     <el-table-column label="操作" width="180" align="center">
                         <template slot-scope="scope">
                             <el-button
@@ -121,9 +124,35 @@ export default {
         this.getData2();
     },
     methods: {
+        toString(){
+            const length = this.tableData.length;
+            for (let i = 0; i < length; i++) {
+                this.tableData[i].equipTypeString = "3";
+                if(this.tableData[i].equipType=="0001")
+                    this.tableData[i].equipTypeString="电子秤";
+                else if(this.tableData[i].equipType=="0002")
+                    this.tableData[i].equipTypeString="读卡器";
+                else if(this.tableData[i].equipType=="0003")
+                    this.tableData[i].equipTypeString="条码打印机";
+                else if(this.tableData[i].equipType=="0004")
+                    this.tableData[i].equipTypeString="安卓PAD";
+                else if(this.tableData[i].equipType=="0005")
+                    this.tableData[i].equipTypeString="红外对射枪";
+                var buytime = new Date(this.tableData[i].createDate);
+                var month= buytime.getMonth()+1;
+                this.tableData[i].createDateString = buytime.getFullYear()+"年"+month+"月"+buytime.getDate()+"日"+buytime.getHours()+"时"+buytime.getMinutes()+"分";
+                if(this.tableData[i].status=="0001")
+                    this.tableData[i].statusString="未派工";
+                else if(this.tableData[i].status=="0002")
+                    this.tableData[i].statusString="维修中";
+                else if(this.tableData[i].status=="0003")
+                    this.tableData[i].statusString="已完工";
+            }
+        },
         getData2() {
             this.$axios.get('/api/equipFaultReport/selectAll').then(res =>{
                 this.tableData = res.data;
+                this.toString();
             })
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
         },
@@ -158,11 +187,26 @@ export default {
                 this.$message.success(`派工第 ${this.idx + 1} 行成功`);
             })
             this.$set(this.tableData, this.idx, this.form);
+        },
+        //每行带颜色
+        tableRowClassName({row, rowIndex}) {
+            if(row.status!='0001')
+                return 'success-row';
+            else return 'warning-row';
         }
     }
 };
 </script>
 
+<style>
+    .el-table .warning-row {
+        background: oldlace;
+    }
+
+    .el-table .success-row {
+        background: #f0f9eb;
+    }
+</style>
 <style scoped>
 .handle-box {
     margin-bottom: 20px;

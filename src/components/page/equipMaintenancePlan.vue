@@ -29,17 +29,18 @@
             <el-table
                 :data="tableData"
                 border
+                height="800"
                 class="table"
                 ref="multipleTable"
                 header-cell-class-name="table-header"
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                    <el-table-column prop="equipType" label="设备类型"></el-table-column>
-                    <el-table-column prop="cycle" label="保养周期"></el-table-column>
-                    <el-table-column prop="warnTime" label="预警时间"></el-table-column>
+                    <el-table-column prop="equipTypeString" label="设备类型" sortable width="200"></el-table-column>
+                    <el-table-column prop="cycle" label="保养周期" sortable width="200"></el-table-column>
+                    <el-table-column prop="warnTime" label="预警时间" sortable width="130"></el-table-column>
                     <el-table-column prop="maintenance" label="保养内容"></el-table-column>
-                    <el-table-column prop="userName" label="保养人"></el-table-column>
+                    <el-table-column prop="userName" label="保养人" sortable width="200"></el-table-column>
 
 
 
@@ -111,7 +112,7 @@
                 <el-form-item label="保养周期" prop="cycle">
                     <el-select v-model="form.cycle" placeholder="请选择保养周期">
                         <el-option key="1" label="周" value="week"></el-option>
-                        <el-option key="2" label="月" value="mouth"></el-option>
+                        <el-option key="2" label="月" value="month"></el-option>
                         <el-option key="3" label="年" value="year"></el-option>
                     </el-select>
                 </el-form-item>
@@ -182,10 +183,28 @@ export default {
         this.getData();
     },
     methods: {
+
+        toString(){
+            const length = this.tableData.length;
+            for (let i = 0; i < length; i++) {
+                this.tableData[i].equipTypeString = "3";
+                if(this.tableData[i].equipType=="0001")
+                    this.tableData[i].equipTypeString="电子秤";
+                else if(this.tableData[i].equipType=="0002")
+                    this.tableData[i].equipTypeString="读卡器";
+                else if(this.tableData[i].equipType=="0003")
+                    this.tableData[i].equipTypeString="条码打印机";
+                else if(this.tableData[i].equipType=="0004")
+                    this.tableData[i].equipTypeString="安卓PAD";
+                else if(this.tableData[i].equipType=="0005")
+                    this.tableData[i].equipTypeString="红外对射枪";
+            }
+        },
         // 获取 easy-mock 的模拟数据
         getData() {
             this.$axios.get('/api/equipMaintenancePlan/selectAll').then(res =>{
                 this.tableData = res.data;
+                this.toString();
             })
         },
         // 触发搜索按钮

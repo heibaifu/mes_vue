@@ -24,8 +24,11 @@
                 </el-form-item>
                 <el-form-item label="设备位置" prop="equipLoc">
                     <el-select v-model="form.equipLoc" placeholder="请选择设备所处产线">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
+                        <el-option label="ML0001" value="0001"></el-option>
+                        <el-option label="ML0002" value="0002"></el-option>
+                        <el-option label="ML0003" value="0003"></el-option>
+                        <el-option label="ML0004" value="0004"></el-option>
+                        <el-option label="ML0005" value="0005" ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="故障描述" prop="faultDesc">

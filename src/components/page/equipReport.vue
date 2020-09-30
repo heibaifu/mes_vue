@@ -31,18 +31,19 @@
                 :data="tableData"
                 border
                 class="table"
+                height="800"
                 ref="multipleTable"
                 header-cell-class-name="table-header"
             >
                 <el-table-column width="55" align="center"></el-table-column>
-                    <el-table-column prop="id" label="编号"></el-table-column>
-                    <el-table-column prop="typeString" label="设备类型"></el-table-column>
+                    <el-table-column prop="id" label="编号" sortable width="280"></el-table-column>
+                    <el-table-column prop="typeString" label="设备类型" sortable width="130"></el-table-column>
                     <el-table-column prop="specString" label="设备规格"></el-table-column>
                     <el-table-column prop="supplier" label="供应商"></el-table-column>
                     <el-table-column prop="manufacturer" label="生产商"></el-table-column>
                     <el-table-column prop="factoryNumber" label="出厂编号"></el-table-column>
                     <el-table-column prop="purpose" label="用途"></el-table-column>
-                    <el-table-column prop="buyDateString" label="采购日期"></el-table-column>
+                    <el-table-column prop="buyDateString" label="采购日期" sortable width="230"></el-table-column>
                     <el-table-column prop="person" label="资产负责人"></el-table-column>
             </el-table>
 
