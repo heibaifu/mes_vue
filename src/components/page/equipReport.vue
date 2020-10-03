@@ -9,7 +9,6 @@
         </div>
         <div class="container">
             <div class="handle-box">
-
                 <el-select v-model="query.address1" placeholder="设备类型" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
                     <el-option key="2" label="电子秤" value="0001"></el-option>

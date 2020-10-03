@@ -64,7 +64,29 @@ export default {
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
-                    title: '设备基础资料'
+                    title: '设备基础资料',
+                    subs: [
+                        {
+                            index: 'b1',
+                            title: '安卓PAD'
+                        },
+                        {
+                            index: 'b2',
+                            title: '电子秤'
+                        },
+                        {
+                            index: 'b3',
+                            title: '条码打印机'
+                        },
+                        {
+                            index: 'b4',
+                            title: '红外对射枪'
+                        },
+                        {
+                            index: 'b5',
+                            title: '读卡器'
+                        }
+                    ]
                 },{
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',

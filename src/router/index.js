@@ -120,6 +120,16 @@ export default new Router({
                     path: '/donate',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
                     meta: { title: '支持作者' }
+                },
+                {
+                    path: '/b1',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/BasPad.vue'),
+                    meta: { title: 'BasPad' }
+                },
+                {
+                    path: '/b2',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basIPhoto.vue'),
+                    meta: { title: 'basIPhoto' }
                 }
             ]
         },
