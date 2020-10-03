@@ -46,7 +46,7 @@
                     <el-table-column prop="productunit" label="产品计量单位"></el-table-column>
                     <el-table-column prop="productprop" label="属性"></el-table-column>
                     <el-table-column prop="delFlag" label="生产流程"></el-table-column>
-                    <el-table-column prop="remarks" label="操作"></el-table-column>
+
 
 
                 <el-table-column label="操作" width="180" align="center">
@@ -86,8 +86,9 @@
             <el-form ref="form" :model="form" label-width="95px">
 
 
+
                     <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
-                    <el-form-item label="产品简称"><el-input v-model="form.productaddr"></el-input></el-form-item>
+                    <el-form-item label="产品简称"><el-input v-model="form.productabbr"></el-input></el-form-item>
                     <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
                     <el-form-item label="是否需要首件检测"><el-input v-model="form.firstcheck"></el-input></el-form-item>
                     <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
@@ -110,16 +111,16 @@
             <el-form ref="form" :model="form" label-width="95px">
 
 
-                <el-form-item label="产品名称"><el-input v-model="form.id"></el-input></el-form-item>
-                <el-form-item label="产品简称"><el-input v-model="form.equipId"></el-input></el-form-item>
-                <el-form-item label="产品简述"><el-input v-model="form.equipNo"></el-input></el-form-item>
-                <el-form-item label="是否需要首件检测"><el-input v-model="form.equipType"></el-input></el-form-item>
-                <el-form-item label="条码"><el-input v-model="form.equipLoc"></el-input></el-form-item>
-                <el-form-item label="管理方式"><el-input v-model="form.faultDesc"></el-input></el-form-item>
-                <el-form-item label="批次"><el-input v-model="form.status"></el-input></el-form-item>
-                <el-form-item label="状态"><el-input v-model="form.reportPerson"></el-input></el-form-item>
-                <el-form-item label="产品计量单位"><el-input v-model="form.maintenanceWorker"></el-input></el-form-item>
-                <el-form-item label="属性"><el-input v-model="form.remarks"></el-input></el-form-item>
+                <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
+                <el-form-item label="产品简称"><el-input v-model="form.productabbr"></el-input></el-form-item>
+                <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
+                <el-form-item label="是否需要首件检测"><el-input v-model="form.firstcheck"></el-input></el-form-item>
+                <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
+                <el-form-item label="管理方式"><el-input v-model="form.manageway"></el-input></el-form-item>
+                <el-form-item label="批次"><el-input v-model="form.lotnumber"></el-input></el-form-item>
+                <el-form-item label="状态"><el-input v-model="form.state"></el-input></el-form-item>
+                <el-form-item label="产品计量单位"><el-input v-model="form.productunit"></el-input></el-form-item>
+                <el-form-item label="属性"><el-input v-model="form.productprop"></el-input></el-form-item>
                 <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>
 
             </el-form>

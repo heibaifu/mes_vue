@@ -28,11 +28,11 @@
                 @selection-change="handleSelectionChange"
             >
 
-                    <el-table-column prop="productname" label="Bom名称"></el-table-column>
-                    <el-table-column prop="productabbr" label="Bom版本"></el-table-column>
-                    <el-table-column prop="productdesc" label="Bom状态"></el-table-column>
+                    <el-table-column prop="bomname" label="Bom名称"></el-table-column>
+                    <el-table-column prop="bomversion" label="Bom版本"></el-table-column>
+                    <el-table-column prop="status" label="Bom状态"></el-table-column>
                     <el-table-column prop="firstcheck" label="所属产品"></el-table-column>
-                    <el-table-column prop="remarks" label="操作"></el-table-column>
+
 
 
                 <el-table-column label="操作" width="180" align="center">
@@ -96,17 +96,12 @@
             <el-form ref="form" :model="form" label-width="95px">
 
 
-                <el-form-item label="产品名称"><el-input v-model="form.id"></el-input></el-form-item>
-                <el-form-item label="产品简称"><el-input v-model="form.equipId"></el-input></el-form-item>
-                <el-form-item label="产品简述"><el-input v-model="form.equipNo"></el-input></el-form-item>
-                <el-form-item label="是否需要首件检测"><el-input v-model="form.equipType"></el-input></el-form-item>
-                <el-form-item label="条码"><el-input v-model="form.equipLoc"></el-input></el-form-item>
-                <el-form-item label="管理方式"><el-input v-model="form.faultDesc"></el-input></el-form-item>
-                <el-form-item label="批次"><el-input v-model="form.status"></el-input></el-form-item>
-                <el-form-item label="状态"><el-input v-model="form.reportPerson"></el-input></el-form-item>
-                <el-form-item label="产品计量单位"><el-input v-model="form.maintenanceWorker"></el-input></el-form-item>
-                <el-form-item label="属性"><el-input v-model="form.remarks"></el-input></el-form-item>
-                <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>
+                <el-form-item label="Bom名称"><el-input v-model="form.bomname"></el-input></el-form-item>
+                <el-form-item label="Bom版本"><el-input v-model="form.bomversion"></el-input></el-form-item>
+                <el-form-item label="Bom状态"><el-input v-model="form.status"></el-input></el-form-item>
+                <el-form-item label="所属产品"><el-input v-model="form.equipType"></el-input></el-form-item>
+
+
 
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -120,7 +115,7 @@
 <script>
 import { fetchData } from '../../api/index';
 export default {
-    name: 'bom_product',
+    name: 'bom_bom',
     data() {
         return {
             query: {
@@ -147,7 +142,7 @@ export default {
     methods: {
 
         getData() {
-            this.$axios.get('/api/basProduct/selectAll').then(res =>{
+            this.$axios.get('/api/basBom/selectAll').then(res =>{
                 this.tableData = res.data;
             })
         },
@@ -164,7 +159,7 @@ export default {
             })
                 .then(() => {
                     this.tableData.splice(index, 1);
-                    this.$axios.get('/api/basProduct/deleteById?id='+row.id).then(res=>{
+                    this.$axios.get('/api/basBom/deleteById?id='+row.id).then(res=>{
                         this.$message.success("删除成功");
                     })
                 })
@@ -180,7 +175,7 @@ export default {
             this.delList = this.delList.concat(this.multipleSelection);
             for (let i = 0; i < length; i++) {
                 str += this.multipleSelection[i].id + ' ';
-                this.$axios.get('/api/basProduct/deleteById?id='+this.multipleSelection[i].id).then(res=>{
+                this.$axios.get('/api/basBom/deleteById?id='+this.multipleSelection[i].id).then(res=>{
                 })
             }
             this.$message.success(`删除了${str}`);
@@ -203,7 +198,7 @@ export default {
             this.editVisible = false;
 
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
-            this.$axios.post('/api/basProduct/edit',this.form).then(res=>{
+            this.$axios.post('/api/basBom/edit',this.form).then(res=>{
                 this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             })
             this.$set(this.tableData, this.idx, this.form);
@@ -213,7 +208,7 @@ export default {
             console.log(this.form)
             this.addVisible = false;
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
-            this.$axios.post('/api/basProduct/add',this.form).then(res=>{
+            this.$axios.post('/api/basBom/add',this.form).then(res=>{
                 this.$message.success(`添加成功`);
             })
             this.getData();
