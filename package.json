@@ -1,11 +1,13 @@
 {
   "name": "vue-manage-system",
-  "version": "4.2.0",
+  "version": "8.17.0",
   "private": true,
   "scripts": {
     "dev": "npm run serve",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "start": "node index.js",
+    "server": "nodemon index.js --ignore client"
   },
   "dependencies": {
     "axios": "^0.18.1",

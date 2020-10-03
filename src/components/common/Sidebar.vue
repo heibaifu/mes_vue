@@ -89,8 +89,40 @@ export default {
                     ]
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '资源基础资料'
+                    index: 'jczl',
+                    title: '资源基础资料',
+                  subs: [
+                    {
+                      index: 'qiye',
+                      title: '企业'
+                    },
+                    {
+                      index: 'gongchang',
+                      title: '工厂'
+                    },
+                    {
+                      index: 'chejian',
+                      title: '车间'
+                    }, {
+                      index: 'chanxian',
+                      title: '产线'
+                    },
+                    {
+                      index: 'gongzhan',
+                      title: '工站'
+                    },
+                    {
+                      index: 'gongwei',
+                      title: '工位'
+                    },{
+                      index: 'yuangong',
+                      title: '员工'
+                    },
+                    {
+                      index: 'gongweiyuangong',
+                      title: '工位与员工信息'
+                    }
+                  ]
                 },{
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
