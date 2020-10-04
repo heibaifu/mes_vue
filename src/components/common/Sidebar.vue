@@ -1,4 +1,4 @@
-<template>
+  <template>
     <div class="sidebar">
         <el-menu
             class="sidebar-el-menu"
@@ -137,12 +137,42 @@ export default {
                     title: '绩效管理'
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '工艺管理'
+                    index: 'gygl',
+                    title: '工艺管理',
+                    subs:[
+                        {
+                            index:'tec_process',
+                            title:'工序维护'
+                        },{
+                            index:'tec_flow',
+                            title:'工艺流程维护'
+                        },{
+                            index:'tec_flow_process',
+                            title:'工艺流程与工序关系'
+                        },{
+                            index:'tec_process_station',
+                            title:'工序与工站关系'
+                        }
+                    ]
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '质量管理'
+                    index: 'zlgl',
+                    title: '质量管理',
+                    subs:[
+                        {
+                            index:'qc_violaction',
+                            title:'违规管理'
+                        },{
+                            index:'qc_inperfections',
+                            title:'残次品上报管理'
+                        },{
+                            index:'qc_abnormal_process',
+                            title:'异常工序检测'
+                        },{
+                            index:'log_cutpiecequalitytestingrecords',
+                            title:'切片质量检测'
+                        }
+                    ]
                 },
                 {
                     icon: 'el-icon-lx-cascades',
