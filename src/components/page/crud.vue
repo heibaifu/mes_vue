@@ -38,31 +38,31 @@
 </template>
 
 <script>
-        export default {
-            name: "crud",
-            data() {
-                return {
-                    tableData: [],
-                    multipleSelection: [],
-                    delList: [],
-                    editVisible: false,
-                    pageTotal: 0,
-                    form: {},
-                    idx: -1,
-                    id: -1
-                };
-            },
-            created() {
-                this.getData();
-            },
-            methods: {
-                getData() {
-                    this.$axios.get('/api/equipRepair/selectAll').then(res =>{
+    export default {
+        name: "crud",
+        data() {
+            return {
+                tableData: [],
+                multipleSelection: [],
+                delList: [],
+                editVisible: false,
+                pageTotal: 0,
+                form: {},
+                idx: -1,
+                id: -1
+            };
+        },
+        created() {
+            this.getData();
+        },
+        methods: {
+            getData() {
+                this.$axios.get('/api/equipRepair/selectAll').then(res =>{
 
-                        this.tableData = res.data;
-                    })
-                }
+                    this.tableData = res.data;
+                })
             }
+        }
     }
 </script>
 

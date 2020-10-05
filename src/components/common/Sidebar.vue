@@ -49,6 +49,7 @@
     </div>
 </template>
 
+
 <script>
 import bus from '../common/bus';
 export default {
@@ -126,8 +127,26 @@ export default {
                 },{
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
-                    title: 'BOM基础资料'
-                },{
+                    title: 'BOM基础资料',
+                    subs: [
+                        {
+                            index: 'SourceList',
+                            title: '原料库存清单'
+                        },{
+                            index: 'BOM_Product',
+                            title: '产品'
+                        },
+                        {
+                            index: 'BOM_Bom',
+                            title: 'BOM物料'
+                        },
+                        {
+                            index: 'table2',
+                            title: 'BOM物料详情'
+                        }
+                    ]
+                },
+                {
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
                     title: '生产管理'
@@ -274,11 +293,6 @@ export default {
                             title: '404页面'
                         }
                     ]
-                },
-                {
-                    icon: 'el-icon-lx-redpacket_fill',
-                    index: '/donate',
-                    title: '支持作者'
                 }
             ]
         };

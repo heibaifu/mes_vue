@@ -156,9 +156,25 @@ export default new Router({
                     meta: { title: '403' }
                 },
                 {
-                    path: '/donate',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
-                    meta: { title: '支持作者' }
+                    path: '/403',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/403.vue'),
+                    meta: { title: '403' }
+                },
+                {
+                    path: '/BOM_Product',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/BOM_Product.vue'),
+                    meta: { title: '产品' }
+                }
+                ,
+                {
+                    path: '/SourceList',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/SourceList.vue'),
+                    meta: { title: '产品' }
+                } ,
+                {
+                    path: '/BOM_Bom',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/BOM_Bom.vue'),
+                    meta: { title: 'BOM物料' }
                 },
                 {
                     path: '/b1',
