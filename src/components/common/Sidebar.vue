@@ -149,7 +149,34 @@ export default {
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
-                    title: '生产管理'
+                    title: '生产管理',
+                subs: [
+                  {
+                    index: 'gongzuoxinxi',
+                    title: '员工工作信息',
+                    subs: [
+                      {
+                        index: 'shanggangjilu',
+                        title: '上岗记录',
+                      },
+
+                    ]
+                  },
+                  {
+                    index: 'gongdanguanli',
+                    title: '工单管理',
+                    subs: [
+                      {
+                        index: 'dingdanxinxi',
+                        title: '订单信息',
+                      },
+                      {
+                        index:"gongdanweihu" ,
+                        title: "工单维护",
+                      }
+                    ]
+                  }
+                ]
                 },{
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',

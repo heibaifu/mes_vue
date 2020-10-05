@@ -20,6 +20,7 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
                     meta: { title: '系统首页' }
                 },
+
                 {
                     path: '/qiye',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/qiye.vue'),
@@ -57,6 +58,22 @@ export default new Router({
                     path: '/gongweiyuangong',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongweiyuangong.vue'),
                     meta: { title: '工位与员工信息' }
+                },
+                {
+                    path: '/shanggangjilu',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/shanggangjilu.vue'),
+                    meta: { title: '上岗记录' }
+                },
+                {
+                    path: '/dingdanxinxi',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/dingdanxinxi.vue'),
+                    meta: { title: '订单信息' }
+                },
+
+                {
+                    path: '/gongdanweihu',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongdanweihu.vue'),
+                    meta: { title: '工单维护' }
                 },
 
                 {
