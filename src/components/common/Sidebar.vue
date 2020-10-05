@@ -148,7 +148,7 @@ export default {
                 },
                 {
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
+                    index: 'shengchanguanli',
                     title: '生产管理',
                 subs: [
                   {
