@@ -16,7 +16,7 @@
             @click="delAllSelection"
         >批量删除</el-button>
 
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <el-input v-model="query.factoryname" placeholder="工厂名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -39,9 +39,9 @@
         <el-table-column prop="enterpriseId" label="所属企业"></el-table-column>
         <el-table-column prop="createBy" label="创建人"></el-table-column>
         <el-table-column prop="createDate" label="创建时间"></el-table-column>
-        <el-table-column prop="updateBy" label="更新人"></el-table-column>
-        <el-table-column prop="updateDate" label="更新时间"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
+<!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->
+<!--        <el-table-column prop="updateDate" label="更新时间"></el-table-column>-->
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
         <el-table-column prop="remarks" label="备注"></el-table-column>
 
 
@@ -147,8 +147,9 @@ export default {
 
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basFactory/selectByName?factoryname='+this.query.factoryname).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {

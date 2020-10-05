@@ -15,8 +15,8 @@
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
-
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <!--        </el-select>-->
+        <el-input v-model="query.stationname" placeholder="工站名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -48,7 +48,7 @@
         <el-table-column prop="stationmaster" label="工站负责人"></el-table-column>
         <el-table-column prop="lineId" label="所属产线"></el-table-column>
         <el-table-column prop="remarks" label="备注"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 <!--        <el-form-item label="工站Id"><el-input v-model="form.id"></el-input></el-form-item>-->
 <!--        <el-form-item label="工站名称"><el-input v-model="form.stationName"></el-input></el-form-item>-->
@@ -162,8 +162,9 @@ export default {
     },
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basWorkstationinfos/selectByName?stationname='+this.query.stationname).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
