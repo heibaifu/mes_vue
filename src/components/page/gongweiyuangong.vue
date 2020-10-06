@@ -80,10 +80,32 @@
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="编号"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="员工编号"><el-input v-model="form.employeeId"></el-input></el-form-item>
-        <el-form-item label="工位编号"><el-input v-model="form.cellId"></el-input></el-form-item>
-        <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
+<!--        <el-form-item label="编号"><el-input v-model="form.id"></el-input></el-form-item>-->
+<!--        <el-form-item label="员工编号"><el-input v-model="form.employeeId"></el-input></el-form-item>-->
+<!--        <el-form-item label="工位编号"><el-input v-model="form.cellId"></el-input></el-form-item>-->
+<!--        <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>-->
+        <el-form-item label="员工姓名">
+          <el-select v-model="form.employee_id" placeholder="请选择员工">
+            <el-option
+                v-for="employee in Employee"
+                :key="employee.employeename"
+                :label="employee.employeename"
+                :value="employee.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+
+        <el-form-item label="工位名称">
+          <el-select v-model="form.cell_id" placeholder="请选择员工">
+            <el-option
+                v-for="cell in Cell"
+                :key="cell.cellname"
+                :label="cell.cellname"
+                :value="cell.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
 
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -95,8 +117,28 @@
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
 
-        <el-form-item label="员工编号"><el-input v-model="form.employee_id"></el-input></el-form-item>
-        <el-form-item label="工位编号"><el-input v-model="form.cell_id"></el-input></el-form-item>
+        <el-form-item label="员工姓名">
+          <el-select v-model="form.employee_id" placeholder="请选择员工">
+            <el-option
+                v-for="employee in Employee"
+                :key="employee.employeename"
+                :label="employee.employeename"
+                :value="employee.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+
+        <el-form-item label="工位名称">
+          <el-select v-model="form.cell_id" placeholder="请选择员工">
+            <el-option
+                v-for="cell in Cell"
+                :key="cell.cellname"
+                :label="cell.cellname"
+                :value="cell.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.createBy"></el-input></el-form-item>
 
@@ -122,6 +164,8 @@ export default {
         pageSize: 50
       },
       tableData: [],
+      Employee:[],
+      Cell:[],
       multipleSelection: [],
       delList: [],
       editVisible: false,
@@ -141,6 +185,18 @@ export default {
       this.$axios.get('/api/basCellEmployee/selectAll').then(res =>{
 
         this.tableData = res.data;
+      })
+    },
+    getEmployeeData() {
+      this.$axios.get('/api/basEmployees/selectAll').then(res =>{
+
+        this.Employee = res.data;
+      })
+    },
+    getCellData() {
+      this.$axios.get('/api/basWorkcell/selectAll').then(res =>{
+
+        this.Cell = res.data;
       })
     },
     // 触发搜索按钮
@@ -185,9 +241,13 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getEmployeeData();
+      this.getCellData();
     },
     //添加操作
     handleAdd(index, row) {
+      this.getEmployeeData();
+      this.getCellData();
       this.addVisible = true;
     },
     // 保存编辑

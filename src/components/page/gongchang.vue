@@ -76,6 +76,16 @@
       <el-form ref="form" :model="form" label-width="95px">
         <el-form-item label="工厂ID"><el-input v-model="form.id"></el-input></el-form-item>
         <el-form-item label="工厂名称"><el-input v-model="form.factoryname"></el-input></el-form-item>
+        <el-form-item label="所属企业">
+          <el-select v-model="form.enterpriseid" placeholder="请选择企业">
+            <el-option
+                v-for="enterprise in Enterprise"
+                :key="enterprise.entername"
+                :label="enterprise.entername"
+                :value="enterprise.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="创建日期"><el-input v-model="form.factorybuilddate"></el-input></el-form-item>
         <el-form-item label="工厂地址"><el-input v-model="form.factoryaddress"></el-input></el-form-item>
         <el-form-item label="工厂电话"><el-input v-model="form.factoryphone"></el-input></el-form-item>
@@ -203,6 +213,7 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getEnterpriseData();
     },
     //添加操作
     handleAdd(index, row) {

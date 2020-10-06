@@ -91,7 +91,16 @@
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
         <el-form-item label="产线ID"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="所属车间"><el-input v-model="form.workshopId"></el-input></el-form-item>
+        <el-form-item label="所属车间">
+          <el-select v-model="form.workshopid" placeholder="请选择车间">
+            <el-option
+                v-for="workshop in Workshop"
+                :key="workshop.shopname"
+                :label="workshop.shopname"
+                :value="workshop.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="产线名称"><el-input v-model="form.linename"></el-input></el-form-item>
         <el-form-item label="产线编码"><el-input v-model="form.linenumber"></el-input></el-form-item>
         <el-form-item label="产线负责人"><el-input v-model="form.linemaster"></el-input></el-form-item>
@@ -214,6 +223,7 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getWorkshopData();
     },
     //添加操作
     handleAdd(index, row) {

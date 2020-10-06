@@ -112,7 +112,16 @@
         <el-form-item label="地址"><el-input v-model="form.address"></el-input></el-form-item>
         <el-form-item label="邮箱"><el-input v-model="form.email"></el-input></el-form-item>
         <el-form-item label="身份证号"><el-input v-model="form.idcard"></el-input></el-form-item>
-        <el-form-item label="所属部门"><el-input v-model="form.officeid"></el-input></el-form-item>
+        <el-form-item label="所属部门">
+          <el-select v-model="form.officeId" placeholder="请选择部门">
+            <el-option
+                v-for="office in Office"
+                :key="office.name"
+                :label="office.name"
+                :value="office.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
 
       </el-form>
@@ -239,6 +248,7 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getOfficeData();
     },
     //添加操作
     handleAdd(index, row) {
