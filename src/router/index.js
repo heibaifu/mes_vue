@@ -21,6 +21,21 @@ export default new Router({
                     meta: { title: '系统首页' }
                 },
                 {
+                    path: '/shanggangjilu',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/shanggangjilu.vue'),
+                    meta: { title: '企业' }
+                },
+                {
+                    path: '/gongdanweihu',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongdanweihu.vue'),
+                    meta: { title: '企业' }
+                },
+                {
+                    path: '/dingdanxinxi',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/dingdanxinxi.vue'),
+                    meta: { title: '企业' }
+                },
+                {
                     path: '/qiye',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/qiye.vue'),
                     meta: { title: '企业' }
