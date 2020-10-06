@@ -103,7 +103,16 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属工站"><el-input v-model="form.station_id"></el-input></el-form-item>
+        <el-form-item label="所属工站">
+          <el-select v-model="form.station_id" placeholder="请选择工站">
+            <el-option
+                v-for="station in Station"
+                :key="station.stationname"
+                :label="station.stationname"
+                :value="station.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工位名称"><el-input v-model="form.cellName"></el-input></el-form-item>
         <el-form-item label="工位编码"><el-input v-model="form.cellNumber"></el-input></el-form-item>
         <el-form-item label="工位负责人"><el-input v-model="form.cellMaster"></el-input></el-form-item>
@@ -133,6 +142,7 @@ export default {
         pageIndex: 0,
         pageSize: 50
       },
+      Station:[],
       tableData: [],
       multipleSelection: [],
       delList: [],
@@ -153,6 +163,12 @@ export default {
       this.$axios.get('/api/basWorkcell/selectAll').then(res =>{
 
         this.tableData = res.data;
+      })
+    },
+    getStationData() {
+      this.$axios.get('/api/basWorkstationinfos/selectAll').then(res =>{
+
+        this.Station = res.data;
       })
     },
     // 触发搜索按钮
@@ -200,6 +216,7 @@ export default {
     },
     //添加操作
     handleAdd(index, row) {
+      this.getStationData();
       this.addVisible = true;
     },
     // 保存编辑

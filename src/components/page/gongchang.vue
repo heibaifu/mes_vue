@@ -92,7 +92,17 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属企业"><el-input v-model="form.enterprise_id"></el-input></el-form-item>
+<!--        <el-form-item label="所属企业"><el-input v-model="form.enterprise_id"></el-input></el-form-item>-->
+        <el-form-item label="所属企业">
+          <el-select v-model="form.enterpriseid" placeholder="请选择企业">
+            <el-option
+                v-for="enterprise in Enterprise"
+                :key="enterprise.entername"
+                :label="enterprise.entername"
+                :value="enterprise.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工厂名称"><el-input v-model="form.factoryName"></el-input></el-form-item>
         <el-form-item label="建筑日期"><el-input v-model="form.factoryBuildDate"></el-input></el-form-item>
         <el-form-item label="地址"><el-input v-model="form.factoryAddress"></el-input></el-form-item>
@@ -102,6 +112,7 @@
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.create_by"></el-input></el-form-item>
       </el-form>
+
       <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
@@ -123,6 +134,7 @@ export default {
       },
       tableData: [],
       multipleSelection: [],
+      Enterprise:[],
       delList: [],
       editVisible: false,
       addVisible: false,
@@ -141,6 +153,11 @@ export default {
       this.$axios.get('/api/basFactory/selectAll').then(res =>{
 
         this.tableData = res.data;
+      })
+    },
+    getEnterpriseData(){
+      this.$axios.get('/api/basEnterprise/selectAll').then(res =>{
+        this.Enterprise = res.data;
       })
     },
 
@@ -189,6 +206,7 @@ export default {
     },
     //添加操作
     handleAdd(index, row) {
+      this.getEnterpriseData();
       this.addVisible = true;
     },
     // 保存编辑

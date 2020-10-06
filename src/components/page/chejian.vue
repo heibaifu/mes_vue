@@ -112,7 +112,16 @@
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
 
-        <el-form-item label="所属工厂"><el-input v-model="form.factory_id"></el-input></el-form-item>
+        <el-form-item label="所属工厂">
+          <el-select v-model="form.factoryid" placeholder="请选择工厂">
+            <el-option
+                v-for="factory in Factory"
+                :key="factory.factoryname"
+                :label="factory.factoryname"
+                :value="factory.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="车间名称"><el-input v-model="form.shopName"></el-input></el-form-item>
         <el-form-item label="车间编码"><el-input v-model="form.shopNo"></el-input></el-form-item>
         <el-form-item label="车间负责人"><el-input v-model="form.master"></el-input></el-form-item>
@@ -145,6 +154,7 @@ export default {
       tableData: [],
       multipleSelection: [],
       delList: [],
+      Factory: [],
       editVisible: false,
       addVisible: false,
       pageTotal: 0,
@@ -162,6 +172,11 @@ export default {
       this.$axios.get('/api/basWorkshop/selectAll').then(res =>{
 
         this.tableData = res.data;
+      })
+    },
+    getFactoryData(){
+      this.$axios.get('/api/basFactory/selectAll').then(res =>{
+        this.Factory = res.data;
       })
     },
     handleSearch() {
@@ -208,6 +223,7 @@ export default {
     },
     //添加操作
     handleAdd(index, row) {
+      this.getFactoryData();
       this.addVisible = true;
     },
     // 保存编辑
