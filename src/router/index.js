@@ -186,6 +186,12 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/basIPhoto.vue'),
                     meta: { title: 'basIPhoto' }
                 }
+                ,
+                {
+                    path: '/BOM_Details',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/BOM_Details.vue'),
+                    meta: { title: 'basIPhoto' }
+                }
             ]
         },
         {

@@ -30,7 +30,7 @@
                 <el-table-column prop="bomname" label="BOM名称"></el-table-column>
                 <el-table-column prop="mtype" label="材料类型"></el-table-column>
                 <el-table-column prop="mnum" label="材料数量"></el-table-column>
-                <el-table-column prop="nuit" label="单位"></el-table-column>
+                <el-table-column prop="unit" label="单位"></el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -164,10 +164,10 @@ export default {
         this.$axios.get('/api/basBom/selectAll').then(res =>{
           this.BomList = res.data;
         })
-        this.$axios.get('/api/sysDict/select_type?type=unit').then(res =>{
+        this.$axios.get('/api/sysDict/selectBytype?type=unit').then(res =>{
           this.unitList = res.data;
         })
-        this.$axios.get('/api/sysDict/select_type?type=material_type').then(res =>{
+        this.$axios.get('/api/sysDict/selectBytype?type=material_type').then(res =>{
           this.productType = res.data;
         })
         },

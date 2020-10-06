@@ -11,8 +11,7 @@
             <div class="handle-box">
                 <el-select v-model="query.address" placeholder="Bom名称" class="handle-select mr10">
                     <el-option key="1" label="Bom名称" value="equip_no"></el-option>
-                    <el-option key="2" label="Bom版本" value="equip_type"></el-option>
-                    <el-option key="3" label="Bom状态" value="report_person"></el-option>
+
                 </el-select>
                 <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
@@ -20,10 +19,12 @@
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header" @selection-change="handleSelectionChange">
 
+
                     <el-table-column prop="bomname" label="Bom名称"></el-table-column>
                     <el-table-column prop="bomversion" label="Bom版本"></el-table-column>
                     <el-table-column prop="status" label="Bom状态"></el-table-column>
-                    <el-table-column prop="firstcheck" label="所属产品"></el-table-column>
+                    <el-table-column prop="updateDate" label="修改时间"></el-table-column>
+
 
 
 
@@ -67,7 +68,7 @@
                 <el-form-item label="Bom名称"><el-input v-model="form.bomname"></el-input></el-form-item>
                 <el-form-item label="Bom版本"><el-input v-model="form.bomversion"></el-input></el-form-item>
                 <el-form-item label="Bom状态"><el-input v-model="form.status"></el-input></el-form-item>
-                <el-form-item label="所属产品"><el-input v-model="form.firstcheck"></el-input></el-form-item>
+                <el-form-item label="所属产品"><el-input v-model="form.updateDate"></el-input></el-form-item>
 
 
             </el-form>
@@ -134,7 +135,9 @@ export default {
         // 触发搜索按钮
         handleSearch() {
             this.$set(this.query, 'pageIndex', 1);
-            this.getData();
+            this.$axios.get('/api/basBom/selectname?name='+this.query.name).then(res=>{
+              this.tableData = res.data
+            })
         },
         // 删除操作
         handleDelete(index, row) {
