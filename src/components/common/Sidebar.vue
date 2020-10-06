@@ -1,4 +1,4 @@
-<template>
+  <template>
     <div class="sidebar">
         <el-menu
             class="sidebar-el-menu"
@@ -49,6 +49,7 @@
     </div>
 </template>
 
+
 <script>
 import bus from '../common/bus';
 export default {
@@ -89,28 +90,135 @@ export default {
                     ]
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '资源基础资料'
+                    index: 'jczl',
+                    title: '资源基础资料',
+                  subs: [
+                    {
+                      index: 'qiye',
+                      title: '企业'
+                    },
+                    {
+                      index: 'gongchang',
+                      title: '工厂'
+                    },
+                    {
+                      index: 'chejian',
+                      title: '车间'
+                    }, {
+                      index: 'chanxian',
+                      title: '产线'
+                    },
+                    {
+                      index: 'gongzhan',
+                      title: '工站'
+                    },
+                    {
+                      index: 'gongwei',
+                      title: '工位'
+                    },{
+                      index: 'yuangong',
+                      title: '员工'
+                    },
+                    {
+                      index: 'gongweiyuangong',
+                      title: '工位与员工信息'
+                    }
+                  ]
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: 'BOM基础资料'
-                },{
+                    index: 'Bom',
+                    title: 'BOM基础资料',
+                    subs: [
+                        {
+                            index: 'SourceList',
+                            title: '原料库存清单'
+                        },{
+                            index: 'BOM_Product',
+                            title: '产品'
+                        },
+                        {
+                            index: 'BOM_Bom',
+                            title: 'BOM物料'
+                        },
+                        {
+                            index: 'BOM_Details',
+                            title: 'BOM物料详情'
+                        }
+                    ]
+                },
+                {
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '生产管理'
+                    index: 'shengchanguanli',
+                    title: '生产管理',
+                subs: [
+                  {
+                    index: 'gongzuoxinxi',
+                    title: '员工工作信息',
+                    subs: [
+                      {
+                        index: 'shanggangjilu',
+                        title: '上岗记录',
+                      },
+
+                    ]
+                  },
+                  {
+                    index: 'gongdanguanli',
+                    title: '工单管理',
+                    subs: [
+                      {
+                        index: 'dingdanxinxi',
+                        title: '订单信息',
+                      },
+                      {
+                        index:"gongdanweihu" ,
+                        title: "工单维护",
+                      }
+                    ]
+                  }
+                ]
                 },{
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
                     title: '绩效管理'
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '工艺管理'
+                    index: 'gygl',
+                    title: '工艺管理',
+                    subs:[
+                        {
+                            index:'tec_process',
+                            title:'工序维护'
+                        },{
+                            index:'tec_flow',
+                            title:'工艺流程维护'
+                        },{
+                            index:'tec_flow_process',
+                            title:'工艺流程与工序关系'
+                        },{
+                            index:'tec_process_station',
+                            title:'工序与工站关系'
+                        }
+                    ]
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '质量管理'
+                    index: 'zlgl',
+                    title: '质量管理',
+                    subs:[
+                        {
+                            index:'qc_violaction',
+                            title:'违规管理'
+                        },{
+                            index:'qc_inperfections',
+                            title:'残次品上报管理'
+                        },{
+                            index:'qc_abnormal_process',
+                            title:'异常工序检测'
+                        },{
+                            index:'log_cutpiecequalitytestingrecords',
+                            title:'切片质量检测'
+                        }
+                    ]
                 },
                 {
                     icon: 'el-icon-lx-cascades',
@@ -134,90 +242,86 @@ export default {
                             title: '设备维修记录'
                         }
                     ]
-                },{
-                    icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '-----------------------'
-                },
-                {
-                    icon: 'el-icon-lx-calendar',
-                    index: '3',
-                    title: '设备相关',
-                    subs: [
-                        {
-                            index: 'form',
-                            title: '基本表单'
-                        },
-                        {
-                            index: '3-2',
-                            title: '三级菜单',
-                            subs: [
-                                {
-                                    index: 'editor',
-                                    title: '富文本编辑器'
-                                },
-                                {
-                                    index: 'markdown',
-                                    title: 'markdown编辑器'
-                                }
-                            ]
-                        },
-                        {
-                            index: 'upload',
-                            title: '文件上传'
-                        }
-                    ]
-                },
-                {
-                    icon: 'el-icon-lx-emoji',
-                    index: 'icon',
-                    title: '自定义图标'
-                },
-                {
-                    icon: 'el-icon-pie-chart',
-                    index: 'charts',
-                    title: 'schart图表'
-                },
-                {
-                    icon: 'el-icon-rank',
-                    index: '6',
-                    title: '拖拽组件',
-                    subs: [
-                        {
-                            index: 'drag',
-                            title: '拖拽列表'
-                        },
-                        {
-                            index: 'dialog',
-                            title: '拖拽弹框'
-                        }
-                    ]
-                },
-                {
-                    icon: 'el-icon-lx-global',
-                    index: 'i18n',
-                    title: '国际化功能'
-                },
-                {
-                    icon: 'el-icon-lx-warn',
-                    index: '7',
-                    title: '错误处理',
-                    subs: [
-                        {
-                            index: 'permission',
-                            title: '权限测试'
-                        },
-                        {
-                            index: '404',
-                            title: '404页面'
-                        }
-                    ]
-                },
-                {
-                    icon: 'el-icon-lx-redpacket_fill',
-                    index: '/donate',
-                    title: '支持作者'
                 }
+                // ,{
+                //     icon: 'el-icon-lx-copy',
+                //     index: 'tabs',
+                //     title: '-----------------------'
+                // },
+                // {
+                //     icon: 'el-icon-lx-calendar',
+                //     index: '3',
+                //     title: '设备相关',
+                //     subs: [
+                //         {
+                //             index: 'form',
+                //             title: '基本表单'
+                //         },
+                //         {
+                //             index: '3-2',
+                //             title: '三级菜单',
+                //             subs: [
+                //                 {
+                //                     index: 'editor',
+                //                     title: '富文本编辑器'
+                //                 },
+                //                 {
+                //                     index: 'markdown',
+                //                     title: 'markdown编辑器'
+                //                 }
+                //             ]
+                //         },
+                //         {
+                //             index: 'upload',
+                //             title: '文件上传'
+                //         }
+                //     ]
+                // },
+                // {
+                //     icon: 'el-icon-lx-emoji',
+                //     index: 'icon',
+                //     title: '自定义图标'
+                // },
+                // {
+                //     icon: 'el-icon-pie-chart',
+                //     index: 'charts',
+                //     title: 'schart图表'
+                // },
+                // {
+                //     icon: 'el-icon-rank',
+                //     index: '6',
+                //     title: '拖拽组件',
+                //     subs: [
+                //         {
+                //             index: 'drag',
+                //             title: '拖拽列表'
+                //         },
+                //         {
+                //             index: 'dialog',
+                //             title: '拖拽弹框'
+                //         }
+                //     ]
+                // },
+                // {
+                //     icon: 'el-icon-lx-global',
+                //     index: 'i18n',
+                //     title: '国际化功能'
+                // },
+                // {
+                //     icon: 'el-icon-lx-warn',
+                //     index: '7',
+                //     title: '错误处理',
+                //     subs: [
+                //         {
+                //             index: 'permission',
+                //             title: '权限测试'
+                //         },
+                //         {
+                //             index: '404',
+                //             title: '404页面'
+                //         }
+                //     ]
+                // }
             ]
         };
     },

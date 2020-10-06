@@ -21,6 +21,45 @@ export default new Router({
                     meta: { title: '系统首页' }
                 },
                 {
+                    path: '/qiye',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/qiye.vue'),
+                    meta: { title: '企业' }
+                },
+                {
+                    path: '/gongchang',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongchang.vue'),
+                    meta: { title: '工厂' }
+                },
+                {
+                    path: '/chejian',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/chejian.vue'),
+                    meta: { title: '车间' }
+                },
+                {
+                    path: '/chanxian',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/chanxian.vue'),
+                    meta: { title: '产线' }
+                }, {
+                    path: '/gongzhan',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongzhan.vue'),
+                    meta: { title: '工站' }
+                }, {
+                    path: '/gongwei',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongwei.vue'),
+                    meta: { title: '工位' }
+                },
+                {
+                    path: '/yuangong',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/yuangong.vue'),
+                    meta: { title: '员工' }
+                },
+                {
+                    path: '/gongweiyuangong',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongweiyuangong.vue'),
+                    meta: { title: '工位与员工信息' }
+                },
+
+                {
                     path: '/icon',
                     component: () => import(/* webpackChunkName: "icon" */ '../components/page/Icon.vue'),
                     meta: { title: '自定义图标' }
@@ -117,9 +156,25 @@ export default new Router({
                     meta: { title: '403' }
                 },
                 {
-                    path: '/donate',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
-                    meta: { title: '支持作者' }
+                    path: '/403',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/403.vue'),
+                    meta: { title: '403' }
+                },
+                {
+                    path: '/BOM_Product',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/BOM_Product.vue'),
+                    meta: { title: '产品' }
+                }
+                ,
+                {
+                    path: '/SourceList',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/SourceList.vue'),
+                    meta: { title: '产品' }
+                } ,
+                {
+                    path: '/BOM_Bom',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/BOM_Bom.vue'),
+                    meta: { title: 'BOM物料' }
                 },
                 {
                     path: '/b1',
