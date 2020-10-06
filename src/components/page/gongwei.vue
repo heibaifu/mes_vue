@@ -15,11 +15,7 @@
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
-        <!--        <el-select v-model="query.address" placeholder="设备编号" class="handle-select mr10">-->
-        <!--          <el-option key="1" label="工厂编号" value="equip_no"></el-option>-->
-        <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
-        <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
-        <!--        </el-select>-->
+
         <el-input v-model="query.cellname" placeholder="工位名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>

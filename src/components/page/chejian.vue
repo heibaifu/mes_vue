@@ -192,6 +192,7 @@ export default {
       this.$axios.get('/api/basWorkshop/selectByName?shopname='+this.query.shopname).then(res =>{
         this.tableData = res.data;
       })
+      this.getFactoryData();
     },
     // 删除操作
     handleDelete(index, row) {
@@ -261,7 +262,9 @@ export default {
       this.$set(this.query, 'pageIndex', val);
       // this.query.pageIndex = val;
       this.getData();
+      this.getFactoryData();
     }
+
   }
 };
 </script>

@@ -20,7 +20,7 @@
         <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
         <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
         <!--        </el-select>-->
-        <el-input v-model="query.employeename" placeholder="员工查询" class="handle-input mr10"></el-input>
+        <el-input v-model="query.employeename" placeholder="员工姓名查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
