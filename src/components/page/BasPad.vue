@@ -9,9 +9,7 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-
             <div class="handle-box">
-
                 <el-select v-model="query.address1" placeholder="设备类型" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
                     <el-option key="2" label="电子秤" value="0001"></el-option>
@@ -23,15 +21,14 @@
                 <el-select v-model="query.address2" placeholder="设备规格" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
                     <el-option key="2" label="重量" value="0001"></el-option>
-                    <el-option key="3" label="体积" value="0002"></el-option>
-                    <el-option key="4" label="长度" value="0003"></el-option>
+                    <el-option key="3" label="长度" value="0002"></el-option>
+                    <el-option key="4" label="体积" value="0003"></el-option>
                 </el-select>
                 <el-input v-model="query.code" placeholder="输入编号查询" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <!--        增加记录        -->
                 <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
             </div>
-
             <el-table
                     :data="tableData"
                     border
@@ -43,10 +40,10 @@
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
 
                 <el-table-column prop="qrcode" label="设备条码"></el-table-column>
-                <el-table-column prop="type" label="设备类型value"></el-table-column>
-                <el-table-column prop="spec" label="设备规格value"></el-table-column>
-                <el-table-column prop="stationId" label="所属工站"></el-table-column>
-                <el-table-column prop="cellId" label="所属工位"></el-table-column>
+                <el-table-column prop="typeString" label="设备类型value"></el-table-column>
+                <el-table-column prop="specString" label="设备规格value"></el-table-column>
+                <el-table-column prop="stationname" label="所属工站"></el-table-column>
+                <el-table-column prop="cellname" label="所属工位"></el-table-column>
                 <el-table-column prop="padsc" label="分辨率"></el-table-column>
                 <el-table-column prop="padnucleus" label="核心数"></el-table-column>
                 <el-table-column prop="padmemory" label="内存"></el-table-column>
@@ -55,7 +52,7 @@
                 <el-table-column prop="manufacturer" label="生产商"></el-table-column>
                 <el-table-column prop="factorynumber" label="出厂编号"></el-table-column>
                 <el-table-column prop="purpose" label="用途"></el-table-column>
-                <el-table-column prop="buyDate" label="采购日期"></el-table-column>
+                <el-table-column prop="buydate" label="采购日期"></el-table-column>
                 <el-table-column prop="person" label="资产负责人"></el-table-column>
                 <el-table-column prop="organization" label="所有权部门"></el-table-column>
 
@@ -111,7 +108,7 @@
                 <el-form-item label="id"><el-input v-model="form.id"></el-input></el-form-item>
                 <el-form-item label="设备条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
                 <el-form-item label="设备类型">
-                    <el-select v-model="form.type" placeholder="设备类型" class="handle-select mr10" :disabled="true">
+                    <el-select v-model="form.type" placeholder="设备类型" class="handle-select mr10">
                     <el-option key="1" label="电子秤" value="0001"></el-option>
                     <el-option key="2" label="读卡器" value="0002"></el-option>
                     <el-option key="3" label="条码打印机" value="0003"></el-option>
@@ -170,10 +167,35 @@
             this.getData();
         },
         methods: {
+            toString(){
+                const length = this.tableData.length;
+                for (let i = 0; i < length; i++) {
+                    this.tableData[i].typeString = "3";
+                    if(this.tableData[i].type=="0001")
+                        this.tableData[i].typeString="电子秤";
+                    else if(this.tableData[i].type=="0002")
+                        this.tableData[i].typeString="读卡器";
+                    else if(this.tableData[i].type=="0003")
+                        this.tableData[i].typeString="条码打印机";
+                    else if(this.tableData[i].type=="0004")
+                        this.tableData[i].typeString="安卓PAD";
+                    else if(this.tableData[i].type=="0005")
+                        this.tableData[i].typeString="红外对射枪";
+                    if(this.tableData[i].spec=="0001")
+                        this.tableData[i].specString="重量";
+                    else if(this.tableData[i].spec=="0002")
+                        this.tableData[i].specString="长度";
+                    else if(this.tableData[i].spec=="0003")
+                        this.tableData[i].specString="体积";
+                    // var buytime = new Date(this.tableData[i].buyDate);
+                    // var month= buytime.getMonth()+1;
+                    // this.tableData[i].buyDateString = buytime.getFullYear()+"年"+month+"月"+buytime.getDate()+"日"+buytime.getHours()+"时"+buytime.getMinutes()+"分";
+                }
+            },
             getData() {
                 this.$axios.get('/api/basPad/selectAll').then(res =>{
-
                     this.tableData = res.data;
+                    this.toString();
                 })
             },
             // 编辑操作
@@ -223,6 +245,7 @@
                     this.tableData = res.data;
                     this.toString();
                 })
+                this.toString();
 
             },
             //添加操作

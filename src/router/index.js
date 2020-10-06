@@ -183,8 +183,23 @@ export default new Router({
                 },
                 {
                     path: '/b2',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basElectronsteelyard.vue'),
+                    meta: { title: 'basElectronsteelyard' }
+                },
+                {
+                    path: '/b4',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/basIPhoto.vue'),
                     meta: { title: 'basIPhoto' }
+                },
+                {
+                    path: '/b3',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basCodeprinter.vue'),
+                    meta: { title: 'basCodeprinter' }
+                },
+                {
+                    path: '/b5',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basCardreader.vue'),
+                    meta: { title: 'basCardreader' }
                 }
                 ,
                 {
