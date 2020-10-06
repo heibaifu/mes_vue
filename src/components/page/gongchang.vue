@@ -29,20 +29,19 @@
           @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工厂ID"></el-table-column>
         <el-table-column prop="factoryname" label="工厂名称"></el-table-column>
+        <el-table-column prop="enterprisename" label="所属企业"></el-table-column>
         <el-table-column prop="factorybuilddate" label="创建日期"></el-table-column>
         <el-table-column prop="factoryaddress" label="工厂地址"></el-table-column>
         <el-table-column prop="factoryphone" label="工厂电话"></el-table-column>
         <el-table-column prop="factoryecode" label="邮政编码"></el-table-column>
         <el-table-column prop="factorybuildm" label="建筑面积"></el-table-column>
-        <el-table-column prop="enterpriseId" label="所属企业"></el-table-column>
-        <el-table-column prop="createBy" label="创建人"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间"></el-table-column>
+<!--        <el-table-column prop="createBy" label="创建人"></el-table-column>-->
+<!--        <el-table-column prop="createDate" label="创建时间"></el-table-column>-->
 <!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->
 <!--        <el-table-column prop="updateDate" label="更新时间"></el-table-column>-->
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 
 
         <el-table-column label="操作" width="180" align="center">

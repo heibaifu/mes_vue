@@ -42,12 +42,13 @@
 
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工站Id"></el-table-column>
+<!--        <el-table-column prop="id" label="工站Id"></el-table-column>-->
         <el-table-column prop="stationname" label="工站名称"></el-table-column>
+          <el-table-column prop="linename" label="所属产线"></el-table-column>
         <el-table-column prop="stationno" label="工站编号"></el-table-column>
         <el-table-column prop="stationmaster" label="工站负责人"></el-table-column>
-        <el-table-column prop="lineId" label="所属产线"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 <!--        <el-form-item label="工站Id"><el-input v-model="form.id"></el-input></el-form-item>-->

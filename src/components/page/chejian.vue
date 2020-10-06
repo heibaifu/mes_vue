@@ -47,17 +47,18 @@
 <!--        update_date-->
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="车间ID"></el-table-column>
+<!--        <el-table-column prop="id" label="车间ID"></el-table-column>-->
         <el-table-column prop="shopname" label="车间名称 "></el-table-column>
+        <el-table-column prop="factoryname" label="所属工厂"></el-table-column>
         <el-table-column prop="shopno" label="车间编码 "></el-table-column>
         <el-table-column prop="master" label="车间负责人"></el-table-column>
         <el-table-column prop="description" label="车间描述"></el-table-column>
-        <el-table-column prop="factoryId" label="所属工厂"></el-table-column>
-        <el-table-column prop="createBy" label="创建人"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间"></el-table-column>
-        <el-table-column prop="updateBy" label="更新人"></el-table-column>
-        <el-table-column prop="updateDate" label="更新时间"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+
+<!--        <el-table-column prop="createBy" label="创建人"></el-table-column>-->
+<!--        <el-table-column prop="createDate" label="创建时间"></el-table-column>-->
+<!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->
+<!--&lt;!&ndash;        <el-table-column prop="updateDate" label="更新时间"></el-table-column>&ndash;&gt;-->
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 

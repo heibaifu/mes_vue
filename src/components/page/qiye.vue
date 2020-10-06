@@ -30,7 +30,7 @@
 
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="企业ID"></el-table-column>
+<!--        <el-table-column prop="id" label="企业ID"></el-table-column>-->
         <el-table-column prop="entername" label="单位名称"></el-table-column>
         <el-table-column prop="entercode" label="组织机构代码"></el-table-column>
         <el-table-column prop="enterlevel" label="单位层次"></el-table-column>
@@ -40,8 +40,8 @@
       <el-table-column prop="enterlpcard" label="法人身份证"></el-table-column>
       <el-table-column prop="enteraddress" label="单位地址"></el-table-column>
         <el-table-column prop="emailcode" label="邮政编码"></el-table-column>
-<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+<!--&lt;!&ndash;        <el-table-column prop="delFlag" label="删除标记"></el-table-column>&ndash;&gt;-->
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="createBy" label="创建人"></el-table-column>-->
 <!--        <el-table-column prop="createDate" label="创建时间"></el-table-column>-->
 <!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->

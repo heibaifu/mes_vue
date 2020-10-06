@@ -47,14 +47,15 @@
 
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工位ID"></el-table-column>
+
         <el-table-column prop="cellname" label="工位名称"></el-table-column>
+        <el-table-column prop="stationname" label="所属工站"></el-table-column>
         <el-table-column prop="cellnumber" label="工位编码"></el-table-column>
         <el-table-column prop="cellmaster" label="工位负责人"></el-table-column>
         <el-table-column prop="celldescription" label="工站描述"></el-table-column>
-        <el-table-column prop="stationId" label="所属工站"></el-table-column>
+
 <!--        <el-table-column prop="del_flag" label="删除标记"></el-table-column>-->
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button

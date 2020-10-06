@@ -51,7 +51,7 @@
 <!--        update_date	17		datetime	更新时间-->
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="员工ID"></el-table-column>
+<!--        <el-table-column prop="id" label="员工ID"></el-table-column>-->
         <el-table-column prop="employeeno" label="员工编号"></el-table-column>
         <el-table-column prop="employeename" label="员工姓名"></el-table-column>
         <el-table-column prop="workdate" label="入职日期"></el-table-column>
@@ -61,7 +61,7 @@
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="idcard" label="身份证号"></el-table-column>
-        <el-table-column prop="officeid" label="所属部门"></el-table-column>
+        <el-table-column prop="officename" label="所属部门"></el-table-column>
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
         <el-table-column prop="remarks" label="备注"></el-table-column>
 <!--        <el-table-column prop="create_by" label="创建人"></el-table-column>-->

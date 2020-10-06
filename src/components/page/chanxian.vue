@@ -46,13 +46,14 @@
 <!--        update_date-->
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="产线ID"></el-table-column>
+<!--        <el-table-column prop="id" label="产线ID"></el-table-column>-->
         <el-table-column prop="linename" label="产线名称"></el-table-column>
+        <el-table-column prop="workshopname" label="车间对应"></el-table-column>
         <el-table-column prop="linenumber" label="产线编码"></el-table-column>
         <el-table-column prop="linemaster" label="产线负责人"></el-table-column>
         <el-table-column prop="linedescription" label="产线描述"></el-table-column>
-        <el-table-column prop="workshopId" label="车间对应"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 
