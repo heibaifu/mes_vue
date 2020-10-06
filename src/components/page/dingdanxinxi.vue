@@ -1,217 +1,205 @@
-<template>
-  <div>
-    <div class="crumbs">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item>
-          <i class="el-icon-lx-cascades"></i> 设备维修记录
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
-    <div class="container">
-<!--      <div class="handle-box">-->
 
-<!--        <el-select v-model="query.address1" placeholder="设备类型" class="handle-select mr10">-->
-<!--          <el-option key="1" label="" value=""></el-option>-->
-<!--          <el-option key="2" label="电子秤" value="0001"></el-option>-->
-<!--          <el-option key="3" label="读卡器" value="0002"></el-option>-->
-<!--          <el-option key="4" label="条码打印机" value="0003"></el-option>-->
-<!--          <el-option key="5" label="安卓PAD" value="0004"></el-option>-->
-<!--          <el-option key="6" label="红外对射枪" value="0005"></el-option>-->
-<!--        </el-select>-->
-<!--        <el-select v-model="query.address2" placeholder="设备位置" class="handle-select mr10">-->
-<!--          <el-option key="1" label="" value=""></el-option>-->
-<!--          <el-option key="2" label="ML001" value="0001"></el-option>-->
-<!--          <el-option key="3" label="ML002" value="0002"></el-option>-->
-<!--          <el-option key="4" label="ML003" value="0003"></el-option>-->
-<!--          <el-option key="4" label="ML004" value="0004"></el-option>-->
-<!--          <el-option key="4" label="ML005" value="0005"></el-option>-->
-<!--        </el-select>-->
-<!--        <el-select v-model="query.address3" placeholder="维修状态" class="handle-select mr10">-->
-<!--          <el-option key="1" label="" value=""></el-option>-->
-<!--          <el-option key="2" label="未派工" value="0001"></el-option>-->
-<!--          <el-option key="3" label="维修" value="0002"></el-option>-->
-<!--          <el-option key="4" label="完工" value="0003"></el-option>-->
-<!--        </el-select>-->
-<!--        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>-->
-<!--      </div>-->
-      <el-table
-          :data="tableData"
-          border
-          class="table"
-          height="800"
-          ref="multipleTable"
-          header-cell-class-name="table-header"
-          :row-class-name="tableRowClassName"
-      >
-        <el-table-column width="55" align="center" sortable></el-table-column>
-        <el-table-column prop="id" label="编号" sortable width="150"></el-table-column>
-        <el-table-column prop="orderno" label="订单号" sortable width="150"></el-table-column>
-        <el-table-column prop="indentor" label="订购商" sortable width="150"></el-table-column>
-        <el-table-column prop="productId" label="产品ID" sortable width="150"></el-table-column>
-        <el-table-column prop="quantity" label="数量" sortable width="150"></el-table-column>
-        <el-table-column prop="unit" label="单位" sortable width="150"></el-table-column>
-        <el-table-column prop="orderdate" label="订购日期" sortable width="150"></el-table-column>
-        <el-table-column prop="salesman" label="经办人" sortable width="150"></el-table-column>
-        <el-table-column prop="status" label="订单状态" sortable width="150"></el-table-column>
-        <el-table-column prop="id" label="" sortable width="150"></el-table-column>
+        <template>
+          <div>
+            <div class="crumbs">
+              <el-breadcrumb separator="/">
+                <el-breadcrumb-item>
+                  <i class="el-icon-lx-cascades"></i> 订单
+                </el-breadcrumb-item>
+              </el-breadcrumb>
+            </div>
+            <div class="container">
 
-        <el-table-column label="操作" width="180" align="center">
-          <template slot-scope="scope">
-            <el-button
-                type="text"
-                icon="el-icon-edit"
-                @click="handleEdit(scope.$index, scope.row)"
-            >下工单</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+              <el-table
+                  :data="tableData"
+                  border
+                  class="table"
+                  ref="multipleTable"
+                  header-cell-class-name="table-header"
+                  @selection-change="handleSelectionChange"
+              >
+                <el-table-column prop="id" label="编号" sortable width="150"></el-table-column>
+                <el-table-column prop="orderno" label="订单号" sortable width="150"></el-table-column>
+                <el-table-column prop="indentor" label="订购商" sortable width="150"></el-table-column>
+                <el-table-column prop="productname" label="产品名称" sortable width="150"></el-table-column>
+                <el-table-column prop="quantity" label="数量" sortable width="150"></el-table-column>
+                <el-table-column prop="unit" label="单位" sortable width="150"></el-table-column>
+                <el-table-column prop="orderdate" label="订购日期" sortable width="150"></el-table-column>
+                <el-table-column prop="salesman" label="经办人" sortable width="150"></el-table-column>
+                <el-table-column prop="status" label="订单状态" sortable width="150"></el-table-column>
 
-    </div>
+                <el-table-column label="操作" width="180" align="center">
+                  <template slot-scope="scope">
+                    <el-button
+                        type="text"
+                        icon="el-icon-edit"
+                        @click="handleEdit(scope.$index, scope.row)"
+                    >下工单</el-button>
 
-    <!-- 编辑弹出框 -->
-    <el-dialog title="工单添加" :visible.sync="editVisible" width="30%">
-      <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="编号" v-show="false"><el-input :disabled="true" v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="用户名" v-show="false"><el-input :disabled="true" v-model="form.reportPerson"></el-input></el-form-item>
-        <el-form-item label="故障类型"><el-input v-model="form.faultType"></el-input></el-form-item>
-        <el-form-item label="故障原因"><el-input v-model="form.faultReason"></el-input></el-form-item>
-        <el-form-item label="故障描述"><el-input type="textarea" v-model="form.faultDesc"></el-input></el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
+                  </template>
+                </el-table-column>
+              </el-table>
+              <div class="pagination">
+                <el-pagination
+                    background
+                    layout="total, prev, pager, next"
+                    :current-page="query.pageIndex"
+                    :page-size="query.pageSize"
+                    :total="pageTotal"
+                    @current-change="handlePageChange"
+                ></el-pagination>
+              </div>
+            </div>
+
+            <!-- 编辑添加框 -->
+            <el-dialog title="下工单" :visible.sync="editVisible" width="30%">
+              <el-form ref="form" :model="form" label-width="95px">
+                <el-form-item label="工单号"><el-input v-model="form.Id"></el-input></el-form-item>
+                <el-form-item label="订单号"><el-input v-model="form.orderno"></el-input></el-form-item>
+                <el-form-item label="工单类型">
+                  <el-select v-model="form.order_id" placeholder="请选择类型">
+                    <el-option
+                        v-for="order in Order"
+                        :key="order.stationname"
+                        :label="order.stationname"
+                        :value="order.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="工单生产数量"><el-input v-model="form.amount"></el-input></el-form-item>
+                <el-form-item label="计量单位"><el-input v-model="form.unitName"></el-input></el-form-item>
+                <el-form-item label="预计生产时间"><el-input v-model="form.estStartTime"></el-input></el-form-item>
+                <el-form-item label="预计结束时间"><el-input v-model="form.estEndTime"></el-input></el-form-item>
+                <el-form-item label="实际生产时间"><el-input v-model="form.actStartTime"></el-input></el-form-item>
+                <el-form-item label="投入数量"><el-input v-model="form.inAmount"></el-input></el-form-item>
+                <el-form-item label="产出数量"><el-input v-model="form.outAmount"></el-input></el-form-item>
+                <el-form-item label="报废数量"><el-input v-model="form.scrapAmount"></el-input></el-form-item>
+                <el-form-item label="工单状态">
+                  <el-select v-model="form.order_id" placeholder="请选择工单状态">
+                    <el-option
+                        v-for="order in Order"
+                        :key="order.stationname"
+                        :label="order.stationname"
+                        :value="order.id">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-form>
+              <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
+                <el-button type="primary" @click="saveAdd">确 定</el-button>
             </span>
-    </el-dialog>
-    <!-- 查看弹出框 -->
-    <el-dialog title="查看维修报告" :visible.sync="lookVisible" width="30%">
-      <el-form ref="form" :model="equipReportData" label-width="95px">
-        <el-form-item label="故障类型"><el-input :disabled="true" v-model="equipReportData.faultType"></el-input></el-form-item>
-        <el-form-item label="故障原因"><el-input :disabled="true" v-model="equipReportData.faultReason"></el-input></el-form-item>
-        <el-form-item label="故障描述"><el-input :disabled="true" type="textarea" v-model="equipReportData.faultDesc"></el-input></el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-                <el-button @click="lookVisible = false">关 闭</el-button>
-            </span>
-    </el-dialog>
-  </div>
-</template>
+            </el-dialog>
 
-<script>
-export default {
-  name: 'equipRepair',
-  data() {
-    return {
-      query: {
-        address1: '',
-        address2: '',
-        address3: '',
-        pageIndex: 0,
-        pageSize: 50
-      },
-      tableData: [],
-      multipleSelection: [],
-      delList: [],
-      editVisible: false,
-      lookVisible: false,
-      pageTotal: 0,
-      form: {},
-      equipReportData: {},
-      idx: -1,
-      id: -1
-    };
-  },
-  created() {
-    this.getData2();
-  },
-  methods: {
+          </div>
+        </template>
 
-    getData2() {
-      this.$axios.get('/api/orders/selectAll').then(res =>{
-        this.tableData = res.data;
-        this.toString();
-      })
-      this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
+        <script>
 
-    },
-    handleSearch() {
-      console.log('/api/orders/select?equip_type='+this.query.address1+'&equip_loc='+this.query.address2+'&status='+this.query.address3);
-      this.$axios.get('/api/orders/select?equip_type='+this.query.address1+'&equip_loc='+this.query.address2+'&status='+this.query.address3).then(res =>{
-        this.tableData = res.data;
-        // this.toString();
-      })
+          export default {
+            data() {
+              return {
+                query: {
 
-    },
-    // 维修报告操作
-    handleEdit(index, row) {
-      this.idx = index;
-      this.form = row;
-      if(row.status=='0001') {
-        this.$message.error(`该记录暂未派工`);
-      }
-      else if(row.status=='0002') {
-        this.editVisible = true;
-      }else if(row.status=='0003') {
-        this.$axios.get('/api/orders/selectByMid?mid='+row.id).then(res =>{
-          this.equipReportData = res.data;
-        })
-        this.lookVisible = true;
-      }
-    },
-    // 保存编辑
-    saveEdit() {
-      console.log(this.form)
-      this.editVisible = false;
-      this.$axios.post('/api/orders/add',this.form).then(res=>{
-        this.form.status='0003';
-        this.$message.success(`维修报告提交成功`);
-      })
-      this.$set(this.tableData, this.idx, this.form);
-    },
-    //每行带颜色
-    tableRowClassName({row, rowIndex}) {
-      if(row.status!='0001')
-        return 'success-row';
-      else return 'warning-row';
-    }
-  }
-};
-</script>
-<style>
-.el-table .warning-row {
-  background: oldlace;
-}
+                  name: '',
+                  pageIndex: 0,
+                  pageSize: 50
+                },
+                tableData: [],
+                multipleSelection: [],
+                delList: [],
+                Workshop:[],
+                editVisible: false,
+                addVisible: false,
+                pageTotal: 0,
+                form: {},
+                idx: -1,
+                id: -1
+              };
+            },
+            created() {
+              this.getData();
+            },
+            methods: {
+              // 多选操作
+              handleSelectionChange(val) {
+                this.multipleSelection = val;
+              },
+              // 获取 easy-mock 的模拟数据
+              getData() {
+                this.$axios.get('/api/orders/selectAll').then(res =>{
 
-.el-table .success-row {
-  background: #f0f9eb;
-}
-</style>
-<style scoped>
-.handle-box {
-  margin-bottom: 20px;
-}
+                  this.tableData = res.data;
+                })
+              },
 
-.handle-select {
-  width: 120px;
-}
+              // 编辑操作
+              handleEdit(index, row) {
+                this.idx = index;
+                this.form = row;
+                console.log(this.form)
+                this.editVisible = true;
+              },
+              // 保存编辑
+              saveEdit() {
+                console.log(this.form)
 
-.handle-input {
-  width: 300px;
-  display: inline-block;
-}
-.table {
-  width: 100%;
-  font-size: 14px;
-}
-.red {
-  color: #ff0000;
-}
-.mr10 {
-  margin-right: 10px;
-}
-.table-td-thumb {
-  display: block;
-  margin: auto;
-  width: 40px;
-  height: 40px;
-}
-</style>
+                this.editVisible = false;
+
+                 // this.$set(this.tableData, this.idx, this.form);
+              },
+
+              //添加操作
+              handleAdd(index, row) {
+                this.addVisible = true;
+              },
+              // 保存添加
+              saveAdd() {
+                console.log(this.form)
+
+                this.editVisible = false;
+                this.$axios.post('/api/basWorkorder/add',this.form).then(res=>{
+                  this.$message.success(`添加成功`);
+                })
+                this.getData();
+              },
+              // 分页导航
+              handlePageChange(val) {
+                this.$set(this.query, 'pageIndex', val);
+                // this.query.pageIndex = val;
+                this.getData();
+              }
+            }
+          };
+        </script>
+
+        <style scoped>
+          .handle-box {
+            margin-bottom: 20px;
+          }
+
+          .handle-select {
+            width: 120px;
+          }
+
+          .handle-input {
+            width: 300px;
+            display: inline-block;
+          }
+          .table {
+            width: 100%;
+            font-size: 14px;
+          }
+          .red {
+            color: #ff0000;
+          }
+          .mr10 {
+            margin-right: 10px;
+          }
+          .table-td-thumb {
+            display: block;
+            margin: auto;
+            width: 40px;
+            height: 40px;
+          }
+        </style>

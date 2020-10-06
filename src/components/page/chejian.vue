@@ -137,9 +137,8 @@
         <el-form-item label="车间描述"><el-input v-model="form.description"></el-input></el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.createBy"></el-input></el-form-item>
-
-
       </el-form>
+
       <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
@@ -262,7 +261,7 @@ export default {
       this.$set(this.query, 'pageIndex', val);
       // this.query.pageIndex = val;
       this.getData();
-      this.getFactoryData();
+
     }
 
   }

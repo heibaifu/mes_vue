@@ -44,8 +44,8 @@
         <el-table-column prop="outamount" label="产出数量" sortable width="200"></el-table-column>
         <el-table-column prop="scrapamount" label="报废数量" sortable width="200"></el-table-column>
         <el-table-column prop="state" label="工单状态" sortable width="200"></el-table-column>
-        <el-table-column prop="lineId" label="产线ID" sortable width="200"></el-table-column>
-        <el-table-column prop="productId" label="产品ID" sortable width="200"></el-table-column>
+        <el-table-column prop="linename" label="工单产线" sortable width="200"></el-table-column>
+        <el-table-column prop="productname" label="产品名称" sortable width="200"></el-table-column>
 
 
         <el-table-column label="操作" width="180" align="center">
@@ -133,7 +133,6 @@
 
 <script>
 export default {
-  name: 'equipMaintenancePlan',
   data() {
     return {
       query: {
@@ -180,7 +179,7 @@ export default {
       })
           .then(() => {
             this.tableData.splice(index, 1);
-            this.$axios.get('/api/basWorkorder/delete?id='+row.id).then(res=>{
+            this.$axios.get('/api/basWorkorder/deleteById?id='+row.id).then(res=>{
               this.$message.success("删除成功");
             })
           })
