@@ -15,8 +15,8 @@
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
-
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <!--        </el-select>-->
+        <el-input v-model="query.stationname" placeholder="工站名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -42,13 +42,14 @@
 
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工站Id"></el-table-column>
+<!--        <el-table-column prop="id" label="工站Id"></el-table-column>-->
         <el-table-column prop="stationname" label="工站名称"></el-table-column>
+          <el-table-column prop="linename" label="所属产线"></el-table-column>
         <el-table-column prop="stationno" label="工站编号"></el-table-column>
         <el-table-column prop="stationmaster" label="工站负责人"></el-table-column>
-        <el-table-column prop="lineId" label="所属产线"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
+
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 <!--        <el-form-item label="工站Id"><el-input v-model="form.id"></el-input></el-form-item>-->
 <!--        <el-form-item label="工站名称"><el-input v-model="form.stationName"></el-input></el-form-item>-->
@@ -110,7 +111,16 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属产线"><el-input v-model="form.line_id"></el-input></el-form-item>
+        <el-form-item label="所属产线">
+          <el-select v-model="form.line_id" placeholder="请选择产线">
+            <el-option
+                v-for="line in Line"
+                :key="line.linename"
+                :label="line.linename"
+                :value="line.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工站名称"><el-input v-model="form.stationName"></el-input></el-form-item>
         <el-form-item label="工站编号"><el-input v-model="form.stationNo"></el-input></el-form-item>
         <el-form-item label="工站负责人"><el-input v-model="form.stationMaster"></el-input></el-form-item>
@@ -138,6 +148,7 @@ export default {
         pageIndex: 0,
         pageSize: 50
       },
+      Line: [],
       tableData: [],
       multipleSelection: [],
       delList: [],
@@ -160,10 +171,18 @@ export default {
         this.tableData = res.data;
       })
     },
+    // 获取 easy-mock 的模拟数据
+    getLineData() {
+      this.$axios.get('/api/basLine/selectAll').then(res =>{
+
+        this.Line = res.data;
+      })
+    },
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basWorkstationinfos/selectByName?stationname='+this.query.stationname).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -205,6 +224,7 @@ export default {
     //添加操作
     handleAdd(index, row) {
       this.addVisible = true;
+      this.getLineData();
     },
     // 保存编辑
     saveEdit() {

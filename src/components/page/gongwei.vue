@@ -20,7 +20,7 @@
         <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
         <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
         <!--        </el-select>-->
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <el-input v-model="query.cellname" placeholder="工位名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -47,14 +47,15 @@
 
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工位ID"></el-table-column>
+
         <el-table-column prop="cellname" label="工位名称"></el-table-column>
+        <el-table-column prop="stationname" label="所属工站"></el-table-column>
         <el-table-column prop="cellnumber" label="工位编码"></el-table-column>
         <el-table-column prop="cellmaster" label="工位负责人"></el-table-column>
         <el-table-column prop="celldescription" label="工站描述"></el-table-column>
-        <el-table-column prop="stationId" label="所属工站"></el-table-column>
-        <el-table-column prop="del_flag" label="删除标记"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+
+<!--        <el-table-column prop="del_flag" label="删除标记"></el-table-column>-->
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
@@ -102,7 +103,16 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属工站"><el-input v-model="form.station_id"></el-input></el-form-item>
+        <el-form-item label="所属工站">
+          <el-select v-model="form.station_id" placeholder="请选择工站">
+            <el-option
+                v-for="station in Station"
+                :key="station.stationname"
+                :label="station.stationname"
+                :value="station.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工位名称"><el-input v-model="form.cellName"></el-input></el-form-item>
         <el-form-item label="工位编码"><el-input v-model="form.cellNumber"></el-input></el-form-item>
         <el-form-item label="工位负责人"><el-input v-model="form.cellMaster"></el-input></el-form-item>
@@ -132,6 +142,7 @@ export default {
         pageIndex: 0,
         pageSize: 50
       },
+      Station:[],
       tableData: [],
       multipleSelection: [],
       delList: [],
@@ -154,10 +165,17 @@ export default {
         this.tableData = res.data;
       })
     },
+    getStationData() {
+      this.$axios.get('/api/basWorkstationinfos/selectAll').then(res =>{
+
+        this.Station = res.data;
+      })
+    },
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basWorkcell/selectByName?cellname='+this.query.cellname).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -198,6 +216,7 @@ export default {
     },
     //添加操作
     handleAdd(index, row) {
+      this.getStationData();
       this.addVisible = true;
     },
     // 保存编辑

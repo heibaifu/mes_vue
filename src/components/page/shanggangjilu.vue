@@ -10,26 +10,9 @@
     <div class="container">
       <div class="handle-box">
 
-        <el-select v-model="query.address1" placeholder="员工号" class="handle-select mr10">
-          <el-option key="1" label="" value=""></el-option>
-          <el-option key="2" label="员工号" value="0001"></el-option>
-
-        </el-select>
-        <el-select v-model="query.address2" placeholder="工位" class="handle-select mr10">
-          <el-option key="1" label="" value=""></el-option>
-          <el-option key="2" label="ML001" value="0001"></el-option>
-          <el-option key="3" label="ML002" value="0002"></el-option>
-          <el-option key="4" label="ML003" value="0003"></el-option>
-          <el-option key="4" label="ML004" value="0004"></el-option>
-          <el-option key="4" label="ML005" value="0005"></el-option>
-        </el-select>
-        <el-select v-model="query.address3" placeholder="工作状态" class="handle-select mr10">
-          <el-option key="1" label="" value=""></el-option>
-          <el-option key="2" label="未派工" value="0001"></el-option>
-          <el-option key="3" label="维修" value="0002"></el-option>
-          <el-option key="4" label="完工" value="0003"></el-option>
-        </el-select>
+        <el-input v-model="query.employeename" placeholder="按姓名查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+
       </div>
       <el-table
           :data="tableData"
@@ -41,14 +24,14 @@
           :row-class-name="tableRowClassName"
       >
         <el-table-column width="55" align="center" sortable></el-table-column>
-        <el-table-column prop="id" label="编号" sortable width="150"></el-table-column>
-        <el-table-column prop="employeeId" label="员工ID" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="id" label="编号" sortable width="150"></el-table-column>-->
+<!--        <el-table-column prop="employeeId" label="员工ID" sortable width="130"></el-table-column>-->
         <el-table-column prop="employeeno" label="员工工号" sortable width="130"></el-table-column>
         <el-table-column prop="employeename" label="员工姓名"></el-table-column>
-        <el-table-column prop="officeId" label="所属部门" sortable width="130"></el-table-column>
-        <el-table-column prop="lineId" label="所属产线" sortable width="180"></el-table-column>
+        <el-table-column prop="officename" label="所属部门" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="lineId" label="所属产线" sortable width="180"></el-table-column>-->
         <el-table-column prop="linename" label="产线名称" sortable width="130"></el-table-column>
-        <el-table-column prop="stationId" label="所属工站" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="stationId" label="所属工站" sortable width="130"></el-table-column>-->
         <el-table-column prop="stationname" label="工站名称"></el-table-column>
         <el-table-column prop="cellId" label="所属工位" sortable width="130"></el-table-column>
         <el-table-column prop="cellname" label="工位名称" sortable width="180"></el-table-column>
@@ -56,8 +39,8 @@
         <el-table-column prop="clockoff" label="下班" sortable width="130"></el-table-column>
         <el-table-column prop="worktime" label="工作时间"></el-table-column>
         <el-table-column prop="workstatus" label="工作状态" sortable width="130"></el-table-column>
-        <el-table-column prop="remarks" label="备注" sortable width="180"></el-table-column>
-        <el-table-column prop="createBy" label="创建人" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="remarks" label="备注" sortable width="180"></el-table-column>-->
+<!--        <el-table-column prop="createBy" label="创建人" sortable width="130"></el-table-column>-->
 <!--        <el-table-column label="操作" width="180" align="center">-->
 <!--          <template slot-scope="scope">-->
 <!--            <el-button-->
@@ -162,39 +145,11 @@ export default {
 
     },
     handleSearch() {
-      console.log('/api/mountGuard/select?equip_type='+this.query.address1+'&equip_loc='+this.query.address2+'&status='+this.query.address3);
-      this.$axios.get('/api/mountGuard/select?equip_type='+this.query.address1+'&equip_loc='+this.query.address2+'&status='+this.query.address3).then(res =>{
+      this.$axios.get('/api/mountGuard/selectByName?employeename='+this.query.employeename).then(res =>{
         this.tableData = res.data;
-        // this.toString();
       })
+    },
 
-    },
-    // 维修报告操作
-    handleEdit(index, row) {
-      this.idx = index;
-      this.form = row;
-      if(row.status=='0001') {
-        this.$message.error(`该记录暂未派工`);
-      }
-      else if(row.status=='0002') {
-        this.editVisible = true;
-      }else if(row.status=='0003') {
-        this.$axios.get('/api/mountGuard/selectByMid?mid='+row.id).then(res =>{
-          this.equipReportData = res.data;
-        })
-        this.lookVisible = true;
-      }
-    },
-    // 保存编辑
-    saveEdit() {
-      console.log(this.form)
-      this.editVisible = false;
-      this.$axios.post('/api/mountGuard/add',this.form).then(res=>{
-        this.form.status='0003';
-        this.$message.success(`维修报告提交成功`);
-      })
-      this.$set(this.tableData, this.idx, this.form);
-    },
     //每行带颜色
     tableRowClassName({row, rowIndex}) {
       if(row.status!='0001')

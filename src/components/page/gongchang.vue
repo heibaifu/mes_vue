@@ -16,7 +16,7 @@
             @click="delAllSelection"
         >批量删除</el-button>
 
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <el-input v-model="query.factoryname" placeholder="工厂名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -29,20 +29,19 @@
           @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工厂ID"></el-table-column>
         <el-table-column prop="factoryname" label="工厂名称"></el-table-column>
+        <el-table-column prop="enterprisename" label="所属企业"></el-table-column>
         <el-table-column prop="factorybuilddate" label="创建日期"></el-table-column>
         <el-table-column prop="factoryaddress" label="工厂地址"></el-table-column>
         <el-table-column prop="factoryphone" label="工厂电话"></el-table-column>
         <el-table-column prop="factoryecode" label="邮政编码"></el-table-column>
         <el-table-column prop="factorybuildm" label="建筑面积"></el-table-column>
-        <el-table-column prop="enterpriseId" label="所属企业"></el-table-column>
-        <el-table-column prop="createBy" label="创建人"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间"></el-table-column>
-        <el-table-column prop="updateBy" label="更新人"></el-table-column>
-        <el-table-column prop="updateDate" label="更新时间"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+<!--        <el-table-column prop="createBy" label="创建人"></el-table-column>-->
+<!--        <el-table-column prop="createDate" label="创建时间"></el-table-column>-->
+<!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->
+<!--        <el-table-column prop="updateDate" label="更新时间"></el-table-column>-->
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 
 
         <el-table-column label="操作" width="180" align="center">
@@ -93,7 +92,17 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属企业"><el-input v-model="form.enterprise_id"></el-input></el-form-item>
+<!--        <el-form-item label="所属企业"><el-input v-model="form.enterprise_id"></el-input></el-form-item>-->
+        <el-form-item label="所属企业">
+          <el-select v-model="form.enterpriseid" placeholder="请选择企业">
+            <el-option
+                v-for="enterprise in Enterprise"
+                :key="enterprise.entername"
+                :label="enterprise.entername"
+                :value="enterprise.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工厂名称"><el-input v-model="form.factoryName"></el-input></el-form-item>
         <el-form-item label="建筑日期"><el-input v-model="form.factoryBuildDate"></el-input></el-form-item>
         <el-form-item label="地址"><el-input v-model="form.factoryAddress"></el-input></el-form-item>
@@ -103,6 +112,7 @@
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.create_by"></el-input></el-form-item>
       </el-form>
+
       <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
@@ -124,6 +134,7 @@ export default {
       },
       tableData: [],
       multipleSelection: [],
+      Enterprise:[],
       delList: [],
       editVisible: false,
       addVisible: false,
@@ -144,11 +155,17 @@ export default {
         this.tableData = res.data;
       })
     },
+    getEnterpriseData(){
+      this.$axios.get('/api/basEnterprise/selectAll').then(res =>{
+        this.Enterprise = res.data;
+      })
+    },
 
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basFactory/selectByName?factoryname='+this.query.factoryname).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -189,6 +206,7 @@ export default {
     },
     //添加操作
     handleAdd(index, row) {
+      this.getEnterpriseData();
       this.addVisible = true;
     },
     // 保存编辑

@@ -20,7 +20,7 @@
         <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
         <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
         <!--        </el-select>-->
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <el-input v-model="query.shopname" placeholder="车间名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -47,18 +47,19 @@
 <!--        update_date-->
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="车间ID"></el-table-column>
+<!--        <el-table-column prop="id" label="车间ID"></el-table-column>-->
         <el-table-column prop="shopname" label="车间名称 "></el-table-column>
+        <el-table-column prop="factoryname" label="所属工厂"></el-table-column>
         <el-table-column prop="shopno" label="车间编码 "></el-table-column>
         <el-table-column prop="master" label="车间负责人"></el-table-column>
         <el-table-column prop="description" label="车间描述"></el-table-column>
-        <el-table-column prop="factoryId" label="所属工厂"></el-table-column>
-        <el-table-column prop="createBy" label="创建人"></el-table-column>
-        <el-table-column prop="createDate" label="创建时间"></el-table-column>
-        <el-table-column prop="updateBy" label="更新人"></el-table-column>
-        <el-table-column prop="updateDate" label="更新时间"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
+
+<!--        <el-table-column prop="createBy" label="创建人"></el-table-column>-->
+<!--        <el-table-column prop="createDate" label="创建时间"></el-table-column>-->
+<!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->
+<!--&lt;!&ndash;        <el-table-column prop="updateDate" label="更新时间"></el-table-column>&ndash;&gt;-->
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 
         <el-table-column label="操作" width="180" align="center">
@@ -111,7 +112,16 @@
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
 
-        <el-form-item label="所属工厂"><el-input v-model="form.factory_id"></el-input></el-form-item>
+        <el-form-item label="所属工厂">
+          <el-select v-model="form.factoryid" placeholder="请选择工厂">
+            <el-option
+                v-for="factory in Factory"
+                :key="factory.factoryname"
+                :label="factory.factoryname"
+                :value="factory.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="车间名称"><el-input v-model="form.shopName"></el-input></el-form-item>
         <el-form-item label="车间编码"><el-input v-model="form.shopNo"></el-input></el-form-item>
         <el-form-item label="车间负责人"><el-input v-model="form.master"></el-input></el-form-item>
@@ -144,6 +154,7 @@ export default {
       tableData: [],
       multipleSelection: [],
       delList: [],
+      Factory: [],
       editVisible: false,
       addVisible: false,
       pageTotal: 0,
@@ -163,10 +174,15 @@ export default {
         this.tableData = res.data;
       })
     },
-    // 触发搜索按钮
+    getFactoryData(){
+      this.$axios.get('/api/basFactory/selectAll').then(res =>{
+        this.Factory = res.data;
+      })
+    },
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basWorkshop/selectByName?shopname='+this.query.shopname).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -207,6 +223,7 @@ export default {
     },
     //添加操作
     handleAdd(index, row) {
+      this.getFactoryData();
       this.addVisible = true;
     },
     // 保存编辑

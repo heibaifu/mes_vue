@@ -20,7 +20,7 @@
         <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
         <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
         <!--        </el-select>-->
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <el-input v-model="query.linename" placeholder="产线名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -46,14 +46,15 @@
 <!--        update_date-->
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="产线ID"></el-table-column>
+<!--        <el-table-column prop="id" label="产线ID"></el-table-column>-->
         <el-table-column prop="linename" label="产线名称"></el-table-column>
+        <el-table-column prop="workshopname" label="所属车间"></el-table-column>
         <el-table-column prop="linenumber" label="产线编码"></el-table-column>
         <el-table-column prop="linemaster" label="产线负责人"></el-table-column>
         <el-table-column prop="linedescription" label="产线描述"></el-table-column>
-        <el-table-column prop="workshopId" label="车间对应"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
+
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 
 
@@ -105,7 +106,16 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属车间"><el-input v-model="form.workshop_id"></el-input></el-form-item>
+        <el-form-item label="所属车间">
+          <el-select v-model="form.workshopid" placeholder="请选择车间">
+            <el-option
+                v-for="workshop in Workshop"
+                :key="workshop.shopname"
+                :label="workshop.shopname"
+                :value="workshop.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="产线名称"><el-input v-model="form.lineName"></el-input></el-form-item>
         <el-form-item label="产线编码"><el-input v-model="form.lineNumber"></el-input></el-form-item>
         <el-form-item label="产线负责人"><el-input v-model="form.lineMaster"></el-input></el-form-item>
@@ -136,6 +146,7 @@ export default {
       tableData: [],
       multipleSelection: [],
       delList: [],
+      Workshop:[],
       editVisible: false,
       addVisible: false,
       pageTotal: 0,
@@ -155,10 +166,17 @@ export default {
         this.tableData = res.data;
       })
     },
+    getWorkshopData() {
+      this.$axios.get('/api/basWorkshop/selectAll').then(res =>{
+
+        this.Workshop = res.data;
+      })
+    },
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basLine/selectByName?linename='+this.query.linename).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -200,6 +218,7 @@ export default {
     //添加操作
     handleAdd(index, row) {
       this.addVisible = true;
+      this.getWorkshopData();
     },
     // 保存编辑
     saveEdit() {

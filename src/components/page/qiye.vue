@@ -16,7 +16,8 @@
             @click="delAllSelection"
         >批量删除</el-button>
 
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+<!--        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>-->
+        <el-input v-model="query.entername" placeholder="企业名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -29,7 +30,7 @@
 
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="企业ID"></el-table-column>
+<!--        <el-table-column prop="id" label="企业ID"></el-table-column>-->
         <el-table-column prop="entername" label="单位名称"></el-table-column>
         <el-table-column prop="entercode" label="组织机构代码"></el-table-column>
         <el-table-column prop="enterlevel" label="单位层次"></el-table-column>
@@ -39,8 +40,8 @@
       <el-table-column prop="enterlpcard" label="法人身份证"></el-table-column>
       <el-table-column prop="enteraddress" label="单位地址"></el-table-column>
         <el-table-column prop="emailcode" label="邮政编码"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+<!--&lt;!&ndash;        <el-table-column prop="delFlag" label="删除标记"></el-table-column>&ndash;&gt;-->
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="createBy" label="创建人"></el-table-column>-->
 <!--        <el-table-column prop="createDate" label="创建时间"></el-table-column>-->
 <!--        <el-table-column prop="updateBy" label="更新人"></el-table-column>-->
@@ -157,9 +158,14 @@ export default {
     },
 
     // 触发搜索按钮
+    // handleSearch() {
+    //   this.$set(this.query, 'pageIndex', 1);
+    //   this.getData();
+    // },
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basEnterprise/selectByName?stationname='+this.query.entername).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -219,7 +225,7 @@ export default {
       console.log(this.form)
 
       this.addVisible = false;
-      this.$axios.post('/api/basEnterprised/add', this.form).then(res => {
+      this.$axios.post('/api/basEnterprise/add', this.form).then(res => {
         this.$message.success(`添加成功`);
       })
       this.getData();
