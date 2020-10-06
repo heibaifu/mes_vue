@@ -28,10 +28,10 @@
 <!--        <el-table-column prop="employeeId" label="员工ID" sortable width="130"></el-table-column>-->
         <el-table-column prop="employeeno" label="员工工号" sortable width="130"></el-table-column>
         <el-table-column prop="employeename" label="员工姓名"></el-table-column>
-        <el-table-column prop="officeId" label="所属部门" sortable width="130"></el-table-column>
-        <el-table-column prop="lineId" label="所属产线" sortable width="180"></el-table-column>
+        <el-table-column prop="officename" label="所属部门" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="lineId" label="所属产线" sortable width="180"></el-table-column>-->
         <el-table-column prop="linename" label="产线名称" sortable width="130"></el-table-column>
-        <el-table-column prop="stationId" label="所属工站" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="stationId" label="所属工站" sortable width="130"></el-table-column>-->
         <el-table-column prop="stationname" label="工站名称"></el-table-column>
         <el-table-column prop="cellId" label="所属工位" sortable width="130"></el-table-column>
         <el-table-column prop="cellname" label="工位名称" sortable width="180"></el-table-column>
@@ -39,7 +39,7 @@
         <el-table-column prop="clockoff" label="下班" sortable width="130"></el-table-column>
         <el-table-column prop="worktime" label="工作时间"></el-table-column>
         <el-table-column prop="workstatus" label="工作状态" sortable width="130"></el-table-column>
-        <el-table-column prop="remarks" label="备注" sortable width="180"></el-table-column>
+<!--        <el-table-column prop="remarks" label="备注" sortable width="180"></el-table-column>-->
 <!--        <el-table-column prop="createBy" label="创建人" sortable width="130"></el-table-column>-->
 <!--        <el-table-column label="操作" width="180" align="center">-->
 <!--          <template slot-scope="scope">-->
