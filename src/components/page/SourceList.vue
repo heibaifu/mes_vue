@@ -2,14 +2,7 @@
 
     <div>
         <div class="container">
-            <el-table
-                    :data="tableData"
-                    border
-                    class="table"
-                    ref="multipleTable"
-                    header-cell-class-name="table-header"
-                    @selection-change="handleSelectionChange"
-            >
+            <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header" @selection-change="handleSelectionChange">
 
                 <el-table-column prop="batchnum" label="批号"></el-table-column>
                 <el-table-column prop="mtype" label="材料类型"></el-table-column>
@@ -17,11 +10,9 @@
                 <el-table-column prop="suppliername" label="供应商名称"></el-table-column>
                 <el-table-column prop="purchasedate" label="采购日期"></el-table-column>
                 <el-table-column prop="quantity" label="库存"></el-table-column>
-                <el-table-column prop="吨" label="单位"></el-table-column>
-
+<!--                <el-table-column prop="吨" label="单位"></el-table-column>-->
             </el-table>
-
-        </div>
+          </div>
     </div>
 </template>
 

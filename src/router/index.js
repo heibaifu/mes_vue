@@ -20,7 +20,6 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
                     meta: { title: '系统首页' }
                 },
-
                 {
                     path: '/qiye',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/qiye.vue'),
@@ -58,22 +57,6 @@ export default new Router({
                     path: '/gongweiyuangong',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongweiyuangong.vue'),
                     meta: { title: '工位与员工信息' }
-                },
-                {
-                    path: '/shanggangjilu',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/shanggangjilu.vue'),
-                    meta: { title: '上岗记录' }
-                },
-                {
-                    path: '/dingdanxinxi',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/dingdanxinxi.vue'),
-                    meta: { title: '订单信息' }
-                },
-
-                {
-                    path: '/gongdanweihu',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongdanweihu.vue'),
-                    meta: { title: '工单维护' }
                 },
 
                 {
@@ -202,46 +185,6 @@ export default new Router({
                     path: '/b2',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/basIPhoto.vue'),
                     meta: { title: 'basIPhoto' }
-                },
-                {
-                    path: '/tec_process',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/TecProcess.vue'),
-                    meta: { title: '工序管理' }
-                },
-                {
-                    path: '/tec_flow',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Flow.vue'),
-                    meta: { title: '工艺流程' }
-                },
-                {
-                    path: '/tec_flow_process',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Flow_Process.vue'),
-                    meta: { title: '工艺流程与工序关系' }
-                },
-                {
-                    path: '/tec_process_station',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Process_Station.vue'),
-                    meta: { title: '工序与工站关系' }
-                },
-                {
-                    path: '/qc_violaction',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Qc_Violaction.vue'),
-                    meta: { title: '违规管理' }
-                },
-                {
-                    path: '/qc_inperfections',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Qc_Inperfections.vue'),
-                    meta: { title: '残次品上报管理' }
-                },
-                {
-                    path: '/qc_abnormal_process',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Qc_Abnormal_Process.vue'),
-                    meta: { title: '异常工序检测' }
-                },
-                {
-                    path: '/log_cutpiecequalitytestingrecords',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Log_Cutpiecequalitytestingrecords.vue'),
-                    meta: { title: '切片质量检测' }
                 }
             ]
         },

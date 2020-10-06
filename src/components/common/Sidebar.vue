@@ -126,7 +126,7 @@ export default {
                   ]
                 },{
                     icon: 'el-icon-lx-copy',
-                    index: 'tabs',
+                    index: 'Bom',
                     title: 'BOM基础资料',
                     subs: [
                         {
@@ -141,7 +141,7 @@ export default {
                             title: 'BOM物料'
                         },
                         {
-                            index: 'table2',
+                            index: 'BOM_Details',
                             title: 'BOM物料详情'
                         }
                     ]
