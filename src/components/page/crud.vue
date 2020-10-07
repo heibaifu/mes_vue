@@ -58,7 +58,6 @@
         methods: {
             getData() {
                 this.$axios.get('/api/equipRepair/selectAll').then(res =>{
-
                     this.tableData = res.data;
                 })
             }

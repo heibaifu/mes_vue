@@ -9,44 +9,31 @@
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-button
-                    type="primary"
-                    icon="el-icon-delete"
-                    class="handle-del mr10"
-                    @click="delAllSelection"
-                >批量删除</el-button>
-                <el-select v-model="query.address" placeholder="设备编号" class="handle-select mr10">
-                    <el-option key="1" label="设备编号" value="equip_no"></el-option>
-                    <el-option key="2" label="设备类型" value="equip_type"></el-option>
-                    <el-option key="3" label="上报人姓名" value="report_person"></el-option>
+                <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection">批量删除</el-button>
+
+                <el-select v-model="query.select" placeholder="产品名称" class="handle-select mr10">
+                    <el-option key="1" label="产品名称" value="name"></el-option>
+                    <el-option key="2" label="条码" value="qrcode"></el-option>
                 </el-select>
-                <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+
+                <el-input v-model="query.desc" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
             </div>
-            <el-table
-                :data="tableData"
-                border
-                class="table"
-                ref="multipleTable"
-                header-cell-class-name="table-header"
-                @selection-change="handleSelectionChange"
-            >
+            <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
 
 
-                    <el-table-column prop="productname" label="产品名称"></el-table-column>
-                    <el-table-column prop="productabbr" label="产品简称"></el-table-column>
-                    <el-table-column prop="productdesc" label="产品简述"></el-table-column>
-                    <el-table-column prop="firstcheck" label="是否需要首件检测"></el-table-column>
-                    <el-table-column prop="qrcode" label="条码"></el-table-column>
-                    <el-table-column prop="manageway" label="管理方式"></el-table-column>
-                    <el-table-column prop="lotnumber" label="批次"></el-table-column>
-                    <el-table-column prop="state" label="状态"></el-table-column>
-                    <el-table-column prop="productunit" label="产品计量单位"></el-table-column>
-                    <el-table-column prop="productprop" label="属性"></el-table-column>
-                    <el-table-column prop="delFlag" label="生产流程"></el-table-column>
-                    <el-table-column prop="remarks" label="操作"></el-table-column>
+                  <el-table-column prop="productname" label="产品名称"></el-table-column>
+                  <el-table-column prop="productabbr" label="产品简称"></el-table-column>
+                  <el-table-column prop="productdesc" label="产品简述"></el-table-column>
+                  <el-table-column prop="firstcheck" label="首件检测"></el-table-column>
+                  <el-table-column prop="qrcode" label="条码"></el-table-column>
+                  <el-table-column prop="manageway" label="管理方式"></el-table-column>
+                  <el-table-column prop="lotnumber" label="批次"></el-table-column>
+                  <el-table-column prop="state" label="状态"></el-table-column>
+                  <el-table-column prop="productunit" label="产品计量单位"></el-table-column>
+                  <el-table-column prop="productprop" label="属性"></el-table-column>
 
 
                 <el-table-column label="操作" width="180" align="center">
@@ -85,18 +72,33 @@
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="95px">
 
+              <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
+              <el-form-item label="产品简称"><el-input v-model="form.productabbr"></el-input></el-form-item>
+              <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
 
-                    <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
-                    <el-form-item label="产品简称"><el-input v-model="form.productaddr"></el-input></el-form-item>
-                    <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
-                    <el-form-item label="是否需要首件检测"><el-input v-model="form.firstcheck"></el-input></el-form-item>
-                    <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
-                    <el-form-item label="管理方式"><el-input v-model="form.manageway"></el-input></el-form-item>
-                    <el-form-item label="批次"><el-input v-model="form.lotnumber"></el-input></el-form-item>
-                    <el-form-item label="状态"><el-input v-model="form.state"></el-input></el-form-item>
-                    <el-form-item label="产品计量单位"><el-input v-model="form.productunit"></el-input></el-form-item>
-                    <el-form-item label="属性"><el-input v-model="form.productprop"></el-input></el-form-item>
-                    <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>
+              <el-form-item label="首件检测">
+                <el-select v-model="form.firstcheck" placeholder="请选择" class="handle-select mr10">
+                  <el-option key="1" label="是" value="是"></el-option>
+                  <el-option key="2" label="否" value="否"></el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
+              <el-form-item label="管理方式"><el-input v-model="form.manageway"></el-input></el-form-item>
+              <el-form-item label="批次"><el-input v-model="form.lotnumber"></el-input></el-form-item>
+              <el-form-item label="状态"><el-input v-model="form.state"></el-input></el-form-item>
+
+              <el-form-item label="产品计量单位">
+                <el-select v-model="form.productunit" placeholder="请选择">
+                  <el-option v-for="item in dataList"
+                             :key="item.label"
+                             :label="item.label"
+                             :value="item.label">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="属性"><el-input v-model="form.productprop"></el-input></el-form-item>
+<!--              <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>-->
 
 
             </el-form>
@@ -110,26 +112,58 @@
             <el-form ref="form" :model="form" label-width="95px">
 
 
-                <el-form-item label="产品名称"><el-input v-model="form.id"></el-input></el-form-item>
-                <el-form-item label="产品简称"><el-input v-model="form.equipId"></el-input></el-form-item>
-                <el-form-item label="产品简述"><el-input v-model="form.equipNo"></el-input></el-form-item>
-                <el-form-item label="是否需要首件检测"><el-input v-model="form.equipType"></el-input></el-form-item>
-                <el-form-item label="条码"><el-input v-model="form.equipLoc"></el-input></el-form-item>
-                <el-form-item label="管理方式"><el-input v-model="form.faultDesc"></el-input></el-form-item>
-                <el-form-item label="批次"><el-input v-model="form.status"></el-input></el-form-item>
-                <el-form-item label="状态"><el-input v-model="form.reportPerson"></el-input></el-form-item>
-                <el-form-item label="产品计量单位"><el-input v-model="form.maintenanceWorker"></el-input></el-form-item>
-                <el-form-item label="属性"><el-input v-model="form.remarks"></el-input></el-form-item>
-                <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>
+              <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
+              <el-form-item label="产品简称"><el-input v-model="form.productabbr"></el-input></el-form-item>
+              <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
+
+              <el-form-item label="首件检测">
+                <el-select v-model="form.firstcheck" placeholder="请选择" class="handle-select mr10">
+                  <el-option key="1" label="是" value="是"></el-option>
+                  <el-option key="2" label="否" value="否"></el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
+              <el-form-item label="管理方式"><el-input v-model="form.manageway"></el-input></el-form-item>
+              <el-form-item label="批次"><el-input v-model="form.lotnumber"></el-input></el-form-item>
+              <el-form-item label="状态"><el-input v-model="form.state"></el-input></el-form-item>
+
+
+
+
+                <el-form-item label="产品计量单位">
+                  <el-select v-model="form.productunit" placeholder="请选择">
+                    <el-option v-for="item in dataList"
+                               :key="item.label"
+                               :label="item.label"
+                               :value="item.label">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="属性"><el-input v-model="form.productprop"></el-input></el-form-item>
+<!--                <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>-->
+
+
+
+
 
             </el-form>
+
+
+
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
             </span>
         </el-dialog>
     </div>
+
+
+
+
 </template>
+
 
 <script>
 import { fetchData } from '../../api/index';
@@ -144,6 +178,7 @@ export default {
                 pageSize: 50
             },
             tableData: [],
+            search:{},
             multipleSelection: [],
             delList: [],
             editVisible: false,
@@ -159,16 +194,20 @@ export default {
 
     },
     methods: {
-
         getData() {
             this.$axios.get('/api/basProduct/selectAll').then(res =>{
                 this.tableData = res.data;
+
             })
+          this.$axios.get('/api/sysDict/selectBytype?type=unit').then(res =>{
+            this.dataList = res.data;
+          })
         },
         // 触发搜索按钮
         handleSearch() {
-            this.$set(this.query, 'pageIndex', 1);
-            this.getData();
+          this.$axios.get('/api/basProduct/search?select='+this.query.select+'&desc='+ this.query.desc).then(res =>{
+            this.tableData = res.data;
+          })
         },
         // 删除操作
         handleDelete(index, row) {
@@ -179,7 +218,7 @@ export default {
                 .then(() => {
                     this.tableData.splice(index, 1);
                     this.$axios.get('/api/basProduct/deleteById?id='+row.id).then(res=>{
-                        this.$message.success("删除成功");
+                        this.tableData = res.data;
                     })
                 })
                 .catch(() => {});
@@ -215,10 +254,9 @@ export default {
         saveEdit() {
             console.log(this.form)
             this.editVisible = false;
-
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
             this.$axios.post('/api/basProduct/edit',this.form).then(res=>{
-                this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+              this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             })
             this.$set(this.tableData, this.idx, this.form);
         },

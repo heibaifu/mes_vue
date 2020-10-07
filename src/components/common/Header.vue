@@ -14,19 +14,19 @@
                         <i class="el-icon-rank"></i>
                     </el-tooltip>
                 </div>
-                <!-- 消息中心 -->
-                <div class="btn-bell">
-                    <el-tooltip
-                        effect="dark"
-                        :content="message?`有${message}条未读消息`:`消息中心`"
-                        placement="bottom"
-                    >
-                        <router-link to="/tabs">
-                            <i class="el-icon-bell"></i>
-                        </router-link>
-                    </el-tooltip>
-                    <span class="btn-bell-badge" v-if="message"></span>
-                </div>
+<!--                &lt;!&ndash; 消息中心 &ndash;&gt;-->
+<!--                <div class="btn-bell">-->
+<!--                    <el-tooltip-->
+<!--                        effect="dark"-->
+<!--                        :content="message?`有${message}条未读消息`:`消息中心`"-->
+<!--                        placement="bottom"-->
+<!--                    >-->
+<!--                        <router-link to="/tabs">-->
+<!--                            <i class="el-icon-bell"></i>-->
+<!--                        </router-link>-->
+<!--                    </el-tooltip>-->
+<!--                    <span class="btn-bell-badge" v-if="message"></span>-->
+<!--                </div>-->
                 <!-- 用户头像 -->
                 <div class="user-avator">
                     <img :src="imgUrl" />
@@ -85,6 +85,9 @@ export default {
                 localStorage.removeItem('userInfo');
                 localStorage.removeItem('ms_username');
                 this.$router.push('/login');
+                this.$axios.get('/api/sysUser/logout').then(res =>{
+                    this.$message.success(`用户退出`);
+                })
             }
         },
         // 侧边栏折叠

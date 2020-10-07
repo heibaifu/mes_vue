@@ -20,7 +20,7 @@
         <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
         <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
         <!--        </el-select>-->
-        <el-input v-model="query.employeename" placeholder="员工查询" class="handle-input mr10"></el-input>
+        <el-input v-model="query.employeename" placeholder="员工姓名查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -51,7 +51,7 @@
 <!--        update_date	17		datetime	更新时间-->
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="员工ID"></el-table-column>
+<!--        <el-table-column prop="id" label="员工ID"></el-table-column>-->
         <el-table-column prop="employeeno" label="员工编号"></el-table-column>
         <el-table-column prop="employeename" label="员工姓名"></el-table-column>
         <el-table-column prop="workdate" label="入职日期"></el-table-column>
@@ -61,9 +61,9 @@
         <el-table-column prop="address" label="地址"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="idcard" label="身份证号"></el-table-column>
-        <el-table-column prop="officeid" label="所属部门"></el-table-column>
+        <el-table-column prop="officename" label="所属部门"></el-table-column>
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="create_by" label="创建人"></el-table-column>-->
 <!--        <el-table-column prop="create_date" label="创建时间"></el-table-column>-->
 <!--        <el-table-column prop="update_by" label="更新人"></el-table-column>-->
@@ -112,7 +112,16 @@
         <el-form-item label="地址"><el-input v-model="form.address"></el-input></el-form-item>
         <el-form-item label="邮箱"><el-input v-model="form.email"></el-input></el-form-item>
         <el-form-item label="身份证号"><el-input v-model="form.idcard"></el-input></el-form-item>
-        <el-form-item label="所属部门"><el-input v-model="form.officeid"></el-input></el-form-item>
+        <el-form-item label="所属部门">
+          <el-select v-model="form.officeId" placeholder="请选择部门">
+            <el-option
+                v-for="office in Office"
+                :key="office.name"
+                :label="office.name"
+                :value="office.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
 
       </el-form>
@@ -130,12 +139,23 @@
         <el-form-item label="员工姓名"><el-input v-model="form.employeeName"></el-input></el-form-item>
         <el-form-item label="入职日期"><el-input v-model="form.workDate"></el-input></el-form-item>
         <el-form-item label="性别"><el-input v-model="form.sex"></el-input></el-form-item>
+
         <el-form-item label="年龄"><el-input v-model="form.age"></el-input></el-form-item>
         <el-form-item label="电话"><el-input v-model="form.telNum"></el-input></el-form-item>
         <el-form-item label="地址"><el-input v-model="form.address"></el-input></el-form-item>
         <el-form-item label="邮箱"><el-input v-model="form.email"></el-input></el-form-item>
         <el-form-item label="身份证号"><el-input v-model="form.idCard"></el-input></el-form-item>
-        <el-form-item label="所属部门"><el-input v-model="form.officeId"></el-input></el-form-item>
+
+        <el-form-item label="所属部门">
+          <el-select v-model="form.officeId" placeholder="请选择部门">
+            <el-option
+                v-for="office in Office"
+                :key="office.name"
+                :label="office.name"
+                :value="office.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.createBy"></el-input></el-form-item>
       </el-form>
@@ -153,11 +173,11 @@ export default {
   data() {
     return {
       query: {
-        address: 'equip_no',
         name: '',
         pageIndex: 0,
         pageSize: 50
       },
+      Office:[],
       tableData: [],
       multipleSelection: [],
       delList: [],
@@ -178,6 +198,12 @@ export default {
       this.$axios.get('/api/basEmployees/selectAll').then(res =>{
 
         this.tableData = res.data;
+      })
+    },
+    getOfficeData() {
+      this.$axios.get('/api/sysOffice/selectAll').then(res =>{
+
+        this.Office = res.data;
       })
     },
     // 触发搜索按钮
@@ -222,9 +248,11 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getOfficeData();
     },
     //添加操作
     handleAdd(index, row) {
+      this.getOfficeData();
       this.addVisible = true;
     },
     // 保存编辑

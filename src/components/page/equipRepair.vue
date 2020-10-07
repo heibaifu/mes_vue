@@ -20,11 +20,10 @@
                 </el-select>
                 <el-select v-model="query.address2" placeholder="设备位置" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
-                    <el-option key="2" label="ML001" value="0001"></el-option>
-                    <el-option key="3" label="ML002" value="0002"></el-option>
-                    <el-option key="4" label="ML003" value="0003"></el-option>
-                    <el-option key="4" label="ML004" value="0004"></el-option>
-                    <el-option key="4" label="ML005" value="0005"></el-option>
+                    <el-option key="2" label="金龙鱼产线" value="0001"></el-option>
+                    <el-option key="3" label="鱿鱼丝产线" value="0002"></el-option>
+                    <el-option key="4" label="金枪鱼产线" value="0003"></el-option>
+                    <el-option key="4" label="马哈鱼产线" value="0004"></el-option>
                 </el-select>
                 <el-select v-model="query.address3" placeholder="维修状态" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
@@ -46,7 +45,7 @@
                 <el-table-column width="55" align="center" sortable></el-table-column>
                 <el-table-column prop="equipNo" label="设备编号" sortable width="150"></el-table-column>
                 <el-table-column prop="equipTypeString" label="设备类型" sortable width="130"></el-table-column>
-                <el-table-column prop="equipLoc" label="所处产线" sortable width="130"></el-table-column>
+                <el-table-column prop="equipLocString" label="所处产线" sortable width="130"></el-table-column>
                 <el-table-column prop="faultDesc" label="故障描述"></el-table-column>
                 <el-table-column prop="reportPerson" label="上报人姓名" sortable width="130"></el-table-column>
                 <el-table-column prop="createDateString" label="创建时间" sortable width="180"></el-table-column>
@@ -144,6 +143,14 @@ export default {
                     this.tableData[i].statusString="维修中";
                 else if(this.tableData[i].status=="0003")
                     this.tableData[i].statusString="已完工";
+                if(this.tableData[i].equipLoc=="0001")
+                    this.tableData[i].equipLocString="金龙鱼产线";
+                else if(this.tableData[i].equipLoc=="0002")
+                    this.tableData[i].equipLocString="鱿鱼丝产线";
+                else if(this.tableData[i].equipLoc=="0003")
+                    this.tableData[i].equipLocString="金枪鱼产线";
+                else if(this.tableData[i].equipLoc=="0004")
+                    this.tableData[i].equipLocString="马哈鱼产线";
             }
         },
         getData2() {
@@ -158,6 +165,7 @@ export default {
             console.log('/api/equipFaultReport/select?equip_type='+this.query.address1+'&equip_loc='+this.query.address2+'&status='+this.query.address3);
             this.$axios.get('/api/equipFaultReport/select?equip_type='+this.query.address1+'&equip_loc='+this.query.address2+'&status='+this.query.address3).then(res =>{
                 this.tableData = res.data;
+                this.toString();
                 // this.toString();
             })
 
@@ -182,6 +190,8 @@ export default {
         saveEdit() {
             console.log(this.form)
             this.editVisible = false;
+
+
             this.$axios.post('/api/equipRepair/add',this.form).then(res=>{
                 this.form.status='0003';
                 this.$message.success(`维修报告提交成功`);

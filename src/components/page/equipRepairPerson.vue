@@ -20,11 +20,10 @@
                 </el-select>
                 <el-select v-model="query.address2" placeholder="设备位置" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
-                    <el-option key="2" label="ML001" value="0001"></el-option>
-                    <el-option key="3" label="ML002" value="0002"></el-option>
-                    <el-option key="4" label="ML003" value="0003"></el-option>
-                    <el-option key="4" label="ML004" value="0004"></el-option>
-                    <el-option key="4" label="ML005" value="0005"></el-option>
+                    <el-option key="2" label="金龙鱼产线" value="0001"></el-option>
+                    <el-option key="3" label="鱿鱼丝产线" value="0002"></el-option>
+                    <el-option key="4" label="金枪鱼产线" value="0003"></el-option>
+                    <el-option key="4" label="马哈鱼产线" value="0004"></el-option>
                 </el-select>
                 <el-select v-model="query.address3" placeholder="维修状态" class="handle-select mr10">
                     <el-option key="1" label="" value=""></el-option>
@@ -46,7 +45,7 @@
                 <el-table-column width="55" align="center"></el-table-column>
                     <el-table-column prop="equipNo" label="设备编号" sortable  width="160"></el-table-column>
                     <el-table-column prop="equipTypeString" label="设备类型" sortable width="130"></el-table-column>
-                    <el-table-column prop="equipLoc" label="所处产线" sortable width="130"></el-table-column>
+                    <el-table-column prop="equipLocString" label="所处产线" sortable width="130"></el-table-column>
                     <el-table-column prop="faultDesc" label="故障描述" ></el-table-column>
                     <el-table-column prop="reportPerson" label="上报人姓名" sortable width="130"></el-table-column>
                     <el-table-column prop="createDateString" label="创建时间" sortable width="180"></el-table-column>
@@ -79,12 +78,12 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="设备位置" prop="equipLoc">
-                    <el-select v-model="form.equipType" placeholder="请选择设备类型" :disabled="true">
-                        <el-option key="1" label="电子秤" value="0001"></el-option>
-                        <el-option key="2" label="读卡器" value="0002"></el-option>
-                        <el-option key="3" label="条码打印机" value="0003"></el-option>
-                        <el-option key="4" label="安卓PAD" value="0004"></el-option>
-                        <el-option key="5" label="红外对射枪" value="0005"></el-option>
+                    <el-select v-model="form.equipLoc" placeholder="请选择设备所处产线" :disabled="true">
+                        <el-option label="ML0001" value="0001"></el-option>
+                        <el-option label="ML0002" value="0002"></el-option>
+                        <el-option label="ML0003" value="0003"></el-option>
+                        <el-option label="ML0004" value="0004"></el-option>
+                        <el-option label="ML0005" value="0005" ></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="故障描述"><el-input :disabled="true" type="textarea"  v-model="form.faultDesc"></el-input></el-form-item>
@@ -147,12 +146,23 @@ export default {
                     this.tableData[i].statusString="维修中";
                 else if(this.tableData[i].status=="0003")
                     this.tableData[i].statusString="已完工";
+                if(this.tableData[i].equipLoc=="0001")
+                    this.tableData[i].equipLocString="金龙鱼产线";
+                else if(this.tableData[i].equipLoc=="0002")
+                    this.tableData[i].equipLocString="鱿鱼丝产线";
+                else if(this.tableData[i].equipLoc=="0003")
+                    this.tableData[i].equipLocString="金枪鱼产线";
+                else if(this.tableData[i].equipLoc=="0004")
+                    this.tableData[i].equipLocString="马哈鱼产线";
+
             }
         },
         getData2() {
             this.$axios.get('/api/equipFaultReport/selectAll').then(res =>{
                 this.tableData = res.data;
                 this.toString();
+                console.log(res);
+                console.log(this.tableData);
             })
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
         },
@@ -163,7 +173,7 @@ export default {
                 this.tableData = res.data;
                 this.toString();
             })
-
+            this.toString();
         },
         // 编辑操作
         handleEdit(index, row) {

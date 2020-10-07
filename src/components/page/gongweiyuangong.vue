@@ -15,12 +15,7 @@
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
-        <!--        <el-select v-model="query.address" placeholder="设备编号" class="handle-select mr10">-->
-        <!--          <el-option key="1" label="工厂编号" value="equip_no"></el-option>-->
-        <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
-        <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
-        <!--        </el-select>-->
-        <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
+        <el-input v-model="query.employeename" placeholder="员工姓名查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
       </div>
@@ -45,11 +40,13 @@
 
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="编号"></el-table-column>
-        <el-table-column prop="employeeId" label="员工编号"></el-table-column>
-        <el-table-column prop="cellId" label="工位编号"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
-        <el-table-column prop="delFlag" label="删除标记"></el-table-column>
+<!--        <el-table-column prop="id" label="编号"></el-table-column>-->
+<!--        <el-table-column prop="employeeId" label="员工编号"></el-table-column>-->
+        <el-table-column prop="employeename" label="员工姓名"></el-table-column>
+<!--        <el-table-column prop="cellId" label="工位编号"></el-table-column>-->
+        <el-table-column prop="cellname" label="所属工位"></el-table-column>
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
+<!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 
         <el-table-column label="操作" width="180" align="center">
@@ -83,10 +80,32 @@
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="编号"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="员工编号"><el-input v-model="form.employeeId"></el-input></el-form-item>
-        <el-form-item label="工位编号"><el-input v-model="form.cellId"></el-input></el-form-item>
-        <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
+<!--        <el-form-item label="编号"><el-input v-model="form.id"></el-input></el-form-item>-->
+<!--        <el-form-item label="员工编号"><el-input v-model="form.employeeId"></el-input></el-form-item>-->
+<!--        <el-form-item label="工位编号"><el-input v-model="form.cellId"></el-input></el-form-item>-->
+<!--        <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>-->
+        <el-form-item label="员工姓名">
+          <el-select v-model="form.employee_id" placeholder="请选择员工">
+            <el-option
+                v-for="employee in Employee"
+                :key="employee.employeename"
+                :label="employee.employeename"
+                :value="employee.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+
+        <el-form-item label="工位名称">
+          <el-select v-model="form.cell_id" placeholder="请选择员工">
+            <el-option
+                v-for="cell in Cell"
+                :key="cell.cellname"
+                :label="cell.cellname"
+                :value="cell.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
 
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -98,8 +117,28 @@
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
 
-        <el-form-item label="员工编号"><el-input v-model="form.employee_id"></el-input></el-form-item>
-        <el-form-item label="工位编号"><el-input v-model="form.cell_id"></el-input></el-form-item>
+        <el-form-item label="员工姓名">
+          <el-select v-model="form.employee_id" placeholder="请选择员工">
+            <el-option
+                v-for="employee in Employee"
+                :key="employee.employeename"
+                :label="employee.employeename"
+                :value="employee.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+
+        <el-form-item label="工位名称">
+          <el-select v-model="form.cell_id" placeholder="请选择员工">
+            <el-option
+                v-for="cell in Cell"
+                :key="cell.cellname"
+                :label="cell.cellname"
+                :value="cell.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.createBy"></el-input></el-form-item>
 
@@ -125,6 +164,8 @@ export default {
         pageSize: 50
       },
       tableData: [],
+      Employee:[],
+      Cell:[],
       multipleSelection: [],
       delList: [],
       editVisible: false,
@@ -146,10 +187,23 @@ export default {
         this.tableData = res.data;
       })
     },
+    getEmployeeData() {
+      this.$axios.get('/api/basEmployees/selectAll').then(res =>{
+
+        this.Employee = res.data;
+      })
+    },
+    getCellData() {
+      this.$axios.get('/api/basWorkcell/selectAll').then(res =>{
+
+        this.Cell = res.data;
+      })
+    },
     // 触发搜索按钮
     handleSearch() {
-      this.$set(this.query, 'pageIndex', 1);
-      this.getData();
+      this.$axios.get('/api/basCellEmployee/selectByName?employeename='+this.query.employeename).then(res =>{
+        this.tableData = res.data;
+      })
     },
     // 删除操作
     handleDelete(index, row) {
@@ -187,9 +241,13 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getEmployeeData();
+      this.getCellData();
     },
     //添加操作
     handleAdd(index, row) {
+      this.getEmployeeData();
+      this.getCellData();
       this.addVisible = true;
     },
     // 保存编辑

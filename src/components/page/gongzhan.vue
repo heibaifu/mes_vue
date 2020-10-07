@@ -42,12 +42,13 @@
 
 
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工站Id"></el-table-column>
+<!--        <el-table-column prop="id" label="工站Id"></el-table-column>-->
         <el-table-column prop="stationname" label="工站名称"></el-table-column>
+          <el-table-column prop="linename" label="所属产线"></el-table-column>
         <el-table-column prop="stationno" label="工站编号"></el-table-column>
         <el-table-column prop="stationmaster" label="工站负责人"></el-table-column>
-        <el-table-column prop="lineId" label="所属产线"></el-table-column>
-        <el-table-column prop="remarks" label="备注"></el-table-column>
+
+<!--        <el-table-column prop="remarks" label="备注"></el-table-column>-->
 <!--        <el-table-column prop="delFlag" label="删除标记"></el-table-column>-->
 
 <!--        <el-form-item label="工站Id"><el-input v-model="form.id"></el-input></el-form-item>-->
@@ -95,7 +96,16 @@
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
         <el-form-item label="工站ID"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="所属产线"><el-input v-model="form.lineId"></el-input></el-form-item>
+        <el-form-item label="所属产线">
+          <el-select v-model="form.line_id" placeholder="请选择产线">
+            <el-option
+                v-for="line in Line"
+                :key="line.linename"
+                :label="line.linename"
+                :value="line.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工站名称"><el-input v-model="form.stationname"></el-input></el-form-item>
         <el-form-item label="工站编号"><el-input v-model="form.stationno"></el-input></el-form-item>
         <el-form-item label="工站负责人"><el-input v-model="form.stationmaster"></el-input></el-form-item>
@@ -110,7 +120,16 @@
     <!-- 编辑添加框 -->
     <el-dialog title="添加" :visible.sync="addVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
-        <el-form-item label="所属产线"><el-input v-model="form.line_id"></el-input></el-form-item>
+        <el-form-item label="所属产线">
+          <el-select v-model="form.line_id" placeholder="请选择产线">
+            <el-option
+                v-for="line in Line"
+                :key="line.linename"
+                :label="line.linename"
+                :value="line.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工站名称"><el-input v-model="form.stationName"></el-input></el-form-item>
         <el-form-item label="工站编号"><el-input v-model="form.stationNo"></el-input></el-form-item>
         <el-form-item label="工站负责人"><el-input v-model="form.stationMaster"></el-input></el-form-item>
@@ -138,6 +157,7 @@ export default {
         pageIndex: 0,
         pageSize: 50
       },
+      Line: [],
       tableData: [],
       multipleSelection: [],
       delList: [],
@@ -158,6 +178,13 @@ export default {
       this.$axios.get('/api/basWorkstationinfos/selectAll').then(res =>{
 
         this.tableData = res.data;
+      })
+    },
+    // 获取 easy-mock 的模拟数据
+    getLineData() {
+      this.$axios.get('/api/basLine/selectAll').then(res =>{
+
+        this.Line = res.data;
       })
     },
     // 触发搜索按钮
@@ -202,10 +229,12 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getLineData();
     },
     //添加操作
     handleAdd(index, row) {
       this.addVisible = true;
+      this.getLineData();
     },
     // 保存编辑
     saveEdit() {

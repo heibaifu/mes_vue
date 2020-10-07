@@ -15,10 +15,8 @@
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
-        <el-select v-model="query.address" placeholder="设备类型" class="handle-select mr10">
-          <el-option key="1" label="" value=""></el-option>
-          <el-option key="2" label="工单号" value="0001"></el-option>
-        </el-select>
+
+        <el-input v-model="query.ordercode" placeholder="工单号查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
 <!--        <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>-->
       </div>
@@ -32,9 +30,10 @@
           @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="id" label="工单ID" sortable width="200"></el-table-column>
+<!--        <el-table-column prop="id" label="工单ID" sortable width="200"></el-table-column>-->
+        <el-table-column prop="ordercode" label="工单码" sortable width="130"></el-table-column>
         <el-table-column prop="orderId" label="订单ID" sortable width="200"></el-table-column>
-        <el-table-column prop="ordercode" label="工单条码" sortable width="130"></el-table-column>
+
         <el-table-column prop="unitname" label="计量单位"></el-table-column>
         <el-table-column prop="ordertype" label="工单类型" sortable width="200"></el-table-column>
         <el-table-column prop="amount" label="工单生产数量" sortable width="200"></el-table-column>
@@ -45,49 +44,32 @@
         <el-table-column prop="outamount" label="产出数量" sortable width="200"></el-table-column>
         <el-table-column prop="scrapamount" label="报废数量" sortable width="200"></el-table-column>
         <el-table-column prop="state" label="工单状态" sortable width="200"></el-table-column>
-        <el-table-column prop="lineId" label="产线ID" sortable width="200"></el-table-column>
-        <el-table-column prop="productId" label="产品ID" sortable width="200"></el-table-column>
+        <el-table-column prop="linename" label="工单产线" sortable width="200"></el-table-column>
+        <el-table-column prop="productname" label="产品名称" sortable width="200"></el-table-column>
 
 
-
-
-        <!--                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>-->
-        <!--                <el-table-column prop="name" label="用户名"></el-table-column>-->
-        <!--                <el-table-column label="账户余额">-->
-        <!--                    <template slot-scope="scope">￥{{scope.row.money}}</template>-->
-        <!--                </el-table-column>-->
-        <!--                <el-table-column label="头像(查看大图)" align="center">-->
-        <!--                    <template slot-scope="scope">-->
-        <!--                        <el-image-->
-        <!--                            class="table-td-thumb"-->
-        <!--                            :src="scope.row.thumb"-->
-        <!--                            :preview-src-list="[scope.row.thumb]"-->
-        <!--                        ></el-image>-->
-        <!--                    </template>-->
-        <!--                </el-table-column>-->
-        <!--                <el-table-column prop="address" label="地址"></el-table-column>-->
-        <!--                <el-table-column label="状态" align="center">-->
-        <!--                    <template slot-scope="scope">-->
-        <!--                        <el-tag-->
-        <!--                            :type="scope.row.state==='成功'?'success':(scope.row.state==='失败'?'danger':'')"-->
-        <!--                        >{{scope.row.state}}</el-tag>-->
-        <!--                    </template>-->
-        <!--                </el-table-column>-->
-
-        <!--                <el-table-column prop="date" label="注册时间"></el-table-column>-->
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
                 type="text"
                 icon="el-icon-edit"
                 @click="handleEdit(scope.$index, scope.row)"
-            >编辑</el-button>
+            >修改</el-button>
             <el-button
                 type="text"
                 icon="el-icon-delete"
-                class="red"
                 @click="handleDelete(scope.$index, scope.row)"
             >删除</el-button>
+            <el-button
+                type="text"
+                icon="el-icon-edit"
+                @click="handleEdit(scope.$index, scope.row)"
+            >查看BOM</el-button>
+            <el-button
+                type="text"
+                icon="el-icon-delete"
+                @click="handleDelete(scope.$index, scope.row)"
+            >查看工艺路由</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -102,71 +84,55 @@
         ></el-pagination>
       </div>
     </div>
-
     <!-- 编辑弹出框 -->
-    <el-dialog title="编辑" :visible.sync="editVisible"  width="30%">
-      <el-form ref="form" :model="form" label-width="95px" :rules="rules">
-        <el-form-item label="编号" v-show="false"><el-input :disabled="true" v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="设备类型" prop="equipType">
-          <el-select v-model="form.equipType" placeholder="请选择设备类型">
-            <el-option key="1" label="电子秤" value="0001"></el-option>
-            <el-option key="2" label="读卡器" value="0002"></el-option>
-            <el-option key="3" label="条码打印机" value="0003"></el-option>
-            <el-option key="4" label="安卓PAD" value="0004"></el-option>
-            <el-option key="5" label="红外对射枪" value="0005"></el-option>
+    <el-dialog title="修改" :visible.sync="editVisible" width="30%">
+      <el-form ref="form" :model="form" label-width="95px">
+        <el-form-item label="工单号"><el-input v-model="form.ordercode"></el-input></el-form-item>
+        <el-form-item label="订单号"><el-input v-model="form.orderId"></el-input></el-form-item>
+        <el-form-item label="工单类型">
+          <el-select v-model="form.workorderstate" placeholder="请选择工单类型">
+            <el-option
+                v-for="enterprise in Enterprise"
+                :key="enterprise.entername"
+                :label="enterprise.entername"
+                :value="enterprise.id">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="保养周期" prop="cycle">
-          <el-select v-model="form.cycle" placeholder="请选择保养周期">
-            <el-option key="1" label="周" value="week"></el-option>
-            <el-option key="2" label="月" value="month"></el-option>
-            <el-option key="3" label="年" value="year"></el-option>
+        <el-form-item label="工单生产数量"><el-input v-model="form.amount"></el-input></el-form-item>
+        <el-form-item label="计量单位"><el-input v-model="form.unitname"></el-input></el-form-item>
+        <el-form-item label="预计生产时间"><el-input v-model="form.eststarttime"></el-input></el-form-item>
+        <el-form-item label="预计结束时间"><el-input v-model="form.estendtime"></el-input></el-form-item>
+        <el-form-item label="实际生产时间"><el-input v-model="form.actstarttime"></el-input></el-form-item>
+        <el-form-item label="投入数量"><el-input v-model="form.inamount"></el-input></el-form-item>
+        <el-form-item label="产出数量"><el-input v-model="form.outamount"></el-input></el-form-item>
+        <el-form-item label="报废数量"><el-input v-model="form.scrapamount"></el-input></el-form-item>
+<!--        <el-form-item label="工单状态"><el-input v-model="form.factoryname"></el-input></el-form-item>-->
+        <el-form-item label="工单状态">
+          <el-select v-model="form.workorderstate" placeholder="请选择工单状态">
+            <el-option
+                v-for="enterprise in Enterprise"
+                :key="enterprise.entername"
+                :label="enterprise.entername"
+                :value="enterprise.id">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="预警时间" prop="warnTime"><el-input v-model="form.warnTime"></el-input></el-form-item>
-        <el-form-item label="保养人姓名" prop="userName"><el-input v-model="form.userName"></el-input></el-form-item>
-        <el-form-item label="保养内容" prop="maintenance"><el-input type="textarea"  v-model="form.maintenance"></el-input></el-form-item>
+        <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
+
       </el-form>
       <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit('form')">确 定</el-button>
+                <el-button type="primary" @click="saveEdit">确 定</el-button>
             </span>
     </el-dialog>
-    <!-- 编辑添加框 -->
-    <el-dialog title="添加" :visible.sync="addVisible" width="30%">
-      <el-form ref="form" :model="form" label-width="95px" :rules="rules">
-        <el-form-item label="编号" v-show="false"><el-input :disabled="true" v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="设备类型" prop="equipType">
-          <el-select v-model="form.equipType" placeholder="请选择设备类型">
-            <el-option key="1" label="电子秤" value="0001"></el-option>
-            <el-option key="2" label="读卡器" value="0002"></el-option>
-            <el-option key="3" label="条码打印机" value="0003"></el-option>
-            <el-option key="4" label="安卓PAD" value="0004"></el-option>
-            <el-option key="5" label="红外对射枪" value="0005"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="保养周期" prop="cycle">
-          <el-select v-model="form.cycle" placeholder="请选择保养周期">
-            <el-option key="1" label="周" value="week"></el-option>
-            <el-option key="2" label="月" value="mouth"></el-option>
-            <el-option key="3" label="年" value="year"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="预警时间" prop="warnTime"><el-input v-model="form.warnTime"></el-input></el-form-item>
-        <el-form-item label="保养人姓名" prop="userName"><el-input v-model="form.userName"></el-input></el-form-item>
-        <el-form-item label="保养内容" prop="maintenance"><el-input type="textarea"  v-model="form.maintenance"></el-input></el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-                <el-button @click="addVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveAdd('form')">确 定</el-button>
-            </span>
-    </el-dialog>
+
   </div>
+
 </template>
 
 <script>
 export default {
-  name: 'equipMaintenancePlan',
   data() {
     return {
       query: {
@@ -184,26 +150,7 @@ export default {
       form: {},
       idx: -1,
       id: -1,
-      rules: {
-        equipType: [
-          { required: true, message: '请选择设备类型', trigger: 'change' }
-        ],
-        cycle: [
-          { required: true, message: '请选择保养周期', trigger: 'change' }
-        ],
-        warnTime: [
-          { required: true, message: '请输入预警时间', trigger: 'blur' },
-          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
-        ],
-        userName: [
-          { required: true, message: '请输入保养人姓名', trigger: 'blur' },
-          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
-        ],
-        maintenance: [
-          { required: true, message: '请输入保养内容', trigger: 'blur' },
-          { min: 1, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur' }
-        ]
-      }
+
     };
   },
   created() {
@@ -211,22 +158,6 @@ export default {
   },
   methods: {
 
-    // toString(){
-    //   const length = this.tableData.length;
-    //   for (let i = 0; i < length; i++) {
-    //     this.tableData[i].equipTypeString = "3";
-    //     if(this.tableData[i].equipType=="0001")
-    //       this.tableData[i].equipTypeString="电子秤";
-    //     else if(this.tableData[i].equipType=="0002")
-    //       this.tableData[i].equipTypeString="读卡器";
-    //     else if(this.tableData[i].equipType=="0003")
-    //       this.tableData[i].equipTypeString="条码打印机";
-    //     else if(this.tableData[i].equipType=="0004")
-    //       this.tableData[i].equipTypeString="安卓PAD";
-    //     else if(this.tableData[i].equipType=="0005")
-    //       this.tableData[i].equipTypeString="红外对射枪";
-    //   }
-    // },
     // 获取 easy-mock 的模拟数据
     getData() {
       this.$axios.get('/api/basWorkorder/selectAll').then(res =>{
@@ -236,7 +167,7 @@ export default {
     },
     // 触发搜索按钮
     handleSearch() {
-      this.$axios.get('/api/basWorkorder/selectByType?equip_type='+this.query.address).then(res =>{
+      this.$axios.get('/api/basWorkorder/selectByName?ordercode='+this.query.ordercode).then(res =>{
         this.tableData = res.data;
       })
     },
@@ -248,7 +179,7 @@ export default {
       })
           .then(() => {
             this.tableData.splice(index, 1);
-            this.$axios.get('/api/basWorkorder/delete?id='+row.id).then(res=>{
+            this.$axios.get('/api/basWorkorder/deleteById?id='+row.id).then(res=>{
               this.$message.success("删除成功");
             })
           })

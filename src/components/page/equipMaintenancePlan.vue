@@ -37,10 +37,10 @@
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                     <el-table-column prop="equipTypeString" label="设备类型" sortable width="200"></el-table-column>
-                    <el-table-column prop="cycle" label="保养周期" sortable width="200"></el-table-column>
+                    <el-table-column prop="cycleString" label="保养周期" sortable width="200"></el-table-column>
                     <el-table-column prop="warnTime" label="预警时间" sortable width="130"></el-table-column>
                     <el-table-column prop="maintenance" label="保养内容"></el-table-column>
-                    <el-table-column prop="userName" label="保养人" sortable width="200"></el-table-column>
+                        <el-table-column prop="userName" label="保养人" sortable width="200"></el-table-column>
 
 
 
@@ -218,6 +218,13 @@ export default {
                     this.tableData[i].equipTypeString="安卓PAD";
                 else if(this.tableData[i].equipType=="0005")
                     this.tableData[i].equipTypeString="红外对射枪";
+
+                if(this.tableData[i].cycle=="week")
+                    this.tableData[i].cycleString="每周";
+                else if(this.tableData[i].cycle=="mouth")
+                    this.tableData[i].cycleString="每月";
+                else if(this.tableData[i].cycle=="year")
+                    this.tableData[i].cycleString="每年";
             }
         },
         // 获取 easy-mock 的模拟数据
@@ -231,6 +238,8 @@ export default {
         handleSearch() {
             this.$axios.get('/api/equipMaintenancePlan/selectByType?equip_type='+this.query.address).then(res =>{
                 this.tableData = res.data;
+                this.toString();
+
             })
         },
         // 删除操作
