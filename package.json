@@ -13,6 +13,7 @@
     "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.11.0",
+    "file-saver": "^2.0.2",
     "mavon-editor": "^2.6.17",
     "vue": "^2.6.10",
     "vue-cropperjs": "^3.0.0",
@@ -20,7 +21,8 @@
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.0.3",
     "vue-schart": "^2.0.0",
-    "vuedraggable": "^2.17.0"
+    "vuedraggable": "^2.17.0",
+    "xlsx": "^0.16.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
