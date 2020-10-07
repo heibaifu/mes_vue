@@ -21,12 +21,12 @@
                 </el-card>
                 <el-card shadow="hover" style="height:252px;">
                     <div slot="header" class="clearfix">
-                        <span>绩效</span>
+                        <span>设备报修数量</span>
                     </div>
-                    <el-progress :percentage="71.3" color="#42b983"></el-progress>去头
-                    <el-progress :percentage="4.1" color="#f1e05a"></el-progress>开片
-                    <el-progress :percentage="3.7"></el-progress>挑刺
-                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>切片
+                    <el-progress :percentage="parseFloat((will*100/all)).toFixed(1)" color="#42b983"></el-progress>未派工
+                    <el-progress :percentage="parseFloat((ing*100/all)).toFixed(1)" color="#f1e05a"></el-progress>维修中
+                    <el-progress :percentage="parseFloat((ed*100/all)).toFixed(1)"></el-progress>已完工
+<!--                    <el-progress :percentage="5.9" color="#f56c6c"></el-progress>切片-->
                 </el-card>
             </el-col>
 
@@ -68,29 +68,41 @@
                 </el-row>
                 <el-card shadow="hover" style="height:403px;">
                     <div slot="header" class="clearfix">
-                        <span>待办事项</span>
-                        <el-button style="float: right; padding: 3px 0" type="text">添加</el-button>
+                        <span>设备故障待处理</span>
                     </div>
                     <el-table :show-header="false" :data="todoList" style="width:100%;">
-                        <el-table-column width="40">
-                            <template slot-scope="scope">
-                                <el-checkbox v-model="scope.row.status"></el-checkbox>
-                            </template>
-                        </el-table-column>
+<!--                        <el-table-column width="40">-->
+<!--                            <template slot-scope="scope">-->
+<!--                                <el-checkbox v-model="scope.row.status"></el-checkbox>-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
                         <el-table-column>
                             <template slot-scope="scope">
-                                <div
-                                    class="todo-item"
-                                    :class="{'todo-item-del': scope.row.status}"
-                                >{{scope.row.title}}</div>
+                                <div class="todo-item" >
+                                    <a style="color: #2d8cf0">
+                                        {{scope.row.equipLocString}}
+                                    </a>的
+                                    <span style="color: #2d8cf0">
+                                        {{scope.row.equipTypeString}}
+                                    </span>，编号
+                                    <span style="color: #2d8cf0">
+                                        {{scope.row.equipNo}}
+                                    </span>，在
+                                    <span style="color: #2d8cf0">
+                                        {{scope.row.createDateString}}
+                                    </span>报修，现在的状态是
+                                    <span style="color: #2d8cf0">
+                                        {{scope.row.statusString}}
+                                    </span>
+                                </div>
                             </template>
                         </el-table-column>
-                        <el-table-column width="60">
-                            <template>
-                                <i class="el-icon-edit"></i>
-                                <i class="el-icon-delete"></i>
-                            </template>
-                        </el-table-column>
+<!--                        <el-table-column width="60">-->
+<!--                            <template>-->
+<!--                                <i class="el-icon-edit"></i>-->
+<!--                                <i class="el-icon-delete"></i>-->
+<!--                            </template>-->
+<!--                        </el-table-column>-->
                     </el-table>
                 </el-card>
             </el-col>
@@ -121,102 +133,65 @@ export default {
     photo: '../../assets/img/img2.jpg',
     data() {
         return {
+            /**
+             * 设备报修数量计算百分比
+             */
+            will:0,
+            ing:0,
+            ed:0,
+            all:0,
             // name: localStorage.getItem('ms_username'),
-            todoList: [
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要写100行代码加几个bug吧',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: false
-                },
-                {
-                    title: '今天要修复100个bug',
-                    status: true
-                },
-                {
-                    title: '今天要写100行代码加几个bug吧',
-                    status: true
-                }
-            ],
+            todoList: [],
             data: [
-                {
-                    name: '2018/09/04',
-                    value: 1083
-                },
-                {
-                    name: '2018/09/05',
-                    value: 941
-                },
-                {
-                    name: '2018/09/06',
-                    value: 1139
-                },
-                {
-                    name: '2018/09/07',
-                    value: 816
-                },
-                {
-                    name: '2018/09/08',
-                    value: 327
-                },
-                {
-                    name: '2018/09/09',
-                    value: 228
-                },
-                {
-                    name: '2018/09/10',
-                    value: 1065
-                }
+
             ],
             options: {
                 type: 'bar',
                 title: {
-                    text: '订单统计'
+                    text: '设备数量总览'
                 },
                 xRorate: 25,
-                labels: ['周一', '周二', '周三', '周四', '周五'],
+                labels: ['电子秤', '读卡器', '条码打印机', '安卓PAD', '红外对射枪'],
                 datasets: [
                     {
-                        label: '家电',
-                        data: [234, 278, 270, 190, 230]
+                        label: '重量',
+                        data: [5, 2, 4, 7, 1]
                     },
                     {
-                        label: '百货',
-                        data: [164, 178, 190, 135, 160]
+                        label: '体积',
+                        data: [4, 2, 4, 1, 6]
                     },
                     {
-                        label: '食品',
-                        data: [144, 198, 150, 235, 120]
+                        label: '长度',
+                        data: [7, 1, 3, 1, 6]
                     }
                 ]
             },
             options2: {
                 type: 'line',
                 title: {
-                    text: '质量管控'
+                    text: '设备报修来源管控'
                 },
-                labels: ['6月', '7月', '8月', '9月', '10月'],
+                labels: ['金龙鱼产线', '鱿鱼丝产线', '金枪鱼产线', '马哈鱼产线'],
                 datasets: [
                     {
-                        label: '违规记录',
+                        label: '电子秤',
                         data: [1, 2, 3, 4, 5]
                     },
                     {
-                        label: '残次品上报',
+                        label: '读卡器',
                         data: [1, 4, 3, 2, 1]
                     },
                     {
-                        label: '异常工序检测',
+                        label: '条码打印机',
+                        data: [5, 6, 1, 3, 2]
+                    },
+                    {
+                        label: '安卓PAD',
+                        data: [5, 6, 1, 3, 2]
+                    },
+                    {
+                        label: '红外对射枪',
                         data: [5, 6, 1, 3, 2]
                     }
                 ]
@@ -245,10 +220,60 @@ export default {
 
     },
     created() {
+        this.$axios.get('/api/equipFaultReport/selectAll').then(res =>{
+            this.todoList = res.data;
+            this.toString();
+        })
         this.getlognums();
         this.frashdata();
+        this.ChartData1();
+        this.ChartData2();
     },
     methods: {
+        toString(){
+            const length = this.todoList.length;
+            this.all = length;
+            for (let i = 0; i < length; i++) {
+                this.todoList[i].equipTypeString = "3";
+                if(this.todoList[i].equipType=="0001")
+                    this.todoList[i].equipTypeString="电子秤";
+                else if(this.todoList[i].equipType=="0002")
+                    this.todoList[i].equipTypeString="读卡器";
+                else if(this.todoList[i].equipType=="0003")
+                    this.todoList[i].equipTypeString="条码打印机";
+                else if(this.todoList[i].equipType=="0004")
+                    this.todoList[i].equipTypeString="安卓PAD";
+                else if(this.todoList[i].equipType=="0005")
+                    this.todoList[i].equipTypeString="红外对射枪";
+                var buytime = new Date(this.todoList[i].createDate);
+                var month= buytime.getMonth()+1;
+                this.todoList[i].createDateString = buytime.getFullYear()+"年"+month+"月"+buytime.getDate()+"日"+buytime.getHours()+"时"+buytime.getMinutes()+"分";
+
+                if(this.todoList[i].status=="0001")
+                {
+                    this.will = this.will+1;
+                    this.todoList[i].statusString="未派工";
+                }
+                else if(this.todoList[i].status=="0002")
+                {
+                    this.todoList[i].statusString="维修中";
+                    this.ing = this.ing+1;
+                }
+                else if(this.todoList[i].status=="0003")
+                {
+                    this.ed = this.ed+1;
+                    this.todoList[i].statusString="已完工";
+                }
+                if(this.todoList[i].equipLoc=="0001")
+                    this.todoList[i].equipLocString="金龙鱼产线";
+                else if(this.todoList[i].equipLoc=="0002")
+                    this.todoList[i].equipLocString="鱿鱼丝产线";
+                else if(this.todoList[i].equipLoc=="0003")
+                    this.todoList[i].equipLocString="金枪鱼产线";
+                else if(this.todoList[i].equipLoc=="0004")
+                    this.todoList[i].equipLocString="马哈鱼产线";
+            }
+        },
         changeDate() {
             const now = new Date().getTime();
             this.data.forEach((item, index) => {
@@ -276,6 +301,47 @@ export default {
             this.$axios.get('/api/orders/doneNum').then(res=>{
                 localStorage.setItem('donenum', res.data.data);
             })
+        },
+        ChartData1() {
+            this.options.datasets[0].data[0]=0;
+            this.options.datasets[1].data[0]=0;
+            this.options.datasets[2].data[0]=0;
+            this.options.datasets[0].data[1]=0;
+            this.options.datasets[1].data[1]=0;
+            this.options.datasets[2].data[1]=0;
+            this.options.datasets[0].data[2]=0;
+            this.options.datasets[1].data[2]=0;
+            this.options.datasets[2].data[2]=0;
+            this.options.datasets[0].data[3]=0;
+            this.options.datasets[1].data[3]=0;
+            this.options.datasets[2].data[3]=0;
+            this.options.datasets[0].data[4]=0;
+            this.options.datasets[1].data[4]=0;
+            this.options.datasets[2].data[4]=0;
+
+        },
+        ChartData2() {
+            this.options2.datasets[0].data[0]=0;
+            this.options2.datasets[1].data[0]=0;
+            this.options2.datasets[2].data[0]=0;
+            this.options2.datasets[3].data[0]=0;
+            this.options2.datasets[4].data[0]=0;
+            this.options2.datasets[0].data[1]=0;
+            this.options2.datasets[1].data[1]=0;
+            this.options2.datasets[2].data[1]=0;
+            this.options2.datasets[3].data[1]=0;
+            this.options2.datasets[4].data[1]=0;
+            this.options2.datasets[0].data[2]=0;
+            this.options2.datasets[1].data[2]=0;
+            this.options2.datasets[2].data[2]=0;
+            this.options2.datasets[3].data[2]=0;
+            this.options2.datasets[4].data[2]=0;
+            this.options2.datasets[0].data[3]=0;
+            this.options2.datasets[1].data[3]=0;
+            this.options2.datasets[2].data[3]=0;
+            this.options2.datasets[3].data[3]=0;
+            this.options2.datasets[4].data[3]=0;
+
         }
         // handleListener() {
         //     bus.$on('collapse', this.handleBus);
