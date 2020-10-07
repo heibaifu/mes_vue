@@ -9,11 +9,15 @@
               </el-breadcrumb>
             </div>
             <div class="container">
-
+              <div class="handle-box">
+                <el-button icon="el-icon-download" @click="exportExcel">导出</el-button>
+                <!--        <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>-->
+              </div>
               <el-table
                   :data="tableData"
                   border
                   class="table"
+                  id="out-table"
                   ref="multipleTable"
                   header-cell-class-name="table-header"
                   @selection-change="handleSelectionChange"
@@ -57,12 +61,12 @@
                 <el-form-item label="工单号"><el-input v-model="form.Id"></el-input></el-form-item>
                 <el-form-item label="订单号"><el-input v-model="form.orderno"></el-input></el-form-item>
                 <el-form-item label="工单类型">
-                  <el-select v-model="form.order_id" placeholder="请选择类型">
+                  <el-select v-model="form.value1" placeholder="请选择">
                     <el-option
-                        v-for="order in Order"
-                        :key="order.stationname"
-                        :label="order.stationname"
-                        :value="order.id">
+                        v-for="item in options1"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -75,12 +79,12 @@
                 <el-form-item label="产出数量"><el-input v-model="form.outAmount"></el-input></el-form-item>
                 <el-form-item label="报废数量"><el-input v-model="form.scrapAmount"></el-input></el-form-item>
                 <el-form-item label="工单状态">
-                  <el-select v-model="form.order_id" placeholder="请选择工单状态">
+                  <el-select v-model="form.value2" placeholder="请选择">
                     <el-option
-                        v-for="order in Order"
-                        :key="order.stationname"
-                        :label="order.stationname"
-                        :value="order.id">
+                        v-for="item in options2"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -95,6 +99,8 @@
         </template>
 
         <script>
+        import FileSaver from 'file-saver'
+        import XLSX from 'xlsx'
 
           export default {
             data() {
@@ -114,13 +120,46 @@
                 pageTotal: 0,
                 form: {},
                 idx: -1,
-                id: -1
+                id: -1,
+                options1: [{
+                  value: '选项1',
+                  label: '一般工单'
+                }, {
+                  value: '选项2',
+                  label: '加班工单'
+                }],
+                options2: [{
+                  value: '选项1',
+                  label: '新建'
+                }, {
+                  value: '选项2',
+                  label: '未发布'
+                }, {
+                  value: '选项3',
+                  label: '已发布'
+                }, {
+                  value: '选项4',
+                  label: '暂停  '
+                }, {
+                  value: '选项5',
+                  label: '取消'
+                }],
               };
             },
             created() {
               this.getData();
             },
             methods: {
+              exportExcel () {
+                /* out-table关联导出的dom节点  */
+                var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+                /* get binary string as output */
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+                try {
+                  FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '订单表.xlsx')
+                } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+                return wbout
+              },
               // 多选操作
               handleSelectionChange(val) {
                 this.multipleSelection = val;

@@ -261,6 +261,33 @@ export default new Router({
                     path: '/log_cutpiecequalitytestingrecords',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Log_Cutpiecequalitytestingrecords.vue'),
                     meta: { title: '切片质量检测' }
+                },
+                {
+                    path: '/performance',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/performance.vue'),
+                    meta: { title: '绩效参数' }
+                }
+
+                ,
+                {
+                    path: '/Relationship',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Relationship.vue'),
+                    meta: { title: '关系' }
+                },
+                {
+                    path: '/cuthead_workStation',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/cuthead_workStation.vue'),
+                    meta: { title: '去头工站' }
+                },
+                {
+                    path: '/cutpiece_workStation',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/cutpiece_workStation.vue'),
+                    meta: { title: '切片工站' }
+                },
+                {
+                    path: '/prick_workStation',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/prick_workStation.vue'),
+                    meta: { title: '挑刺工站' }
                 }
             ]
         },

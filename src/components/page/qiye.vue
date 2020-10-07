@@ -12,6 +12,7 @@
         <el-button
             type="primary"
             icon="el-icon-delete"
+
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
@@ -20,13 +21,16 @@
         <el-input v-model="query.entername" placeholder="企业名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
+        <el-button icon="el-icon-download" @click="exportExcel">导出</el-button>
       </div>
       <el-table
           :data="tableData"
           border
           class="table"
+          id = "out-table"
           ref="multipleTable"
           header-cell-class-name="table-header"
+          :row-class-name="tableRowClassName"
 
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
@@ -125,7 +129,10 @@
 
 <script>
 // import { fetchData } from '../../api/index';
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 export default {
+
   name: 'qiye',
   data() {
     return {
@@ -156,6 +163,16 @@ export default {
         this.tableData = res.data;
       })
     },
+    exportExcel () {
+      /* out-table关联导出的dom节点  */
+      var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+      /* get binary string as output */
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+      try {
+        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '企业表.xlsx')
+      } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+      return wbout
+    },
 
     // 触发搜索按钮
     // handleSearch() {
@@ -167,6 +184,7 @@ export default {
         this.tableData = res.data;
       })
     },
+
     // 删除操作
     handleDelete(index, row) {
       // 二次确认删除

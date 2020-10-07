@@ -18,11 +18,13 @@
                 <el-input v-model="query.flowname" placeholder="请输入所属流程查询" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
+                <el-button icon="el-icon-download" @click="exportExcel">导出</el-button>
             </div>
             <el-table
                     :data="tableData"
                     border
                     class="table"
+                    id="out-table"
                     ref="multipleTable"
                     header-cell-class-name="table-header"
                     @selection-change="handleSelectionChange"
@@ -125,6 +127,8 @@
 </template>
 
 <script>
+    import FileSaver from 'file-saver'
+    import XLSX from 'xlsx'
     export default {
         name: 'Tec_Flow_Process',
         data() {
@@ -151,12 +155,24 @@
             this.getData();
         },
         methods: {
+
             // 获取 easy-mock 的模拟数据
             getData() {
                 this.$axios.get('/api/tecFlowProcess/selectAll').then(res =>{
                     this.tableData = res.data;
                 })
 
+            },
+            //数据导出为excel
+            exportExcel () {
+                /* out-table关联导出的dom节点  */
+                var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+                /* get binary string as output */
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+                try {
+                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '工艺流程与工序关系.xlsx')
+                } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+                return wbout
             },
             // 触发搜索按钮
             handleSearch() {

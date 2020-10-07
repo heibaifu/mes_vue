@@ -12,12 +12,14 @@
 
         <el-input v-model="query.employeename" placeholder="按姓名查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+        <el-button icon="el-icon-download" @click="exportExcel">导出</el-button>
 
       </div>
       <el-table
           :data="tableData"
           border
           class="table"
+          id="out-table"
           height="800"
           ref="multipleTable"
           header-cell-class-name="table-header"
@@ -83,6 +85,8 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
+import XLSX from 'xlsx'
 export default {
   name: 'shanggangjilu',
   data() {
@@ -110,6 +114,16 @@ export default {
     this.getData2();
   },
   methods: {
+    exportExcel () {
+      /* out-table关联导出的dom节点  */
+      var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+      /* get binary string as output */
+      var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+      try {
+        FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '上岗记录表.xlsx')
+      } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+      return wbout
+    },
     // toString(){
     //   const length = this.tableData.length;
     //   for (let i = 0; i < length; i++) {
