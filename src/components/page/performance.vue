@@ -11,9 +11,8 @@
             <div class="handle-box">
                 <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection">批量删除</el-button>
 
-                <el-select v-model="query.select" placeholder="产品名称" class="handle-select mr10">
-                    <el-option key="1" label="产品名称" value="name"></el-option>
-                    <el-option key="2" label="条码" value="qrcode"></el-option>
+                <el-select v-model="query.select" placeholder="绩效参数" class="handle-select mr10">
+                    <el-option key="1" label="绩效参数" value="name"></el-option>
                 </el-select>
 
                 <el-input v-model="query.desc" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
@@ -24,17 +23,9 @@
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
 
 
-                  <el-table-column prop="productname" label="产品名称"></el-table-column>
-                  <el-table-column prop="productabbr" label="产品简称"></el-table-column>
-                  <el-table-column prop="productdesc" label="产品简述"></el-table-column>
-                  <el-table-column prop="firstcheck" label="首件检测"></el-table-column>
-                  <el-table-column prop="qrcode" label="条码"></el-table-column>
-                  <el-table-column prop="manageway" label="管理方式"></el-table-column>
-                  <el-table-column prop="lotnumber" label="批次"></el-table-column>
-                  <el-table-column prop="state" label="状态"></el-table-column>
-                  <el-table-column prop="productunit" label="产品计量单位"></el-table-column>
-                  <el-table-column prop="productprop" label="属性"></el-table-column>
-
+                  <el-table-column prop="performtypename" label="绩效参数名称"></el-table-column>
+                  <el-table-column prop="performtypenum" label="单价"></el-table-column>
+                  <el-table-column prop="performtypeunit" label="单位"></el-table-column>
 
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
@@ -72,21 +63,11 @@
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="95px">
 
-              <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
-              <el-form-item label="产品简称"><el-input v-model="form.productabbr"></el-input></el-form-item>
-              <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
+              <el-form-item label="绩效参数名称"><el-input v-model="form.productname"></el-input></el-form-item>
+              <el-form-item label="单价"><el-input v-model="form.productabbr"></el-input></el-form-item>
+              <el-form-item label="单位"><el-input v-model="form.productdesc"></el-input></el-form-item>
 
-              <el-form-item label="首件检测">
-                <el-select v-model="form.firstcheck" placeholder="请选择" class="handle-select mr10">
-                  <el-option key="1" label="是" value="是"></el-option>
-                  <el-option key="2" label="否" value="否"></el-option>
-                </el-select>
-              </el-form-item>
 
-              <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
-              <el-form-item label="管理方式"><el-input v-model="form.manageway"></el-input></el-form-item>
-              <el-form-item label="批次"><el-input v-model="form.lotnumber"></el-input></el-form-item>
-              <el-form-item label="状态"><el-input v-model="form.state"></el-input></el-form-item>
 
               <el-form-item label="产品计量单位">
                 <el-select v-model="form.productunit" placeholder="请选择">
@@ -97,8 +78,6 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="属性"><el-input v-model="form.productprop"></el-input></el-form-item>
-<!--              <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>-->
 
 
             </el-form>
@@ -109,46 +88,24 @@
         </el-dialog>
         <!-- 编辑添加框 -->
         <el-dialog title="添加" :visible.sync="addVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="95px">
+          <el-form ref="form" :model="form" label-width="95px">
 
-
-              <el-form-item label="产品名称"><el-input v-model="form.productname"></el-input></el-form-item>
-              <el-form-item label="产品简称"><el-input v-model="form.productabbr"></el-input></el-form-item>
-              <el-form-item label="产品简述"><el-input v-model="form.productdesc"></el-input></el-form-item>
-
-              <el-form-item label="首件检测">
-                <el-select v-model="form.firstcheck" placeholder="请选择" class="handle-select mr10">
-                  <el-option key="1" label="是" value="是"></el-option>
-                  <el-option key="2" label="否" value="否"></el-option>
-                </el-select>
-              </el-form-item>
-
-              <el-form-item label="条码"><el-input v-model="form.qrcode"></el-input></el-form-item>
-              <el-form-item label="管理方式"><el-input v-model="form.manageway"></el-input></el-form-item>
-              <el-form-item label="批次"><el-input v-model="form.lotnumber"></el-input></el-form-item>
-              <el-form-item label="状态"><el-input v-model="form.state"></el-input></el-form-item>
+            <el-form-item label="绩效参数名称"><el-input v-model="form.productname"></el-input></el-form-item>
+            <el-form-item label="单价"><el-input v-model="form.productabbr"></el-input></el-form-item>
+            <el-form-item label="单位"><el-input v-model="form.productdesc"></el-input></el-form-item>
 
 
 
-
-                <el-form-item label="产品计量单位">
-                  <el-select v-model="form.productunit" placeholder="请选择">
-                    <el-option v-for="item in dataList"
-                               :key="item.label"
-                               :label="item.label"
-                               :value="item.label">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-
-                <el-form-item label="属性"><el-input v-model="form.productprop"></el-input></el-form-item>
-<!--                <el-form-item label="生产流程"><el-input v-model="form.createBy"></el-input></el-form-item>-->
-
-
-
-
-
-            </el-form>
+            <el-form-item label="产品计量单位">
+              <el-select v-model="form.productunit" placeholder="请选择">
+                <el-option v-for="item in dataList"
+                           :key="item.label"
+                           :label="item.label"
+                           :value="item.label">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
 
 
 
@@ -195,7 +152,7 @@ export default {
     },
     methods: {
         getData() {
-            this.$axios.get('/api/basProduct/selectAll').then(res =>{
+            this.$axios.get('/api/kpiPerformtype/selectAll').then(res =>{
                 this.tableData = res.data;
 
             })
