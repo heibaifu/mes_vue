@@ -159,10 +159,19 @@
             this.getData();
         },
         methods: {
+            toString() {
+                const length = this.tableData.length;
+                for (let i = 0; i < length; i++) {
+                    var violationtime = new Date(this.tableData[i].violationTime);
+                    var month = violationtime.getMonth() + 1;
+                    this.tableData[i].violationtime = violationtime.getFullYear() + "年" + month + "月" + violationtime.getDate() + "日" + violationtime.getHours() + "时" + violationtime.getMinutes() + "分";
+                }
+            },
             // 获取 easy-mock 的模拟数据
             getData() {
                 this.$axios.get('/api/qcViolaction/selectAll').then(res =>{
                     this.tableData = res.data;
+                    // this.toString();
                 })
 
             },
@@ -170,6 +179,7 @@
             handleSearch() {
                 this.$axios.get('/api/qcViolaction/selectByName?stationname='+this.query.stationname).then(res =>{
                     this.tableData = res.data;
+                    this.toString();
                 })
             },
             //工站信息
