@@ -264,7 +264,7 @@ export default new Router({
                 },
                 {
                     path: '/performance',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Performance.vue'),
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/performance.vue'),
                     meta: { title: '绩效参数' }
                 }
 
