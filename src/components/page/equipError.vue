@@ -14,7 +14,7 @@
                     <el-input v-model="form.equipNo"></el-input>
                 </el-form-item>
                 <el-form-item label="设备类型" prop="equipType">
-                    <el-select v-model="form.equipType" placeholder="请选择设备类型">
+                        <el-select v-model="form.equipType" placeholder="请选择设备类型">
                         <el-option key="1" label="电子秤" value="0001"></el-option>
                         <el-option key="2" label="读卡器" value="0002"></el-option>
                         <el-option key="3" label="条码打印机" value="0003"></el-option>

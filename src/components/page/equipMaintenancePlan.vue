@@ -42,7 +42,7 @@
                     <el-table-column prop="cycleString" label="保养周期" sortable width="200"></el-table-column>
                     <el-table-column prop="warnTime" label="预警时间" sortable width="130"></el-table-column>
                     <el-table-column prop="maintenance" label="保养内容"></el-table-column>
-                        <el-table-column prop="userName" label="保养人" sortable width="200"></el-table-column>
+                    <el-table-column prop="userName" label="保养人" sortable width="200"></el-table-column>
 
 
 

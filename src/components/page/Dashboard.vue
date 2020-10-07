@@ -155,15 +155,15 @@ export default {
                 datasets: [
                     {
                         label: '重量',
-                        data: [234, 278, 270, 190, 230]
+                        data: [5, 2, 4, 7, 1]
                     },
                     {
                         label: '体积',
-                        data: [164, 178, 190, 135, 160]
+                        data: [4, 2, 4, 1, 6]
                     },
                     {
                         label: '长度',
-                        data: [144, 198, 150, 235, 120]
+                        data: [7, 1, 3, 1, 6]
                     }
                 ]
             },
@@ -226,6 +226,8 @@ export default {
         })
         this.getlognums();
         this.frashdata();
+        this.ChartData1();
+        this.ChartData2();
     },
     methods: {
         toString(){
@@ -299,6 +301,53 @@ export default {
             this.$axios.get('/api/orders/doneNum').then(res=>{
                 localStorage.setItem('donenum', res.data.data);
             })
+        },
+        ChartData1() {
+            this.options.datasets[0].data[0]=0;
+            this.options.datasets[1].data[0]=0;
+            this.options.datasets[2].data[0]=0;
+            this.options.datasets[0].data[1]=0;
+            this.options.datasets[1].data[1]=0;
+            this.options.datasets[2].data[1]=0;
+            this.options.datasets[0].data[2]=0;
+            this.options.datasets[1].data[2]=0;
+            this.options.datasets[2].data[2]=0;
+            this.options.datasets[0].data[3]=0;
+            this.options.datasets[1].data[3]=0;
+            this.options.datasets[2].data[3]=0;
+            this.options.datasets[0].data[4]=0;
+            this.options.datasets[1].data[4]=0;
+            this.options.datasets[2].data[4]=0;
+
+
+            const length = this.todoList.length;
+            for (let i = 0; i < this.todoList.length; i++) {
+                // if(this.todoList[i].equipType=="0001")//电子秤
+                    this.options.datasets[0].data[0]++;
+            }
+        },
+        ChartData2() {
+            this.options2.datasets[0].data[0]=0;
+            this.options2.datasets[1].data[0]=0;
+            this.options2.datasets[2].data[0]=0;
+            this.options2.datasets[3].data[0]=0;
+            this.options2.datasets[4].data[0]=0;
+            this.options2.datasets[0].data[1]=0;
+            this.options2.datasets[1].data[1]=0;
+            this.options2.datasets[2].data[1]=0;
+            this.options2.datasets[3].data[1]=0;
+            this.options2.datasets[4].data[1]=0;
+            this.options2.datasets[0].data[2]=0;
+            this.options2.datasets[1].data[2]=0;
+            this.options2.datasets[2].data[2]=0;
+            this.options2.datasets[3].data[2]=0;
+            this.options2.datasets[4].data[2]=0;
+            this.options2.datasets[0].data[3]=0;
+            this.options2.datasets[1].data[3]=0;
+            this.options2.datasets[2].data[3]=0;
+            this.options2.datasets[3].data[3]=0;
+            this.options2.datasets[4].data[3]=0;
+
         }
         // handleListener() {
         //     bus.$on('collapse', this.handleBus);
