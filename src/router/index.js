@@ -23,17 +23,17 @@ export default new Router({
                 {
                     path: '/shanggangjilu',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/shanggangjilu.vue'),
-                    meta: { title: '企业' }
+                    meta: { title: '上岗记录' }
                 },
                 {
                     path: '/gongdanweihu',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongdanweihu.vue'),
-                    meta: { title: '企业' }
+                    meta: { title: '工单维护' }
                 },
                 {
                     path: '/dingdanxinxi',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/dingdanxinxi.vue'),
-                    meta: { title: '企业' }
+                    meta: { title: '订单信息' }
                 },
                 {
                     path: '/qiye',

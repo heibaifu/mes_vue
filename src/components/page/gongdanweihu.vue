@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-cascades"></i> 设备保养计划
+          <i class="el-icon-lx-cascades"></i> 工单维护
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
