@@ -124,7 +124,8 @@ export default {
                       title: '工位与员工信息'
                     }
                   ]
-                },{
+                },
+              {
                     icon: 'el-icon-lx-copy',
                     index: 'Bom',
                     title: 'BOM基础资料',
@@ -145,7 +146,46 @@ export default {
                             title: 'BOM物料详情'
                         }
                     ]
-                },
+              },
+
+
+              {
+                icon: 'el-icon-lx-copy',
+                index: 'achievement',
+                title: '绩效管理',
+                subs: [
+
+                  {
+                    index: 'Performance report',
+                    title: '绩效报表',
+                    subs: [
+                      {
+                        index: 'cuthead_workStation',
+                        title: '去头工站',
+                      },
+                      {
+                        index: 'cutpiece_workStation',
+                        title: '切片工站',
+                      },
+                      {
+                        index:"prick_workStation",
+                        title: "挑刺工站",
+                      }
+                    ]
+                  },
+                  {
+                    index: 'performance',
+                    title: '绩效参数配置'
+                  },
+                  {
+                    index: 'Relationship',
+                    title: '绩效参数与工站的关系'
+                  },
+
+                ]
+
+                  },
+
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'shengchanguanli',
@@ -177,11 +217,13 @@ export default {
                     ]
                   }
                 ]
-                },{
-                    icon: 'el-icon-lx-copy',
-                    index: 'tabs',
-                    title: '绩效管理'
-                },{
+                }
+
+
+
+
+                ,
+              {
                     icon: 'el-icon-lx-copy',
                     index: 'gygl',
                     title: '工艺管理',
