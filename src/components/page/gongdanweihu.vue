@@ -90,12 +90,12 @@
         <el-form-item label="工单号"><el-input v-model="form.ordercode"></el-input></el-form-item>
         <el-form-item label="订单号"><el-input v-model="form.orderId"></el-input></el-form-item>
         <el-form-item label="工单类型">
-          <el-select v-model="form.workorderstate" placeholder="请选择工单类型">
+          <el-select v-model="form.value1" placeholder="请选择">
             <el-option
-                v-for="enterprise in Enterprise"
-                :key="enterprise.entername"
-                :label="enterprise.entername"
-                :value="enterprise.id">
+                v-for="item in options1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
@@ -109,12 +109,12 @@
         <el-form-item label="报废数量"><el-input v-model="form.scrapamount"></el-input></el-form-item>
 <!--        <el-form-item label="工单状态"><el-input v-model="form.factoryname"></el-input></el-form-item>-->
         <el-form-item label="工单状态">
-          <el-select v-model="form.workorderstate" placeholder="请选择工单状态">
+          <el-select v-model="form.value2" placeholder="请选择">
             <el-option
-                v-for="enterprise in Enterprise"
-                :key="enterprise.entername"
-                :label="enterprise.entername"
-                :value="enterprise.id">
+                v-for="item in options2"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
@@ -151,8 +151,34 @@ export default {
       idx: -1,
       id: -1,
 
+      options1: [{
+        value: '选项1',
+        label: '一般工单'
+      }, {
+        value: '选项2',
+        label: '加班工单'
+      }],
+      options2: [{
+        value: '选项1',
+        label: '新建'
+      }, {
+        value: '选项2',
+        label: '未发布'
+      }, {
+        value: '选项3',
+        label: '已发布'
+      }, {
+        value: '选项4',
+        label: '暂停  '
+      }, {
+        value: '选项5',
+        label: '取消'
+      }],
+
     };
+
   },
+
   created() {
     this.getData();
   },
