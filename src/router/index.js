@@ -221,6 +221,46 @@ export default new Router({
                     path: '/BOM_Details',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/BOM_Details.vue'),
                     meta: { title: 'basIPhoto' }
+                },
+                {
+                    path: '/tec_flow',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Flow.vue'),
+                    meta: { title: '工序维护' }
+                },
+                {
+                    path: '/tec_process',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/TecProcess.vue'),
+                    meta: { title: '工艺流程维护' }
+                },
+                {
+                    path: '/tec_flow_process',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Flow_Process.vue'),
+                    meta: { title: '工艺流程与工序关系' }
+                },
+                {
+                    path: '/tec_process_station',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Process_Station.vue'),
+                    meta: { title: '工序与工站关系' }
+                },
+                {
+                    path: '/qc_violaction',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Qc_Violaction.vue'),
+                    meta: { title: '违规管理' }
+                },
+                {
+                    path: '/qc_inperfections',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Qc_Inperfections.vue'),
+                    meta: { title: '残次品上报管理' }
+                },
+                {
+                    path: '/qc_abnormal_process',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Qc_Abnormal_Process.vue'),
+                    meta: { title: '异常工序检测' }
+                },
+                {
+                    path: '/log_cutpiecequalitytestingrecords',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/qc/Log_Cutpiecequalitytestingrecords.vue'),
+                    meta: { title: '切片质量检测' }
                 }
             ]
         },

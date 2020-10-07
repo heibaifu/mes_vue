@@ -30,11 +30,11 @@
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="proname" label="工序名称"></el-table-column>
                 <el-table-column prop="problem" label="上报问题"></el-table-column>
-                <el-table-column prop="report_user" label="上报人"></el-table-column>
-                <el-table-column prop="report_time" label="上报时间"></el-table-column>
+                <el-table-column prop="reportUsername" label="上报人"></el-table-column>
+                <el-table-column prop="reportTime" label="上报时间"></el-table-column>
                 <el-table-column prop="test" label="检查结果"></el-table-column>
-                <el-table-column prop="test_user" label="检查人"></el-table-column>
-                <el-table-column prop="test_time" label="检查时间"></el-table-column>
+                <el-table-column prop="reportUsername" label="检查人"></el-table-column>
+                <el-table-column prop="testTime" label="检查时间"></el-table-column>
                 <el-table-column prop="state" label="问题状态"></el-table-column>
 
                 <el-table-column label="操作" width="180" align="center">
