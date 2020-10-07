@@ -28,11 +28,13 @@
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <!--        增加记录        -->
                 <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
+                <el-button icon="el-icon-download" @click="exportExcel">导出</el-button>
             </div>
             <el-table
                     :data="tableData"
                     border
                     class="table"
+                    id="out-table"
                     ref="multipleTable"
                     header-cell-class-name="table-header"
                     @selection-change="handleSelectionChange"
@@ -134,6 +136,9 @@
 
 <script>
     import { fetchData } from '../../api/index';
+    import FileSaver from 'file-saver'
+    import XLSX from 'xlsx'
+
     export default {
         name: 'basIPhoto',
         data() {
@@ -243,7 +248,18 @@
             //添加操作
             handleAdd(index, row) {
                 this.addVisible = true;
-            }
+            },
+            exportExcel () {
+                /* out-table关联导出的dom节点  */
+                var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+                /* get binary string as output */
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+                try {
+                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '设备台账.xlsx')
+                } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+                return wbout
+            },
+
         }
     }
 </script>
