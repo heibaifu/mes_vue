@@ -319,12 +319,6 @@ export default {
             this.options.datasets[1].data[4]=0;
             this.options.datasets[2].data[4]=0;
 
-
-            const length = this.todoList.length;
-            for (let i = 0; i < this.todoList.length; i++) {
-                // if(this.todoList[i].equipType=="0001")//电子秤
-                    this.options.datasets[0].data[0]++;
-            }
         },
         ChartData2() {
             this.options2.datasets[0].data[0]=0;
