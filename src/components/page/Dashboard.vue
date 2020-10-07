@@ -310,26 +310,13 @@ export default {
             })
         },
         ChartData2() {
-            this.options2.datasets[0].data[0]=0;
-            this.options2.datasets[1].data[0]=0;
-            this.options2.datasets[2].data[0]=0;
-            this.options2.datasets[3].data[0]=0;
-            this.options2.datasets[4].data[0]=0;
-            this.options2.datasets[0].data[1]=0;
-            this.options2.datasets[1].data[1]=0;
-            this.options2.datasets[2].data[1]=0;
-            this.options2.datasets[3].data[1]=0;
-            this.options2.datasets[4].data[1]=0;
-            this.options2.datasets[0].data[2]=0;
-            this.options2.datasets[1].data[2]=0;
-            this.options2.datasets[2].data[2]=0;
-            this.options2.datasets[3].data[2]=0;
-            this.options2.datasets[4].data[2]=0;
-            this.options2.datasets[0].data[3]=0;
-            this.options2.datasets[1].data[3]=0;
-            this.options2.datasets[2].data[3]=0;
-            this.options2.datasets[3].data[3]=0;
-            this.options2.datasets[4].data[3]=0;
+            this.$axios.get('/api/equipFaultReport/ChartData2').then(res=>{
+                this.options2.datasets[0].data=res.data[0];
+                this.options2.datasets[1].data=res.data[1];
+                this.options2.datasets[2].data=res.data[2];
+                this.options2.datasets[3].data=res.data[3];
+                this.options2.datasets[4].data=res.data[4];
+            })
 
         }
         // handleListener() {
