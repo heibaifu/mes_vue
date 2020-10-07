@@ -15,11 +15,7 @@
             class="handle-del mr10"
             @click="delAllSelection"
         >批量删除</el-button>
-        <!--        <el-select v-model="query.address" placeholder="设备编号" class="handle-select mr10">-->
-        <!--          <el-option key="1" label="工厂编号" value="equip_no"></el-option>-->
-        <!--          <el-option key="2" label="工厂名称" value="equip_type"></el-option>-->
-        <!--&lt;!&ndash;          <el-option key="3" label="上报人姓名" value="report_person"></el-option>&ndash;&gt;-->
-        <!--        </el-select>-->
+
         <el-input v-model="query.cellname" placeholder="工位名称查询" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
         <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
@@ -88,7 +84,16 @@
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
         <el-form-item label="工位ID"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="所属工站"><el-input v-model="form.stationId"></el-input></el-form-item>
+        <el-form-item label="所属工站">
+          <el-select v-model="form.station_id" placeholder="请选择工站">
+            <el-option
+                v-for="station in Station"
+                :key="station.stationname"
+                :label="station.stationname"
+                :value="station.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工位名称"><el-input v-model="form.cellname"></el-input></el-form-item>
         <el-form-item label="工位编码"><el-input v-model="form.cellnumber"></el-input></el-form-item>
         <el-form-item label="工位负责人"><el-input v-model="form.cellmaster"></el-input></el-form-item>
@@ -213,6 +218,7 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getStationData();
     },
     //添加操作
     handleAdd(index, row) {

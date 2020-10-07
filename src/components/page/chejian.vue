@@ -94,7 +94,16 @@
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
         <el-form-item label="车间ID"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="所属工厂"><el-input v-model="form.factoryId"></el-input></el-form-item>
+        <el-form-item label="所属工厂">
+          <el-select v-model="form.factoryid" placeholder="请选择工厂">
+            <el-option
+                v-for="factory in Factory"
+                :key="factory.factoryname"
+                :label="factory.factoryname"
+                :value="factory.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="车间名称"><el-input v-model="form.shopname"></el-input></el-form-item>
         <el-form-item label="车间编码"><el-input v-model="form.shopno"></el-input></el-form-item>
         <el-form-item label="车间负责人"><el-input v-model="form.master"></el-input></el-form-item>
@@ -128,9 +137,8 @@
         <el-form-item label="车间描述"><el-input v-model="form.description"></el-input></el-form-item>
         <el-form-item label="备注"><el-input v-model="form.remarks"></el-input></el-form-item>
         <el-form-item label="创建人"><el-input v-model="form.createBy"></el-input></el-form-item>
-
-
       </el-form>
+
       <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
@@ -183,6 +191,7 @@ export default {
       this.$axios.get('/api/basWorkshop/selectByName?shopname='+this.query.shopname).then(res =>{
         this.tableData = res.data;
       })
+      this.getFactoryData();
     },
     // 删除操作
     handleDelete(index, row) {
@@ -220,6 +229,7 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getFactoryData();
     },
     //添加操作
     handleAdd(index, row) {
@@ -251,7 +261,9 @@ export default {
       this.$set(this.query, 'pageIndex', val);
       // this.query.pageIndex = val;
       this.getData();
+
     }
+
   }
 };
 </script>

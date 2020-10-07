@@ -20,7 +20,21 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
                     meta: { title: '系统首页' }
                 },
-
+                {
+                    path: '/shanggangjilu',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/shanggangjilu.vue'),
+                    meta: { title: '上岗记录' }
+                },
+                {
+                    path: '/gongdanweihu',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongdanweihu.vue'),
+                    meta: { title: '工单维护' }
+                },
+                {
+                    path: '/dingdanxinxi',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/dingdanxinxi.vue'),
+                    meta: { title: '订单信息' }
+                },
                 {
                     path: '/qiye',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/qiye.vue'),
@@ -58,22 +72,6 @@ export default new Router({
                     path: '/gongweiyuangong',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongweiyuangong.vue'),
                     meta: { title: '工位与员工信息' }
-                },
-                {
-                    path: '/shanggangjilu',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/shanggangjilu.vue'),
-                    meta: { title: '上岗记录' }
-                },
-                {
-                    path: '/dingdanxinxi',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/dingdanxinxi.vue'),
-                    meta: { title: '订单信息' }
-                },
-
-                {
-                    path: '/gongdanweihu',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/gongdanweihu.vue'),
-                    meta: { title: '工单维护' }
                 },
 
                 {
@@ -200,18 +198,39 @@ export default new Router({
                 },
                 {
                     path: '/b2',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basElectronsteelyard.vue'),
+                    meta: { title: 'basElectronsteelyard' }
+                },
+                {
+                    path: '/b4',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/basIPhoto.vue'),
                     meta: { title: 'basIPhoto' }
                 },
                 {
-                    path: '/tec_process',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/TecProcess.vue'),
-                    meta: { title: '工序管理' }
+                    path: '/b3',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basCodeprinter.vue'),
+                    meta: { title: 'basCodeprinter' }
+                },
+                {
+                    path: '/b5',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/basCardreader.vue'),
+                    meta: { title: 'basCardreader' }
+                }
+                ,
+                {
+                    path: '/BOM_Details',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/BOM_Details.vue'),
+                    meta: { title: 'basIPhoto' }
                 },
                 {
                     path: '/tec_flow',
                     component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/Tec_Flow.vue'),
-                    meta: { title: '工艺流程' }
+                    meta: { title: '工序维护' }
+                },
+                {
+                    path: '/tec_process',
+                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/tec/TecProcess.vue'),
+                    meta: { title: '工艺流程维护' }
                 },
                 {
                     path: '/tec_flow_process',

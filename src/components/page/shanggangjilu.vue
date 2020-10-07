@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-cascades"></i> 设备维修记录
+          <i class="el-icon-lx-cascades"></i> 上岗记录
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -33,7 +33,7 @@
         <el-table-column prop="linename" label="产线名称" sortable width="130"></el-table-column>
 <!--        <el-table-column prop="stationId" label="所属工站" sortable width="130"></el-table-column>-->
         <el-table-column prop="stationname" label="工站名称"></el-table-column>
-        <el-table-column prop="cellId" label="所属工位" sortable width="130"></el-table-column>
+<!--        <el-table-column prop="cellId" label="所属工位" sortable width="130"></el-table-column>-->
         <el-table-column prop="cellname" label="工位名称" sortable width="180"></el-table-column>
         <el-table-column prop="clockin" label="上班" sortable width="130"></el-table-column>
         <el-table-column prop="clockoff" label="下班" sortable width="130"></el-table-column>

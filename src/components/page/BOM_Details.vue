@@ -9,45 +9,35 @@
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="query.address" placeholder="Bom名称" class="handle-select mr10">
-                    <el-option key="1" label="Bom名称" value="equip_no"></el-option>
-
+                <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection">批量删除</el-button>
+                <el-select v-model="query.address" placeholder="产品名称" class="handle-select mr10">
+                    <el-option key="1" label="产品名称" value="equip_no"></el-option>
+                    <el-option key="2" label="设备类型" value="equip_type"></el-option>
+                    <el-option key="3" label="上报人姓名" value="report_person"></el-option>
                 </el-select>
                 <el-input v-model="query.name" placeholder="请输入相应查询条件" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
                 <el-button type="primary" icon="el-icon-zoom-in" @click="handleAdd">添加</el-button>
             </div>
-            <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header" @selection-change="handleSelectionChange">
-
-
-                    <el-table-column prop="bomname" label="Bom名称"></el-table-column>
-                    <el-table-column prop="bomversion" label="Bom版本"></el-table-column>
-                    <el-table-column prop="status" label="Bom状态"></el-table-column>
-                    <el-table-column prop="updateDate" label="修改时间"></el-table-column>
-
-
-
-
+            <el-table :data="tableData"
+                border
+                class="table"
+                ref="multipleTable"
+                header-cell-class-name="table-header"
+                @selection-change="handleSelectionChange"
+            >
+                <el-table-column type="selection" width="55" align="center"></el-table-column>
+                <el-table-column prop="bomname" label="BOM名称"></el-table-column>
+                <el-table-column prop="mtype" label="材料类型"></el-table-column>
+                <el-table-column prop="mnum" label="材料数量"></el-table-column>
+                <el-table-column prop="unit" label="单位"></el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
-                        <el-button
-                            type="text"
-                            icon="el-icon-edit"
-                            @click="handleEdit(scope.$index, scope.row)"
-                        >编辑</el-button>
-                        <el-button
-                            type="text"
-                            icon="el-icon-delete"
-                            class="red"
-                            @click="handleDelete(scope.$index, scope.row)"
-                        >删除</el-button>
+                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
-
-
             </el-table>
-
-
             <div class="pagination">
                 <el-pagination
                     background
@@ -64,12 +54,26 @@
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="95px">
 
+              <el-form-item label="BOM名称">
+                <el-select v-model="form.bomId" placeholder="请选择">
+                  <el-option v-for="item in BomList" :key="item.bomname" :label="item.bomname" :value="item.bomname">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="材料类型">
+                <el-select v-model="form.mtype" placeholder="请选择">
+                  <el-option v-for="item in productType" :key="item.label" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="材料数量"><el-input v-model="form.mnum"></el-input></el-form-item>
+              <el-form-item label="单位">
 
-                <el-form-item label="Bom名称"><el-input v-model="form.bomname"></el-input></el-form-item>
-                <el-form-item label="Bom版本"><el-input v-model="form.bomversion"></el-input></el-form-item>
-                <el-form-item label="Bom状态"><el-input v-model="form.status"></el-input></el-form-item>
-                <el-form-item label="所属产品"><el-input v-model="form.updateDate"></el-input></el-form-item>
-
+                <el-select v-model="form.unit" placeholder="请选择">
+                  <el-option v-for="item in unitList" :key="item.label" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
 
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -82,26 +86,50 @@
             <el-form ref="form" :model="form" label-width="95px">
 
 
-                <el-form-item label="Bom名称"><el-input v-model="form.bomname"></el-input></el-form-item>
-                <el-form-item label="Bom版本"><el-input v-model="form.bomversion"></el-input></el-form-item>
-                <el-form-item label="Bom状态"><el-input v-model="form.status"></el-input></el-form-item>
-                <el-form-item label="所属产品"><el-input v-model="form.firstcheck"></el-input></el-form-item>
+              <el-form-item label="BOM名称">
+                <el-select v-model="form.bomId" placeholder="请选择">
+                  <el-option v-for="item in BomList" :key="item.id" :label="item.bomname" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
 
+              <el-form-item label="材料类型">
+                <el-select v-model="form.mtype" placeholder="请选择">
+                  <el-option v-for="item in productType" :key="item.label" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
 
+              <el-form-item label="材料数量"><el-input v-model="form.mnum"></el-input></el-form-item>
+
+              <el-form-item label="单位">
+                <el-select v-model="form.unit" placeholder="请选择">
+                  <el-option v-for="item in unitList" :key="item.label" :label="item.label" :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
 
             </el-form>
+
+
+
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
                 <el-button type="primary" @click="saveAdd">确 定</el-button>
             </span>
         </el-dialog>
     </div>
+
+
+
+
 </template>
+
 
 <script>
 import { fetchData } from '../../api/index';
 export default {
-    name: 'bom_bom',
+    name: 'bom_product',
     data() {
         return {
             query: {
@@ -111,6 +139,9 @@ export default {
                 pageSize: 50
             },
             tableData: [],
+            unitList: [],
+            BomList: [],
+            productType:[],
             multipleSelection: [],
             delList: [],
             editVisible: false,
@@ -126,18 +157,25 @@ export default {
 
     },
     methods: {
-
-        getData() {
-            this.$axios.get('/api/basBom/selectAll').then(res =>{
-                this.tableData = res.data;
-            })
+      getData() {
+        this.$axios.get('/api/basBomDetail/selectAll').then(res =>{
+          this.tableData = res.data;
+        })
+        this.$axios.get('/api/basBom/selectAll').then(res =>{
+          this.BomList = res.data;
+        })
+        this.$axios.get('/api/sysDict/selectBytype?type=unit').then(res =>{
+          this.unitList = res.data;
+        })
+        this.$axios.get('/api/sysDict/selectBytype?type=material_type').then(res =>{
+          this.productType = res.data;
+        })
         },
         // 触发搜索按钮
         handleSearch() {
             this.$set(this.query, 'pageIndex', 1);
-            this.$axios.get('/api/basBom/selectname?name='+this.query.name).then(res=>{
-              this.tableData = res.data
-            })
+
+            this.getData();
         },
         // 删除操作
         handleDelete(index, row) {
@@ -147,7 +185,7 @@ export default {
             })
                 .then(() => {
                     this.tableData.splice(index, 1);
-                    this.$axios.get('/api/basBom/deleteById?id='+row.id).then(res=>{
+                    this.$axios.get('/api/basBomDetail/deleteById?id='+row.id).then(res=>{
                         this.$message.success("删除成功");
                     })
                 })
@@ -163,7 +201,7 @@ export default {
             this.delList = this.delList.concat(this.multipleSelection);
             for (let i = 0; i < length; i++) {
                 str += this.multipleSelection[i].id + ' ';
-                this.$axios.get('/api/basBom/deleteById?id='+this.multipleSelection[i].id).then(res=>{
+                this.$axios.get('/api/basBomDetail/deleteById?id='+this.multipleSelection[i].id).then(res=>{
                 })
             }
             this.$message.success(`删除了${str}`);
@@ -185,10 +223,8 @@ export default {
             console.log(this.form)
             this.editVisible = false;
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
-
-
-            this.$axios.post('/api/basBom/edit',this.form).then(res=>{
-                this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+            this.$axios.post('/api/basBomDetail/edit',this.form).then(res=>{
+              this.$message.success(`修改第 ${this.idx + 1} 行成功`);
             })
             this.$set(this.tableData, this.idx, this.form);
         },
@@ -197,9 +233,7 @@ export default {
             console.log(this.form)
             this.addVisible = false;
             this.form.reportPerson = JSON.parse(localStorage.getItem("userInfo")).name;
-
-
-            this.$axios.post('/api/basBom/add',this.form).then(res=>{
+            this.$axios.post('/api/basBomDetail/add',this.form).then(res=>{
                 this.$message.success(`添加成功`);
             })
             this.getData();

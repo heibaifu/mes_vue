@@ -96,7 +96,16 @@
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="95px">
         <el-form-item label="工站ID"><el-input v-model="form.id"></el-input></el-form-item>
-        <el-form-item label="所属产线"><el-input v-model="form.lineId"></el-input></el-form-item>
+        <el-form-item label="所属产线">
+          <el-select v-model="form.line_id" placeholder="请选择产线">
+            <el-option
+                v-for="line in Line"
+                :key="line.linename"
+                :label="line.linename"
+                :value="line.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="工站名称"><el-input v-model="form.stationname"></el-input></el-form-item>
         <el-form-item label="工站编号"><el-input v-model="form.stationno"></el-input></el-form-item>
         <el-form-item label="工站负责人"><el-input v-model="form.stationmaster"></el-input></el-form-item>
@@ -220,6 +229,7 @@ export default {
       this.form = row;
       console.log(this.form)
       this.editVisible = true;
+      this.getLineData();
     },
     //添加操作
     handleAdd(index, row) {
