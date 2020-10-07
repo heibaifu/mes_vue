@@ -303,22 +303,11 @@ export default {
             })
         },
         ChartData1() {
-            this.options.datasets[0].data[0]=0;
-            this.options.datasets[1].data[0]=0;
-            this.options.datasets[2].data[0]=0;
-            this.options.datasets[0].data[1]=0;
-            this.options.datasets[1].data[1]=0;
-            this.options.datasets[2].data[1]=0;
-            this.options.datasets[0].data[2]=0;
-            this.options.datasets[1].data[2]=0;
-            this.options.datasets[2].data[2]=0;
-            this.options.datasets[0].data[3]=0;
-            this.options.datasets[1].data[3]=0;
-            this.options.datasets[2].data[3]=0;
-            this.options.datasets[0].data[4]=0;
-            this.options.datasets[1].data[4]=0;
-            this.options.datasets[2].data[4]=0;
-
+            this.$axios.get('/api/equipReport/ChartData1').then(res=>{
+                this.options.datasets[0].data=res.data[0];
+                this.options.datasets[1].data=res.data[1];
+                this.options.datasets[2].data=res.data[2];
+            })
         },
         ChartData2() {
             this.options2.datasets[0].data[0]=0;
